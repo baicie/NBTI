@@ -4,11 +4,7 @@
     "target": "ES2017",
     "lib": ["ES2016", "DOM", "DOM.Iterable"],
     "jsx": "preserve",
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
+    "baseUrl": ".",
     "paths": {
       "@/*": ["./*"],
       "@nbti/core": ["../../packages/core/src"],

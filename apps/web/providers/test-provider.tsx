@@ -5,7 +5,6 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useState,
 } from 'react'
 import type {
@@ -56,6 +55,7 @@ const defaultConfig: LoadedConfig = {
   },
   questions: {
     meta: { totalQuestions: 4, timeEstimate: 300 },
+    dimensions: [],
     questions: [],
   },
   types: { types: [] },
@@ -152,7 +152,6 @@ export function TestProvider({ children }: { children: ReactNode }) {
     const scoringResult = calculateScores(
       answerList,
       config.manifest.scoring,
-      config.questions.dimensions,
       config.questions.questions,
     )
 

@@ -3,29 +3,22 @@
   "compilerOptions": {
     "ignoreDeprecations": "6.0",
     "baseUrl": ".",
-    "outDir": "temp",
-    "rootDir": ".",
-    "noEmit": true,
-    "composite": false,
-    "isolatedDeclarations": false,
     "types": ["vitest/globals", "node"],
     "paths": {
-      "@baicie/*": ["packages/*/src"]
+      "@/*": ["apps/web/*"],
+      "@nbti/*": ["packages/*/src"]
     }
   },
   "include": [
     "packages/*/src",
     "packages/*/__tests__",
     "packages/*/__test__",
-    "packages/*/*.test.ts",
-    "packages/*/*.spec.ts",
-    "scripts/setup-vitest.ts"
+    "scripts/**/*"
   ],
   "exclude": [
     "**/dist",
     "**/temp",
     "**/node_modules",
-    "**/tsconfig.tsbuildinfo",
-    "**/templates/**"
+    "**/tsconfig.tsbuildinfo"
   ]
 }

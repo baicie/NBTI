@@ -240,8 +240,9 @@ export default function TestPage() {
             </CardDescription>
             <CardTitle className="text-xl">
               {currentQuestion
-                ? currentQuestion.content[settings.locale] ||
-                  currentQuestion.content.zh
+                ? currentQuestion.content[
+                    settings.locale as keyof typeof currentQuestion.content
+                  ] || currentQuestion.content.zh
                 : ''}
             </CardTitle>
           </CardHeader>
@@ -260,7 +261,9 @@ export default function TestPage() {
                     }
                   >
                     <span className="font-medium">
-                      {option.content[settings.locale] || option.content.zh}
+                      {option.content[
+                        settings.locale as keyof typeof option.content
+                      ] || option.content.zh}
                     </span>
                   </button>
                 ))

@@ -3,27 +3,22 @@
   "compilerOptions": {
     "ignoreDeprecations": "6.0",
     "baseUrl": ".",
-    "outDir": "temp",
-    "rootDir": ".",
-    "noEmit": true,
-    "composite": false,
-    "isolatedDeclarations": false,
     "types": ["vitest/globals", "node", "react", "react-dom"],
     "paths": {
-      "@baicie/*": ["packages/*/src"]
+      "@/*": ["apps/web/*"],
+      "@nbti/*": ["packages/*/src"]
     }
   },
   "include": [
     "packages/*/src",
     "packages/*/__tests__",
     "scripts/**/*",
-    "playground/**/*"
+    "apps/**/*"
   ],
   "exclude": [
     "**/dist",
     "**/temp",
     "**/node_modules",
-    "**/tsconfig.tsbuildinfo",
-    "playground/vue"
+    "**/tsconfig.tsbuildinfo"
   ]
 }

@@ -1,34 +1,33 @@
-import importX from 'eslint-plugin-import-x'
-import tseslint from 'typescript-eslint'
 import vitest from '@vitest/eslint-plugin'
+import importX from 'eslint-plugin-import-x'
+import reactHooks from 'eslint-plugin-react-hooks'
+import reactRefresh from 'eslint-plugin-react-refresh'
+import { defineConfig } from 'eslint/config'
 import { builtinModules } from 'node:module'
+import tseslint from 'typescript-eslint'
 
 const DOMGlobals = ['window', 'document']
 const NodeGlobals = ['module', 'require']
 
-export default tseslint.config(
+export default defineConfig(
   {
     files: ['**/*.js', '**/*.ts', '**/*.tsx'],
     extends: [tseslint.configs.base],
     plugins: {
       'import-x': importX,
+      'react-hooks': reactHooks,
+      'react-refresh': reactRefresh,
     },
     rules: {
       'no-debugger': 'error',
       'no-console': ['error', { allow: ['warn', 'error', 'info'] }],
-      // most of the codebase are expected to be env agnostic
       'no-restricted-globals': ['error', ...DOMGlobals, ...NodeGlobals],
-
       'sort-imports': ['error', { ignoreDeclarationSort: true }],
-
       'import-x/no-nodejs-modules': [
         'error',
         { allow: builtinModules.map(mod => `node:${mod}`) },
       ],
-      // This rule enforces the preference for using '@ts-expect-error' comments in TypeScript
-      // code to indicate intentional type errors, improving code clarity and maintainability.
-      '@typescript-eslint/prefer-ts-expect-error': 'error',
-      // Enforce the use of 'import type' for importing types
+      '@typescript-eslint/prefer-ts-expect-error': 'warn',
       '@typescript-eslint/consistent-type-imports': [
         'error',
         {
@@ -36,12 +35,16 @@ export default tseslint.config(
           disallowTypeAnnotations: false,
         },
       ],
-      // Enforce the use of top-level import type qualifier when an import only has specifiers with inline type qualifiers
       '@typescript-eslint/no-import-type-side-effects': 'error',
+      'react-hooks/rules-of-hooks': 'error',
+      'react-hooks/exhaustive-deps': 'warn',
+      'react-refresh/only-export-components': [
+        'warn',
+        { allowConstantExport: true },
+      ],
     },
   },
 
-  // tests, no restrictions (runs in Node / Vitest with jsdom)
   {
     files: [
       '**/__tests__/**',
@@ -58,12 +61,13 @@ export default tseslint.config(
       'no-console': 'off',
       'no-restricted-globals': 'off',
       'no-restricted-syntax': 'off',
+      'react-hooks/rules-of-hooks': 'off',
+      'react-hooks/exhaustive-deps': 'off',
       'vitest/no-disabled-tests': 'error',
       'vitest/no-focused-tests': 'error',
     },
   },
 
-  // shared, may be used in any env
   {
     files: ['packages/shared/**', 'eslint.config.js'],
     rules: {
@@ -71,16 +75,13 @@ export default tseslint.config(
     },
   },
 
-  // JavaScript files
   {
     files: ['*.js'],
     rules: {
-      // We only do `no-unused-vars` checks for js files, TS files are checked by TypeScript itself.
       'no-unused-vars': ['error', { vars: 'all', args: 'none' }],
     },
   },
 
-  // Node scripts
   {
     files: [
       'eslint.config.js',
@@ -104,6 +105,7 @@ export default tseslint.config(
       'explorations/',
       'dts-build/packages',
       'playground',
+      '.next/',
     ],
   },
 )
