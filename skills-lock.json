@@ -35,6 +35,34 @@
       "source": "vercel-labs/agent-skills",
       "sourceType": "github",
       "computedHash": "f3bc47f890f42a44db1007ab390709ec368e4b8c089baee6b0007182236ac474"
+    },
+    "typescript-advanced-types": {
+      "source": "wshobson/agents",
+      "sourceType": "github",
+      "skillName": "typescript-advanced-types",
+      "installCount": "23.6K",
+      "description": "TypeScript 高级类型技巧，适合严格模式项目"
+    },
+    "monorepo-management": {
+      "source": "wshobson/agents",
+      "sourceType": "github",
+      "skillName": "monorepo-management",
+      "installCount": "5.5K",
+      "description": "Monorepo 管理最佳实践，完美适配 pnpm workspace"
+    },
+    "i18n-localization": {
+      "source": "sickn33/antigravity-awesome-skills",
+      "sourceType": "github",
+      "skillName": "i18n-localization",
+      "installCount": "1.3K",
+      "description": "国际化本地化最佳实践"
+    },
+    "zod-schema-validation": {
+      "source": "mindrally/skills",
+      "sourceType": "github",
+      "skillName": "zod-schema-validation",
+      "installCount": "236",
+      "description": "Zod 模式验证，项目使用 JSON Schema"
     }
   }
 }
