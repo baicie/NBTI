@@ -16,6 +16,14 @@ import type {
 } from '@nbti/core'
 import { calculateScores } from '@nbti/core'
 
+const STORAGE_KEY_PREFIX = 'nbti_test_'
+
+interface StoredProgress {
+  session: TestSession
+  answers: Record<string, string>
+  timestamp: number
+}
+
 interface TestContextValue {
   config: LoadedConfig | null
   configStatus: 'idle' | 'loading' | 'loaded' | 'error'
@@ -25,7 +33,7 @@ interface TestContextValue {
   result: ScoringResult | null
   settings: UserSettings
   loadConfig: (config: LoadedConfig) => void
-  startSession: () => void
+  startSession: (suiteId: string) => void
   answerQuestion: (questionId: string, optionId: string) => void
   nextQuestion: () => void
   prevQuestion: () => void
@@ -33,9 +41,8 @@ interface TestContextValue {
   resetTest: () => void
   updateSettings: (settings: Partial<UserSettings>) => void
   setLocale: (locale: string) => void
+  resumeSession: (suiteId: string, totalQuestions: number) => boolean
 }
-
-const TestContext = createContext<TestContextValue | null>(null)
 
 // 默认配置（用于测试模式）
 const defaultConfig: LoadedConfig = {
@@ -64,6 +71,67 @@ const defaultConfig: LoadedConfig = {
   i18n: {},
 }
 
+// localStorage 操作
+function getStorageKey(suiteId: string): string {
+  return `${STORAGE_KEY_PREFIX}${suiteId}`
+}
+
+// 使用 globalThis 检测浏览器环境
+const isBrowser =
+  typeof globalThis !== 'undefined' &&
+  typeof globalThis.localStorage !== 'undefined'
+
+function saveProgress(
+  suiteId: string,
+  session: TestSession,
+  answers: Map<string, string>,
+): void {
+  if (!isBrowser) return
+
+  try {
+    const stored: StoredProgress = {
+      session,
+      answers: Object.fromEntries(answers),
+      timestamp: Date.now(),
+    }
+    globalThis.localStorage.setItem(
+      getStorageKey(suiteId),
+      JSON.stringify(stored),
+    )
+  } catch {
+    // 忽略存储错误
+  }
+}
+
+function loadProgress(suiteId: string): StoredProgress | null {
+  if (!isBrowser) return null
+
+  try {
+    const stored = globalThis.localStorage.getItem(getStorageKey(suiteId))
+    if (!stored) return null
+
+    const parsed = JSON.parse(stored) as StoredProgress
+
+    // 检查是否过期（24小时）
+    const EXPIRY_HOURS = 24
+    if (Date.now() - parsed.timestamp > EXPIRY_HOURS * 60 * 60 * 1000) {
+      globalThis.localStorage.removeItem(getStorageKey(suiteId))
+      return null
+    }
+
+    return parsed
+  } catch {
+    return null
+  }
+}
+
+function clearProgress(suiteId: string): void {
+  if (!isBrowser) return
+  globalThis.localStorage.removeItem(getStorageKey(suiteId))
+}
+
+const TestContext = createContext<TestContextValue | null>(null)
+
 export function TestProvider({ children }: { children: ReactNode }) {
   const [config, setConfig] = useState<LoadedConfig | null>(defaultConfig)
   const [configStatus, setConfigStatus] = useState<
@@ -80,52 +148,113 @@ export function TestProvider({ children }: { children: ReactNode }) {
     soundEnabled: false,
   })
 
+  // 存储当前套件ID用于持久化
+  const [currentSuiteId, setCurrentSuiteId] = useState<string | null>(null)
+
   const loadConfig = useCallback((newConfig: LoadedConfig) => {
     setConfig(newConfig)
     setConfigStatus('loaded')
     setConfigError(null)
   }, [])
 
-  const startSession = useCallback(() => {
-    if (!config) return
+  const startSession = useCallback(
+    (suiteId: string) => {
+      if (!config) return
 
-    const questions = config.questions.questions
-    setSession({
-      id: crypto.randomUUID(),
-      packageId: config.manifest.id,
-      startTime: Date.now(),
-      currentIndex: 0,
-      totalQuestions: questions.length || 4, // 默认4题
-      answers: [],
-    })
-    setAnswers(new Map())
-    setResult(null)
-  }, [config])
+      // 先尝试恢复之前的进度
+      const stored = loadProgress(suiteId)
+      if (stored) {
+        setSession(stored.session)
+        setAnswers(new Map(Object.entries(stored.answers)))
+        setCurrentSuiteId(suiteId)
+        setResult(null)
+        return
+      }
 
-  const answerQuestion = useCallback((questionId: string, optionId: string) => {
-    setAnswers(prev => {
-      const next = new Map(prev)
-      next.set(questionId, optionId)
-      return next
-    })
-  }, [])
+      // 没有保存的进度，创建新会话
+      const questions = config.questions.questions
+      const newSession: TestSession = {
+        id: crypto.randomUUID(),
+        packageId: config.manifest.id,
+        startTime: Date.now(),
+        currentIndex: 0,
+        totalQuestions: questions.length || 4,
+        answers: [],
+      }
+      setSession(newSession)
+      setAnswers(new Map())
+      setCurrentSuiteId(suiteId)
+      setResult(null)
+
+      // 保存初始进度
+      saveProgress(suiteId, newSession, new Map())
+    },
+    [config],
+  )
+
+  // 恢复会话（不自动启动）
+  const resumeSession = useCallback(
+    (suiteId: string, totalQuestions: number): boolean => {
+      const stored = loadProgress(suiteId)
+      if (stored && stored.session.totalQuestions === totalQuestions) {
+        setSession(stored.session)
+        setAnswers(new Map(Object.entries(stored.answers)))
+        setCurrentSuiteId(suiteId)
+        setResult(null)
+        return true
+      }
+      return false
+    },
+    [],
+  )
+
+  const answerQuestion = useCallback(
+    (questionId: string, optionId: string) => {
+      setAnswers(prev => {
+        const next = new Map(prev)
+        next.set(questionId, optionId)
+
+        // 持久化
+        if (session && currentSuiteId) {
+          saveProgress(currentSuiteId, session, next)
+        }
+
+        return next
+      })
+    },
+    [session, currentSuiteId],
+  )
 
   const nextQuestion = useCallback(() => {
     setSession(prev => {
       if (!prev) return prev
       const totalQuestions = prev.totalQuestions
       const nextIndex = Math.min(prev.currentIndex + 1, totalQuestions - 1)
-      return { ...prev, currentIndex: nextIndex }
+      const newSession = { ...prev, currentIndex: nextIndex }
+
+      // 持久化
+      if (currentSuiteId) {
+        saveProgress(currentSuiteId, newSession, answers)
+      }
+
+      return newSession
     })
-  }, [])
+  }, [currentSuiteId, answers])
 
   const prevQuestion = useCallback(() => {
     setSession(prev => {
       if (!prev) return prev
       const nextIndex = Math.max(prev.currentIndex - 1, 0)
-      return { ...prev, currentIndex: nextIndex }
+      const newSession = { ...prev, currentIndex: nextIndex }
+
+      // 持久化
+      if (currentSuiteId) {
+        saveProgress(currentSuiteId, newSession, answers)
+      }
+
+      return newSession
     })
-  }, [])
+  }, [currentSuiteId, answers])
 
   const submitTest = useCallback((): ScoringResult => {
     if (!config || !session) {
@@ -156,14 +285,26 @@ export function TestProvider({ children }: { children: ReactNode }) {
     )
 
     setResult(scoringResult)
+
+    // 清除保存的进度
+    if (currentSuiteId) {
+      clearProgress(currentSuiteId)
+    }
+
     return scoringResult
-  }, [config, session, answers])
+  }, [config, session, answers, currentSuiteId])
 
   const resetTest = useCallback(() => {
     setSession(null)
     setAnswers(new Map())
     setResult(null)
-  }, [])
+
+    // 清除保存的进度
+    if (currentSuiteId) {
+      clearProgress(currentSuiteId)
+    }
+    setCurrentSuiteId(null)
+  }, [currentSuiteId])
 
   const updateSettings = useCallback((newSettings: Partial<UserSettings>) => {
     setSettings(prev => ({ ...prev, ...newSettings }))
@@ -190,11 +331,13 @@ export function TestProvider({ children }: { children: ReactNode }) {
     resetTest,
     updateSettings,
     setLocale,
+    resumeSession,
   }
 
   return <TestContext.Provider value={value}>{children}</TestContext.Provider>
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useTest() {
   const context = useContext(TestContext)
   if (!context) {
