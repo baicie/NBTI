@@ -3,6 +3,7 @@
     {
       "id": "INTJ",
       "name": { "zh": "建筑师", "en": "Architect" },
+      "posterImage": { "zh": "/types/INTJ-zh.png", "en": "/types/INTJ-en.png" },
       "subtitle": {
         "zh": "富有想象力和战略性的思想家",
         "en": "Imaginative and strategic thinkers"
@@ -32,6 +33,7 @@
     {
       "id": "INTP",
       "name": { "zh": "逻辑学家", "en": "Logician" },
+      "posterImage": { "zh": "/types/INTP-zh.png", "en": "/types/INTP-en.png" },
       "subtitle": {
         "zh": "富有创造力的发明家",
         "en": "Creative inventors"
@@ -61,6 +63,7 @@
     {
       "id": "ENTJ",
       "name": { "zh": "指挥官", "en": "Commander" },
+      "posterImage": { "zh": "/types/ENTJ-zh.png", "en": "/types/ENTJ-en.png" },
       "subtitle": {
         "zh": "大胆、富有想象力的领导者",
         "en": "Bold, imaginative leaders"
@@ -90,6 +93,7 @@
     {
       "id": "ENTP",
       "name": { "zh": "辩论家", "en": "Debater" },
+      "posterImage": { "zh": "/types/ENTP-zh.png", "en": "/types/ENTP-en.png" },
       "subtitle": {
         "zh": "聪明好奇的思想家",
         "en": "Smart and curious thinkers"
@@ -119,6 +123,7 @@
     {
       "id": "INFJ",
       "name": { "zh": "提倡者", "en": "Advocate" },
+      "posterImage": { "zh": "/types/INFJ-zh.png", "en": "/types/INFJ-en.png" },
       "subtitle": {
         "zh": "安静而神秘，富有启发性",
         "en": "Quiet and mysterious, yet inspiring"
@@ -148,6 +153,7 @@
     {
       "id": "INFP",
       "name": { "zh": "调停者", "en": "Mediator" },
+      "posterImage": { "zh": "/types/INFP-zh.png", "en": "/types/INFP-en.png" },
       "subtitle": {
         "zh": "诗意、善良的利他主义者",
         "en": "Poetic, kind, and altruistic"
@@ -177,6 +183,7 @@
     {
       "id": "ENFJ",
       "name": { "zh": "主人公", "en": "Protagonist" },
+      "posterImage": { "zh": "/types/ENFJ-zh.png", "en": "/types/ENFJ-en.png" },
       "subtitle": {
         "zh": "富有魅力和鼓舞人心的领导者",
         "en": "Charismatic and inspiring leaders"
@@ -206,6 +213,7 @@
     {
       "id": "ENFP",
       "name": { "zh": "竞选者", "en": "Campaigner" },
+      "posterImage": { "zh": "/types/ENFP-zh.png", "en": "/types/ENFP-en.png" },
       "subtitle": {
         "zh": "热情洋溢、富有想象力的社交者",
         "en": "Enthusiastic, creative, and social"
@@ -235,6 +243,7 @@
     {
       "id": "ISTJ",
       "name": { "zh": "物流师", "en": "Logistician" },
+      "posterImage": { "zh": "/types/ISTJ-zh.png", "en": "/types/ISTJ-en.png" },
       "subtitle": {
         "zh": "务实且注重事实",
         "en": "Practical and fact-based"
@@ -264,6 +273,7 @@
     {
       "id": "ISFJ",
       "name": { "zh": "守护者", "en": "Defender" },
+      "posterImage": { "zh": "/types/ISFJ-zh.png", "en": "/types/ISFJ-en.png" },
       "subtitle": {
         "zh": "温暖且保护性的守护者",
         "en": "Warm and protective guardians"
@@ -289,6 +299,7 @@
     {
       "id": "ESTJ",
       "name": { "zh": "总经理", "en": "Executive" },
+      "posterImage": { "zh": "/types/ESTJ-zh.png", "en": "/types/ESTJ-en.png" },
       "subtitle": {
         "zh": "卓越的执行者，组织者",
         "en": "Excellent executors and organizers"
@@ -318,6 +329,7 @@
     {
       "id": "ESFJ",
       "name": { "zh": "执政官", "en": "Consul" },
+      "posterImage": { "zh": "/types/ESFJ-zh.png", "en": "/types/ESFJ-en.png" },
       "subtitle": {
         "zh": "富有爱心、热心的社交者",
         "en": "Caring and enthusiastic socializers"
@@ -347,6 +359,7 @@
     {
       "id": "ISTP",
       "name": { "zh": "鉴赏家", "en": "Virtuoso" },
+      "posterImage": { "zh": "/types/ISTP-zh.png", "en": "/types/ISTP-en.png" },
       "subtitle": {
         "zh": "大胆而实用的实验者",
         "en": "Bold and practical experimenters"
@@ -376,6 +389,7 @@
     {
       "id": "ISFP",
       "name": { "zh": "探险家", "en": "Adventurer" },
+      "posterImage": { "zh": "/types/ISFP-zh.png", "en": "/types/ISFP-en.png" },
       "subtitle": {
         "zh": "灵活、有魅力的艺术家",
         "en": "Flexible and charming artists"
@@ -405,6 +419,7 @@
     {
       "id": "ESTP",
       "name": { "zh": "企业家", "en": "Entrepreneur" },
+      "posterImage": { "zh": "/types/ESTP-zh.png", "en": "/types/ESTP-en.png" },
       "subtitle": {
         "zh": "聪明、精力充沛的观察者",
         "en": "Smart, energetic perceptors"
@@ -434,6 +449,7 @@
     {
       "id": "ESFP",
       "name": { "zh": "表演者", "en": "Entertainer" },
+      "posterImage": { "zh": "/types/ESFP-zh.png", "en": "/types/ESFP-en.png" },
       "subtitle": {
         "zh": "自发性、魅力十足的表演者",
         "en": "Spontaneous and enthusiastic performers"

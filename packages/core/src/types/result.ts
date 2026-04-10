@@ -49,6 +49,8 @@ export interface Quote {
 export interface PersonalityType {
   id: string
   name: LocalizedString
+  posterImage?: LocalizedString
+  posterCaption?: LocalizedString
   subtitle?: LocalizedString
   description?: LocalizedString
   icon?: string
