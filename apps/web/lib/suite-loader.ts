@@ -11,6 +11,10 @@ import mbtiManifest from '../configs/suites/mbti/manifest.json'
 import mbtiTheme from '../configs/suites/mbti/theme.json'
 import mbtiQuestions from '../configs/suites/mbti/questions.json'
 import mbtiTypes from '../configs/suites/mbti/types.json'
+import discManifest from '../configs/suites/disc/manifest.json'
+import discTheme from '../configs/suites/disc/theme.json'
+import discQuestions from '../configs/suites/disc/questions.json'
+import discTypes from '../configs/suites/disc/types.json'
 
 /**
  * 获取套件索引
@@ -99,6 +103,12 @@ async function loadSuiteData(suiteId: string) {
       questions = mbtiQuestions as Record<string, unknown>
       types = mbtiTypes as Record<string, unknown>
       theme = mbtiTheme as SuiteTheme
+      break
+    case 'disc':
+      manifest = discManifest as Record<string, unknown>
+      questions = discQuestions as Record<string, unknown>
+      types = discTypes as Record<string, unknown>
+      theme = discTheme as SuiteTheme
       break
     default:
       throw new Error(`Unknown suite: ${suiteId}`)

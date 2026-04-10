@@ -18,6 +18,16 @@ export default async function ResultPage({ params }: ResultPageProps) {
   // 类型断言
   const typedManifest = manifest as {
     name: Record<string, string>
+    settings?: {
+      showDimensions?: boolean
+    }
+    background?: {
+      enabled?: boolean
+      image?: string
+      opacity?: number
+      position?: string
+      size?: string
+    }
   }
 
   const typedTypes = types as {

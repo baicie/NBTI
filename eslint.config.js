@@ -76,6 +76,13 @@ export default defineConfig(
   },
 
   {
+    files: ['apps/web/**'],
+    rules: {
+      'no-restricted-globals': 'off',
+    },
+  },
+
+  {
     files: ['*.js'],
     rules: {
       'no-unused-vars': ['error', { vars: 'all', args: 'none' }],

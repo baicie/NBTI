@@ -19,9 +19,18 @@ export default async function TestPage({ params }: TestPageProps) {
   const typedManifest = manifest as {
     name: { zh: string; en: string }
     settings?: {
+      layout?: 'list' | 'single'
       allowBack?: boolean
       showTimer?: boolean
       maxDuration?: number | null
+      showDimensions?: boolean
+    }
+    background?: {
+      enabled?: boolean
+      image?: string
+      opacity?: number
+      position?: string
+      size?: string
     }
   }
 

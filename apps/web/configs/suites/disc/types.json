@@ -1,0 +1,248 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "lastUpdated": "2026-04-10"
+  },
+  "dimensions": [
+    {
+      "id": "D",
+      "name": { "zh": "支配性", "en": "Dominance" },
+      "left": { "letter": "D", "name": { "zh": "支配型", "en": "Dominant" } },
+      "right": {
+        "letter": "C",
+        "name": { "zh": "谨慎型", "en": "Conscientious" }
+      }
+    },
+    {
+      "id": "I",
+      "name": { "zh": "影响性", "en": "Influence" },
+      "left": {
+        "letter": "I",
+        "name": { "zh": "影响型", "en": "Influential" }
+      },
+      "right": { "letter": "S", "name": { "zh": "稳健型", "en": "Steady" } }
+    }
+  ],
+  "types": [
+    {
+      "id": "D",
+      "name": { "zh": "支配型", "en": "Dominant" },
+      "posterImage": {
+        "zh": "/types/DISC-D-zh.png",
+        "en": "/types/DISC-D-en.png"
+      },
+      "posterCaption": {
+        "zh": "掌控全局 · 果断行动",
+        "en": "Take Charge · Get Results"
+      },
+      "subtitle": {
+        "zh": "结果导向，勇于挑战",
+        "en": "Results-driven, bold challenger"
+      },
+      "description": {
+        "zh": "支配型人格的人专注于结果，他们直接、有竞争力，喜欢挑战和掌控局面。他们是天生的领导者，善于快速做出决策并推动事情向前发展。",
+        "en": "People with dominant personality focus on results. They are direct, competitive, love challenges, and prefer to control situations. They are natural leaders who make quick decisions."
+      },
+      "color": "#dc2626",
+      "traits": [
+        {
+          "id": "decisive",
+          "name": { "zh": "果断", "en": "Decisive" },
+          "level": 95
+        },
+        {
+          "id": "confident",
+          "name": { "zh": "自信", "en": "Confident" },
+          "level": 90
+        },
+        {
+          "id": "direct",
+          "name": { "zh": "直接", "en": "Direct" },
+          "level": 88
+        },
+        {
+          "id": "competitive",
+          "name": { "zh": "竞争", "en": "Competitive" },
+          "level": 85
+        }
+      ],
+      "strengths": [
+        { "zh": "善于做决策", "en": "Good at decision making" },
+        { "zh": "敢于承担风险", "en": "Willing to take risks" },
+        { "zh": "目标导向明确", "en": "Clear goal-oriented" }
+      ],
+      "weaknesses": [
+        { "zh": "可能显得咄咄逼人", "en": "May seem aggressive" },
+        { "zh": "缺乏耐心", "en": "Lacks patience" }
+      ],
+      "careers": [
+        { "zh": "企业高管", "en": "Executive" },
+        { "zh": "创业者", "en": "Entrepreneur" },
+        { "zh": "销售经理", "en": "Sales Manager" }
+      ]
+    },
+    {
+      "id": "I",
+      "name": { "zh": "影响型", "en": "Influential" },
+      "posterImage": {
+        "zh": "/types/DISC-I-zh.png",
+        "en": "/types/DISC-I-en.png"
+      },
+      "posterCaption": {
+        "zh": "激励人心 · 充满热情",
+        "en": "Inspire Others · Enthusiastic"
+      },
+      "subtitle": {
+        "zh": "乐观开朗，善于社交",
+        "en": "Optimistic and social"
+      },
+      "description": {
+        "zh": "影响型人格的人专注于与他人的互动，他们热情、外向、有说服力，喜欢成为关注的焦点。他们是天生的沟通者，善于激励和影响他人。",
+        "en": "People with influential personality focus on interaction with others. They are enthusiastic, extroverted, and persuasive, enjoying being the center of attention."
+      },
+      "color": "#f59e0b",
+      "traits": [
+        {
+          "id": "enthusiastic",
+          "name": { "zh": "热情", "en": "Enthusiastic" },
+          "level": 95
+        },
+        {
+          "id": "sociable",
+          "name": { "zh": "社交", "en": "Sociable" },
+          "level": 92
+        },
+        {
+          "id": "persuasive",
+          "name": { "zh": "说服力", "en": "Persuasive" },
+          "level": 88
+        },
+        {
+          "id": "optimistic",
+          "name": { "zh": "乐观", "en": "Optimistic" },
+          "level": 85
+        }
+      ],
+      "strengths": [
+        { "zh": "出色的沟通能力", "en": "Excellent communication" },
+        { "zh": "善于建立关系", "en": "Good at building relationships" },
+        { "zh": "激励团队士气", "en": "Motivates team morale" }
+      ],
+      "weaknesses": [
+        { "zh": "有时过于冲动", "en": "Sometimes impulsive" },
+        { "zh": "难以接受批评", "en": "Difficult to accept criticism" }
+      ],
+      "careers": [
+        { "zh": "营销人员", "en": "Marketer" },
+        { "zh": "公关专家", "en": "PR Specialist" },
+        { "zh": "教师", "en": "Teacher" }
+      ]
+    },
+    {
+      "id": "S",
+      "name": { "zh": "稳健型", "en": "Steady" },
+      "posterImage": {
+        "zh": "/types/DISC-S-zh.png",
+        "en": "/types/DISC-S-en.png"
+      },
+      "posterCaption": {
+        "zh": "稳定可靠 · 和谐至上",
+        "en": "Support Others · Stay Stable"
+      },
+      "subtitle": {
+        "zh": "温和耐心，忠诚可靠",
+        "en": "Patient and loyal"
+      },
+      "description": {
+        "zh": "稳健型人格的人专注于稳定和支持，他们平和、有耐心，喜欢在可预测的环境中工作。他们是优秀的团队成员，善于倾听和支持他人。",
+        "en": "People with steady personality focus on stability and support. They are calm, patient, and enjoy working in predictable environments. They are excellent team members."
+      },
+      "color": "#10b981",
+      "traits": [
+        {
+          "id": "patient",
+          "name": { "zh": "耐心", "en": "Patient" },
+          "level": 95
+        },
+        { "id": "loyal", "name": { "zh": "忠诚", "en": "Loyal" }, "level": 92 },
+        {
+          "id": "supportive",
+          "name": { "zh": "支持", "en": "Supportive" },
+          "level": 90
+        },
+        { "id": "calm", "name": { "zh": "平和", "en": "Calm" }, "level": 88 }
+      ],
+      "strengths": [
+        { "zh": "可靠的团队成员", "en": "Reliable team member" },
+        { "zh": "善于倾听", "en": "Good listener" },
+        { "zh": "维护和谐", "en": "Maintains harmony" }
+      ],
+      "weaknesses": [
+        { "zh": "害怕改变", "en": "Resistant to change" },
+        { "zh": "难以拒绝他人", "en": "Difficult to say no" }
+      ],
+      "careers": [
+        { "zh": "行政人员", "en": "Administrator" },
+        { "zh": "人力资源", "en": "HR Professional" },
+        { "zh": "咨询师", "en": "Counselor" }
+      ]
+    },
+    {
+      "id": "C",
+      "name": { "zh": "谨慎型", "en": "Conscientious" },
+      "posterImage": {
+        "zh": "/types/DISC-C-zh.png",
+        "en": "/types/DISC-C-en.png"
+      },
+      "posterCaption": {
+        "zh": "精确严谨 · 追求完美",
+        "en": "Be Accurate · Maintain Quality"
+      },
+      "subtitle": {
+        "zh": "细致周到，追求精确",
+        "en": "Detail-oriented and accurate"
+      },
+      "description": {
+        "zh": "谨慎型人格的人专注于质量和准确性，他们分析、谨慎、注重细节，喜欢按照规则和标准工作。他们是优秀的问题解决者，善于发现错误和改进流程。",
+        "en": "People with conscientious personality focus on quality and accuracy. They are analytical, cautious, and detail-oriented, enjoying working by rules and standards."
+      },
+      "color": "#3b82f6",
+      "traits": [
+        {
+          "id": "analytical",
+          "name": { "zh": "分析", "en": "Analytical" },
+          "level": 95
+        },
+        {
+          "id": "detail",
+          "name": { "zh": "细节", "en": "Detail-oriented" },
+          "level": 92
+        },
+        {
+          "id": "accurate",
+          "name": { "zh": "精确", "en": "Accurate" },
+          "level": 90
+        },
+        {
+          "id": "systematic",
+          "name": { "zh": "系统", "en": "Systematic" },
+          "level": 88
+        }
+      ],
+      "strengths": [
+        { "zh": "高质量的工作输出", "en": "High-quality work output" },
+        { "zh": "风险意识强", "en": "Strong risk awareness" },
+        { "zh": "善于分析和规划", "en": "Good at analysis and planning" }
+      ],
+      "weaknesses": [
+        { "zh": "过度关注细节", "en": "Over-focus on details" },
+        { "zh": "决策较慢", "en": "Slow decision-making" }
+      ],
+      "careers": [
+        { "zh": "财务人员", "en": "Finance Professional" },
+        { "zh": "工程师", "en": "Engineer" },
+        { "zh": "审计员", "en": "Auditor" }
+      ]
+    }
+  ]
+}

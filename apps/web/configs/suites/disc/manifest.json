@@ -1,20 +1,20 @@
 {
-  "id": "mbti",
-  "name": { "zh": "MBTI 性格测试", "en": "MBTI Personality" },
+  "id": "disc",
+  "name": { "zh": "DISC 性格测试", "en": "DISC Personality" },
   "version": "1.0.0",
   "description": {
-    "zh": "MBTI（迈尔斯-布里格斯类型指标）是一种自我报告式的人格类型问卷",
-    "en": "The Myers-Briggs Type Indicator is a self-report inventory"
+    "zh": "DISC 是一种行为风格评估工具，帮助你了解自己在不同情境下的行为倾向",
+    "en": "DISC is a behavior style assessment tool"
   },
-  "thumbnail": "/thumbnails/mbti.png",
-  "dimensions": ["EI", "NS", "TF", "JP"],
+  "thumbnail": "/thumbnails/disc.png",
+  "dimensions": ["D", "I", "S", "C"],
   "config": {
     "questions": "questions.json",
     "types": "types.json",
     "themes": "theme.json"
   },
   "settings": {
-    "layout": "list",
+    "layout": "single",
     "allowBack": true,
     "showTimer": false,
     "shuffleQuestions": false,
@@ -32,8 +32,8 @@
   },
   "scoring": {
     "type": "dimension",
-    "dimensions": ["EI", "NS", "TF", "JP"],
-    "calculateMethod": "difference",
+    "dimensions": ["D", "I", "S", "C"],
+    "calculateMethod": "percentage",
     "normalizeOutput": true
   }
 }

@@ -1,0 +1,528 @@
+{
+  "dimensions": [
+    {
+      "id": "D",
+      "name": { "zh": "支配性", "en": "Dominance" },
+      "left": {
+        "letter": "D",
+        "name": { "zh": "支配型", "en": "Dominant" }
+      },
+      "right": {
+        "letter": "C",
+        "name": { "zh": "谨慎型", "en": "Conscientious" }
+      }
+    },
+    {
+      "id": "I",
+      "name": { "zh": "影响性", "en": "Influence" },
+      "left": {
+        "letter": "I",
+        "name": { "zh": "影响型", "en": "Influential" }
+      },
+      "right": {
+        "letter": "S",
+        "name": { "zh": "稳健型", "en": "Steady" }
+      }
+    }
+  ],
+  "questions": [
+    {
+      "id": "d1",
+      "content": {
+        "zh": "在面对挑战时，我通常会：",
+        "en": "When facing challenges, I usually:"
+      },
+      "dimension": "D",
+      "options": [
+        {
+          "id": "d1a",
+          "content": {
+            "zh": "主动出击，积极寻找解决方案",
+            "en": "Take initiative and actively seek solutions"
+          },
+          "scores": { "D": 5, "I": 1, "S": 1, "C": 2 }
+        },
+        {
+          "id": "d1b",
+          "content": {
+            "zh": "冷静分析，权衡利弊后再行动",
+            "en": "Analyze calmly and weigh pros and cons"
+          },
+          "scores": { "D": 2, "I": 1, "S": 2, "C": 5 }
+        },
+        {
+          "id": "d1c",
+          "content": {
+            "zh": "寻求他人意见和支持",
+            "en": "Seek opinions and support from others"
+          },
+          "scores": { "D": 1, "I": 2, "S": 5, "C": 2 }
+        },
+        {
+          "id": "d1d",
+          "content": {
+            "zh": "激励团队一起面对",
+            "en": "Motivate the team to face it together"
+          },
+          "scores": { "D": 3, "I": 5, "S": 2, "C": 1 }
+        }
+      ]
+    },
+    {
+      "id": "d2",
+      "content": {
+        "zh": "在团队会议中，我更倾向于：",
+        "en": "In team meetings, I tend to:"
+      },
+      "dimension": "I",
+      "options": [
+        {
+          "id": "d2a",
+          "content": {
+            "zh": "提出明确的目标和方向",
+            "en": "Propose clear goals and directions"
+          },
+          "scores": { "D": 5, "I": 2, "S": 1, "C": 3 }
+        },
+        {
+          "id": "d2b",
+          "content": {
+            "zh": "营造轻松愉快的氛围",
+            "en": "Create a relaxed and pleasant atmosphere"
+          },
+          "scores": { "D": 1, "I": 5, "S": 3, "C": 1 }
+        },
+        {
+          "id": "d2c",
+          "content": {
+            "zh": "倾听并协调各方意见",
+            "en": "Listen and coordinate different opinions"
+          },
+          "scores": { "D": 1, "I": 2, "S": 5, "C": 3 }
+        },
+        {
+          "id": "d2d",
+          "content": {
+            "zh": "提供详细的数据和分析",
+            "en": "Provide detailed data and analysis"
+          },
+          "scores": { "D": 2, "I": 1, "S": 1, "C": 5 }
+        }
+      ]
+    },
+    {
+      "id": "d3",
+      "content": {
+        "zh": "我更喜欢的工作环境是：",
+        "en": "I prefer working environments that are:"
+      },
+      "dimension": "S",
+      "options": [
+        {
+          "id": "d3a",
+          "content": {
+            "zh": "快节奏、充满挑战",
+            "en": "Fast-paced and challenging"
+          },
+          "scores": { "D": 5, "I": 3, "S": 1, "C": 2 }
+        },
+        {
+          "id": "d3b",
+          "content": {
+            "zh": "自由开放、充满创意",
+            "en": "Free, open, and creative"
+          },
+          "scores": { "D": 2, "I": 5, "S": 2, "C": 1 }
+        },
+        {
+          "id": "d3c",
+          "content": {
+            "zh": "稳定和谐、支持协作",
+            "en": "Stable, harmonious, and collaborative"
+          },
+          "scores": { "D": 1, "I": 2, "S": 5, "C": 2 }
+        },
+        {
+          "id": "d3d",
+          "content": {
+            "zh": "井然有序、注重细节",
+            "en": "Well-organized and detail-oriented"
+          },
+          "scores": { "D": 2, "I": 1, "S": 2, "C": 5 }
+        }
+      ]
+    },
+    {
+      "id": "d4",
+      "content": {
+        "zh": "做决策时，我通常会：",
+        "en": "When making decisions, I usually:"
+      },
+      "dimension": "C",
+      "options": [
+        {
+          "id": "d4a",
+          "content": {
+            "zh": "迅速果断，立即行动",
+            "en": "Decide quickly and act immediately"
+          },
+          "scores": { "D": 5, "I": 2, "S": 1, "C": 2 }
+        },
+        {
+          "id": "d4b",
+          "content": {
+            "zh": "考虑对人的影响和感受",
+            "en": "Consider the impact on people and feelings"
+          },
+          "scores": { "D": 1, "I": 4, "S": 4, "C": 1 }
+        },
+        {
+          "id": "d4c",
+          "content": {
+            "zh": "谨慎评估所有风险",
+            "en": "Carefully evaluate all risks"
+          },
+          "scores": { "D": 2, "I": 1, "S": 2, "C": 5 }
+        },
+        {
+          "id": "d4d",
+          "content": {
+            "zh": "广泛讨论达成共识",
+            "en": "Discuss broadly to reach consensus"
+          },
+          "scores": { "D": 1, "I": 3, "S": 5, "C": 2 }
+        }
+      ]
+    },
+    {
+      "id": "d5",
+      "content": {
+        "zh": "在压力下，我会：",
+        "en": "Under pressure, I tend to:"
+      },
+      "dimension": "D",
+      "options": [
+        {
+          "id": "d5a",
+          "content": { "zh": "更加积极主动", "en": "Become more proactive" },
+          "scores": { "D": 5, "I": 2, "S": 1, "C": 2 }
+        },
+        {
+          "id": "d5b",
+          "content": {
+            "zh": "保持乐观，鼓励他人",
+            "en": "Stay optimistic and encourage others"
+          },
+          "scores": { "D": 2, "I": 5, "S": 2, "C": 1 }
+        },
+        {
+          "id": "d5c",
+          "content": {
+            "zh": "保持冷静，按计划行事",
+            "en": "Stay calm and follow the plan"
+          },
+          "scores": { "D": 2, "I": 1, "S": 4, "C": 4 }
+        },
+        {
+          "id": "d5d",
+          "content": {
+            "zh": "重新审视问题细节",
+            "en": "Re-examine the details of the problem"
+          },
+          "scores": { "D": 1, "I": 1, "S": 2, "C": 5 }
+        }
+      ]
+    },
+    {
+      "id": "d6",
+      "content": {
+        "zh": "与陌生人交流时，我通常是：",
+        "en": "When talking with strangers, I am usually:"
+      },
+      "dimension": "I",
+      "options": [
+        {
+          "id": "d6a",
+          "content": {
+            "zh": "直接自信地介绍自己",
+            "en": "Introduce myself directly and confidently"
+          },
+          "scores": { "D": 4, "I": 4, "S": 1, "C": 1 }
+        },
+        {
+          "id": "d6b",
+          "content": {
+            "zh": "热情友好地打开话题",
+            "en": "Open the conversation warmly and friendly"
+          },
+          "scores": { "D": 1, "I": 5, "S": 2, "C": 1 }
+        },
+        {
+          "id": "d6c",
+          "content": {
+            "zh": "友好但保持一定距离",
+            "en": "Friendly but maintain some distance"
+          },
+          "scores": { "D": 1, "I": 2, "S": 4, "C": 3 }
+        },
+        {
+          "id": "d6d",
+          "content": {
+            "zh": "观察为主，谨慎发言",
+            "en": "Observe first, then speak carefully"
+          },
+          "scores": { "D": 1, "I": 1, "S": 2, "C": 5 }
+        }
+      ]
+    },
+    {
+      "id": "d7",
+      "content": {
+        "zh": "我喜欢项目中哪种角色？",
+        "en": "Which role do I prefer in a project?"
+      },
+      "dimension": "S",
+      "options": [
+        {
+          "id": "d7a",
+          "content": {
+            "zh": "领导者，统筹全局",
+            "en": "Leader, overseeing the big picture"
+          },
+          "scores": { "D": 5, "I": 3, "S": 1, "C": 2 }
+        },
+        {
+          "id": "d7b",
+          "content": {
+            "zh": "协调者，促进合作",
+            "en": "Coordinator, promoting cooperation"
+          },
+          "scores": { "D": 2, "I": 4, "S": 4, "C": 1 }
+        },
+        {
+          "id": "d7c",
+          "content": {
+            "zh": "支持者，提供帮助",
+            "en": "Supporter, providing help"
+          },
+          "scores": { "D": 1, "I": 2, "S": 5, "C": 2 }
+        },
+        {
+          "id": "d7d",
+          "content": {
+            "zh": "专家，确保质量",
+            "en": "Expert, ensuring quality"
+          },
+          "scores": { "D": 2, "I": 1, "S": 1, "C": 5 }
+        }
+      ]
+    },
+    {
+      "id": "d8",
+      "content": {
+        "zh": "当我不同意别人的观点时，我会：",
+        "en": "When I disagree with someone, I:"
+      },
+      "dimension": "C",
+      "options": [
+        {
+          "id": "d8a",
+          "content": {
+            "zh": "直接表达不同看法",
+            "en": "Express my different view directly"
+          },
+          "scores": { "D": 5, "I": 2, "S": 1, "C": 2 }
+        },
+        {
+          "id": "d8b",
+          "content": {
+            "zh": "用幽默方式化解",
+            "en": "Use humor to resolve it"
+          },
+          "scores": { "D": 2, "I": 5, "S": 2, "C": 1 }
+        },
+        {
+          "id": "d8c",
+          "content": {
+            "zh": "暂时保留，避免冲突",
+            "en": "Keep it to myself to avoid conflict"
+          },
+          "scores": { "D": 1, "I": 2, "S": 5, "C": 2 }
+        },
+        {
+          "id": "d8d",
+          "content": {
+            "zh": "提出理性分析和依据",
+            "en": "Present rational analysis and evidence"
+          },
+          "scores": { "D": 2, "I": 1, "S": 1, "C": 5 }
+        }
+      ]
+    },
+    {
+      "id": "d9",
+      "content": { "zh": "我更擅长：", "en": "I am better at:" },
+      "dimension": "D",
+      "options": [
+        {
+          "id": "d9a",
+          "content": {
+            "zh": "解决问题和应对危机",
+            "en": "Solving problems and handling crises"
+          },
+          "scores": { "D": 5, "I": 2, "S": 1, "C": 3 }
+        },
+        {
+          "id": "d9b",
+          "content": {
+            "zh": "影响和激励他人",
+            "en": "Influencing and motivating others"
+          },
+          "scores": { "D": 2, "I": 5, "S": 2, "C": 1 }
+        },
+        {
+          "id": "d9c",
+          "content": {
+            "zh": "维护关系和团队和谐",
+            "en": "Maintaining relationships and team harmony"
+          },
+          "scores": { "D": 1, "I": 2, "S": 5, "C": 2 }
+        },
+        {
+          "id": "d9d",
+          "content": {
+            "zh": "分析数据和发现规律",
+            "en": "Analyzing data and finding patterns"
+          },
+          "scores": { "D": 2, "I": 1, "S": 1, "C": 5 }
+        }
+      ]
+    },
+    {
+      "id": "d10",
+      "content": {
+        "zh": "我的沟通风格通常是：",
+        "en": "My communication style is usually:"
+      },
+      "dimension": "I",
+      "options": [
+        {
+          "id": "d10a",
+          "content": {
+            "zh": "简洁明了，直接切入重点",
+            "en": "Concise, getting straight to the point"
+          },
+          "scores": { "D": 4, "I": 3, "S": 1, "C": 3 }
+        },
+        {
+          "id": "d10b",
+          "content": {
+            "zh": "生动有趣，富有感染力",
+            "en": "Vivid, interesting, and infectious"
+          },
+          "scores": { "D": 1, "I": 5, "S": 2, "C": 1 }
+        },
+        {
+          "id": "d10c",
+          "content": {
+            "zh": "温和耐心，善于倾听",
+            "en": "Gentle, patient, and good at listening"
+          },
+          "scores": { "D": 1, "I": 2, "S": 5, "C": 2 }
+        },
+        {
+          "id": "d10d",
+          "content": {
+            "zh": "逻辑清晰，有理有据",
+            "en": "Clear logic and well-supported"
+          },
+          "scores": { "D": 2, "I": 1, "S": 1, "C": 5 }
+        }
+      ]
+    },
+    {
+      "id": "d11",
+      "content": {
+        "zh": "我希望在工作中获得：",
+        "en": "In my work, I hope to gain:"
+      },
+      "dimension": "S",
+      "options": [
+        {
+          "id": "d11a",
+          "content": {
+            "zh": "成就感和认可",
+            "en": "Achievement and recognition"
+          },
+          "scores": { "D": 4, "I": 3, "S": 2, "C": 2 }
+        },
+        {
+          "id": "d11b",
+          "content": {
+            "zh": "社交机会和友谊",
+            "en": "Social opportunities and friendship"
+          },
+          "scores": { "D": 1, "I": 5, "S": 3, "C": 1 }
+        },
+        {
+          "id": "d11c",
+          "content": {
+            "zh": "稳定性和归属感",
+            "en": "Stability and belonging"
+          },
+          "scores": { "D": 1, "I": 2, "S": 5, "C": 2 }
+        },
+        {
+          "id": "d11d",
+          "content": {
+            "zh": "专业成长和精准性",
+            "en": "Professional growth and precision"
+          },
+          "scores": { "D": 2, "I": 1, "S": 1, "C": 5 }
+        }
+      ]
+    },
+    {
+      "id": "d12",
+      "content": {
+        "zh": "面对规则和流程时，我倾向于：",
+        "en": "Regarding rules and processes, I tend to:"
+      },
+      "dimension": "C",
+      "options": [
+        {
+          "id": "d12a",
+          "content": {
+            "zh": "质疑并改进它们",
+            "en": "Question and improve them"
+          },
+          "scores": { "D": 5, "I": 3, "S": 1, "C": 2 }
+        },
+        {
+          "id": "d12b",
+          "content": {
+            "zh": "灵活变通，不拘泥",
+            "en": "Be flexible and not rigid"
+          },
+          "scores": { "D": 2, "I": 5, "S": 2, "C": 1 }
+        },
+        {
+          "id": "d12c",
+          "content": {
+            "zh": "尊重并遵守它们",
+            "en": "Respect and follow them"
+          },
+          "scores": { "D": 1, "I": 2, "S": 4, "C": 3 }
+        },
+        {
+          "id": "d12d",
+          "content": {
+            "zh": "制定更完善的标准",
+            "en": "Establish more complete standards"
+          },
+          "scores": { "D": 2, "I": 1, "S": 1, "C": 5 }
+        }
+      ]
+    }
+  ]
+}
