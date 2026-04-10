@@ -4,8 +4,9 @@
   "packageManager": "pnpm@10.33.0",
   "type": "module",
   "scripts": {
-    "dev": "echo dev",
-    "build": "echo build",
+    "dev": "pnpm --filter @nbti/web dev",
+    "dev:all": "pnpm --filter @nbti/web dev",
+    "build": "pnpm --filter @nbti/web build",
     "clean": "rimraf --glob packages/*/dist temp .eslintcache",
     "check": "tsc --incremental --noEmit",
     "lint": "eslint --cache .",
@@ -15,6 +16,7 @@
     "test-unit": "vitest --project unit*",
     "test-e2e": "node scripts/build.js zeus -f global -d && vitest --project e2e",
     "test-coverage": "vitest run --project unit* --coverage",
+    "install:all": "pnpm install",
     "preinstall": "npx only-allow pnpm",
     "postinstall": "simple-git-hooks"
   },
@@ -36,7 +38,9 @@
   },
   "devDependencies": {
     "@baicie/scripts": "^0.1.2",
-    "@types/node": "^25.5.2",
+    "@types/node": "^25.6.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
     "@vitest/eslint-plugin": "^1.6.15",
     "eslint": "^10.2.0",
     "eslint-plugin-import-x": "^4.16.2",
@@ -47,6 +51,7 @@
     "simple-git-hooks": "^2.13.1",
     "typescript": "^6.0.2",
     "typescript-eslint": "^8.58.1",
-    "vitest": "^4.1.4"
+    "vitest": "^4.1.4",
+    "zod": "^4.3.6"
   }
 }

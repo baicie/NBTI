@@ -1,0 +1,433 @@
+{
+  "meta": {
+    "totalQuestions": 28,
+    "timeEstimate": 300,
+    "tags": ["personality", "mbti", "psychology"],
+    "description": {
+      "zh": "MBTI 性格测试通过四个维度来分析你的性格特点，帮助你更好地了解自己和他人。",
+      "en": "The MBTI personality test analyzes your personality traits through four dimensions, helping you better understand yourself and others."
+    }
+  },
+  "dimensions": [
+    {
+      "id": "EI",
+      "name": {
+        "zh": "外向 — 内向",
+        "en": "Extraversion — Introversion"
+      },
+      "description": {
+        "zh": "你从哪里获得能量？",
+        "en": "Where do you get your energy?"
+      },
+      "leftLabel": {
+        "zh": "外向",
+        "en": "Extravert"
+      },
+      "rightLabel": {
+        "zh": "内向",
+        "en": "Introvert"
+      }
+    },
+    {
+      "id": "NS",
+      "name": {
+        "zh": "直觉 — 实感",
+        "en": "Intuition — Sensing"
+      },
+      "description": {
+        "zh": "你如何获取信息？",
+        "en": "How do you take in information?"
+      },
+      "leftLabel": {
+        "zh": "直觉",
+        "en": "Intuition"
+      },
+      "rightLabel": {
+        "zh": "实感",
+        "en": "Sensing"
+      }
+    },
+    {
+      "id": "TF",
+      "name": {
+        "zh": "思考 — 情感",
+        "en": "Thinking — Feeling"
+      },
+      "description": {
+        "zh": "你如何做决定？",
+        "en": "How do you make decisions?"
+      },
+      "leftLabel": {
+        "zh": "思考",
+        "en": "Thinking"
+      },
+      "rightLabel": {
+        "zh": "情感",
+        "en": "Feeling"
+      }
+    },
+    {
+      "id": "JP",
+      "name": {
+        "zh": "判断 — 知觉",
+        "en": "Judging — Perceiving"
+      },
+      "description": {
+        "zh": "你如何与外界互动？",
+        "en": "How do you deal with the outside world?"
+      },
+      "leftLabel": {
+        "zh": "判断",
+        "en": "Judging"
+      },
+      "rightLabel": {
+        "zh": "知觉",
+        "en": "Perceiving"
+      }
+    }
+  ],
+  "categories": [
+    {
+      "id": "energy",
+      "name": {
+        "zh": "能量获取",
+        "en": "Energy"
+      },
+      "description": {
+        "zh": "关于你如何获取和消耗能量的题目",
+        "en": "Questions about how you get and spend energy"
+      }
+    },
+    {
+      "id": "information",
+      "name": {
+        "zh": "信息获取",
+        "en": "Information"
+      },
+      "description": {
+        "zh": "关于你如何处理信息的题目",
+        "en": "Questions about how you process information"
+      }
+    },
+    {
+      "id": "decision",
+      "name": {
+        "zh": "决策方式",
+        "en": "Decision Making"
+      },
+      "description": {
+        "zh": "关于你如何做决定的题目",
+        "en": "Questions about how you make decisions"
+      }
+    },
+    {
+      "id": "lifestyle",
+      "name": {
+        "zh": "生活方式",
+        "en": "Lifestyle"
+      },
+      "description": {
+        "zh": "关于你如何与外部世界打交道的题目",
+        "en": "Questions about how you interact with the outer world"
+      }
+    }
+  ],
+  "questions": [
+    {
+      "id": "q001",
+      "dimension": "EI",
+      "category": "energy",
+      "content": {
+        "zh": "在社交聚会中，你通常会：",
+        "en": "At a social gathering, you tend to:"
+      },
+      "options": [
+        {
+          "id": "opt_001a",
+          "content": {
+            "zh": "主动和很多人交流，包括陌生人",
+            "en": "Initiate conversations with many people, including strangers"
+          },
+          "weight": { "E": 3, "I": 0 }
+        },
+        {
+          "id": "opt_001b",
+          "content": {
+            "zh": "和熟悉的朋友聊天",
+            "en": "Chat with friends you know well"
+          },
+          "weight": { "E": 1, "I": 1 }
+        },
+        {
+          "id": "opt_001c",
+          "content": {
+            "zh": "在一旁观察，偶尔参与",
+            "en": "Observe from the side and occasionally participate"
+          },
+          "weight": { "E": 0, "I": 2 }
+        },
+        {
+          "id": "opt_001d",
+          "content": {
+            "zh": "找个安静的角落休息",
+            "en": "Find a quiet corner to rest"
+          },
+          "weight": { "E": 0, "I": 3 }
+        }
+      ]
+    },
+    {
+      "id": "q002",
+      "dimension": "EI",
+      "category": "energy",
+      "content": {
+        "zh": "周末你更喜欢：",
+        "en": "On weekends, you prefer to:"
+      },
+      "options": [
+        {
+          "id": "opt_002a",
+          "content": {
+            "zh": "和朋友一起出去活动",
+            "en": "Go out and do activities with friends"
+          },
+          "weight": { "E": 3, "I": 0 }
+        },
+        {
+          "id": "opt_002b",
+          "content": {
+            "zh": "有时社交，有时独处",
+            "en": "Sometimes socialize, sometimes be alone"
+          },
+          "weight": { "E": 1, "I": 1 }
+        },
+        {
+          "id": "opt_002c",
+          "content": {
+            "zh": "一个人安静地做自己喜欢的事",
+            "en": "Quietly do things you enjoy alone"
+          },
+          "weight": { "E": 0, "I": 2 }
+        },
+        {
+          "id": "opt_002d",
+          "content": {
+            "zh": "在家充电，远离人群",
+            "en": "Recharge at home, away from people"
+          },
+          "weight": { "E": 0, "I": 3 }
+        }
+      ]
+    },
+    {
+      "id": "q003",
+      "dimension": "NS",
+      "category": "information",
+      "content": {
+        "zh": "当你学习新事物时，你更倾向于：",
+        "en": "When learning something new, you prefer to:"
+      },
+      "options": [
+        {
+          "id": "opt_003a",
+          "content": {
+            "zh": "关注具体的事实和实际的例子",
+            "en": "Focus on concrete facts and practical examples"
+          },
+          "weight": { "S": 3, "N": 0 }
+        },
+        {
+          "id": "opt_003b",
+          "content": {
+            "zh": "思考背后的原理和可能性",
+            "en": "Think about underlying principles and possibilities"
+          },
+          "weight": { "S": 0, "N": 3 }
+        },
+        {
+          "id": "opt_003c",
+          "content": {
+            "zh": "既学习事实也探索理论",
+            "en": "Learn both facts and explore theories"
+          },
+          "weight": { "S": 1, "N": 1 }
+        }
+      ]
+    },
+    {
+      "id": "q004",
+      "dimension": "NS",
+      "category": "information",
+      "content": {
+        "zh": "你更关注：",
+        "en": "You tend to focus more on:"
+      },
+      "options": [
+        {
+          "id": "opt_004a",
+          "content": {
+            "zh": "当前存在的、具体的事物",
+            "en": "What is real and concrete right now"
+          },
+          "weight": { "S": 3, "N": 0 }
+        },
+        {
+          "id": "opt_004b",
+          "content": {
+            "zh": "未来可能发生的事",
+            "en": "What might happen in the future"
+          },
+          "weight": { "S": 0, "N": 3 }
+        },
+        {
+          "id": "opt_004c",
+          "content": {
+            "zh": "两者都会考虑",
+            "en": "Consider both"
+          },
+          "weight": { "S": 1, "N": 1 }
+        }
+      ]
+    },
+    {
+      "id": "q005",
+      "dimension": "TF",
+      "category": "decision",
+      "content": {
+        "zh": "在做决定时，你更看重：",
+        "en": "When making decisions, you value more:"
+      },
+      "options": [
+        {
+          "id": "opt_005a",
+          "content": {
+            "zh": "逻辑和客观分析",
+            "en": "Logic and objective analysis"
+          },
+          "weight": { "T": 3, "F": 0 }
+        },
+        {
+          "id": "opt_005b",
+          "content": {
+            "zh": "对人的影响和感受",
+            "en": "Impact on people and their feelings"
+          },
+          "weight": { "T": 0, "F": 3 }
+        },
+        {
+          "id": "opt_005c",
+          "content": {
+            "zh": "两者都会考虑",
+            "en": "Consider both"
+          },
+          "weight": { "T": 1, "F": 1 }
+        }
+      ]
+    },
+    {
+      "id": "q006",
+      "dimension": "TF",
+      "category": "decision",
+      "content": {
+        "zh": "当朋友向你倾诉烦恼时，你更可能：",
+        "en": "When a friend shares their problems, you are more likely to:"
+      },
+      "options": [
+        {
+          "id": "opt_006a",
+          "content": {
+            "zh": "提供解决方案和建议",
+            "en": "Offer solutions and advice"
+          },
+          "weight": { "T": 3, "F": 0 }
+        },
+        {
+          "id": "opt_006b",
+          "content": {
+            "zh": "倾听并给予情感支持",
+            "en": "Listen and offer emotional support"
+          },
+          "weight": { "T": 0, "F": 3 }
+        },
+        {
+          "id": "opt_006c",
+          "content": {
+            "zh": "两者结合",
+            "en": "A combination of both"
+          },
+          "weight": { "T": 1, "F": 1 }
+        }
+      ]
+    },
+    {
+      "id": "q007",
+      "dimension": "JP",
+      "category": "lifestyle",
+      "content": {
+        "zh": "你更喜欢哪种工作方式？",
+        "en": "Which work style do you prefer?"
+      },
+      "options": [
+        {
+          "id": "opt_007a",
+          "content": {
+            "zh": "按计划行事，有条理",
+            "en": "Following a plan and being organized"
+          },
+          "weight": { "J": 3, "P": 0 }
+        },
+        {
+          "id": "opt_007b",
+          "content": {
+            "zh": "灵活应变，随机应变",
+            "en": "Being flexible and adapting as you go"
+          },
+          "weight": { "J": 0, "P": 3 }
+        },
+        {
+          "id": "opt_007c",
+          "content": {
+            "zh": "两者结合",
+            "en": "A mix of both"
+          },
+          "weight": { "J": 1, "P": 1 }
+        }
+      ]
+    },
+    {
+      "id": "q008",
+      "dimension": "JP",
+      "category": "lifestyle",
+      "content": {
+        "zh": "你通常更喜欢：",
+        "en": "You usually prefer:"
+      },
+      "options": [
+        {
+          "id": "opt_008a",
+          "content": {
+            "zh": "提前做好计划",
+            "en": "Having things planned ahead"
+          },
+          "weight": { "J": 3, "P": 0 }
+        },
+        {
+          "id": "opt_008b",
+          "content": {
+            "zh": "即兴发挥",
+            "en": "Being spontaneous"
+          },
+          "weight": { "J": 0, "P": 3 }
+        },
+        {
+          "id": "opt_008c",
+          "content": {
+            "zh": "视情况而定",
+            "en": "It depends on the situation"
+          },
+          "weight": { "J": 1, "P": 1 }
+        }
+      ]
+    }
+  ]
+}

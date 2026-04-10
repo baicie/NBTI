@@ -6,12 +6,6 @@ import { builtinModules } from 'node:module'
 const DOMGlobals = ['window', 'document']
 const NodeGlobals = ['module', 'require']
 
-const banConstEnum = {
-  selector: 'TSEnumDeclaration[const=true]',
-  message:
-    'Please use non-const enums. This project automatically inlines enums.',
-}
-
 export default tseslint.config(
   {
     files: ['**/*.js', '**/*.ts', '**/*.tsx'],
@@ -25,33 +19,6 @@ export default tseslint.config(
       // most of the codebase are expected to be env agnostic
       'no-restricted-globals': ['error', ...DOMGlobals, ...NodeGlobals],
 
-      'no-restricted-syntax': [
-        'error',
-        banConstEnum,
-        {
-          selector: 'ObjectPattern > RestElement',
-          message:
-            'Our output target is ES2016, and object rest spread results in ' +
-            'verbose helpers and should be avoided.',
-        },
-        {
-          selector: 'ObjectExpression > SpreadElement',
-          message:
-            'esbuild transpiles object spread into very verbose inline helpers.\n' +
-            'Please use the `extend` helper from @zeus-js/shared instead.',
-        },
-        {
-          selector: 'AwaitExpression',
-          message:
-            'Our output target is ES2016, so async/await syntax should be avoided.',
-        },
-        {
-          selector: 'ChainExpression',
-          message:
-            'Our output target is ES2016, and optional chaining results in ' +
-            'verbose helpers and should be avoided.',
-        },
-      ],
       'sort-imports': ['error', { ignoreDeclarationSort: true }],
 
       'import-x/no-nodejs-modules': [
@@ -124,7 +91,6 @@ export default tseslint.config(
     ],
     rules: {
       'no-restricted-globals': 'off',
-      'no-restricted-syntax': ['error', banConstEnum],
       'no-console': 'off',
     },
   },

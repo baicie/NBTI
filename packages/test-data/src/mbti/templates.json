@@ -1,0 +1,224 @@
+{
+  "defaultTemplate": "classic",
+  "templates": [
+    {
+      "id": "classic",
+      "name": {
+        "zh": "经典款",
+        "en": "Classic"
+      },
+      "thumbnail": "/templates/classic-thumb.png",
+      "description": {
+        "zh": "经典风格的结果图，适合分享到社交媒体",
+        "en": "Classic style result card, suitable for sharing on social media"
+      },
+      "dimensions": {
+        "width": 1080,
+        "height": 1080
+      },
+      "background": {
+        "type": "gradient",
+        "value": [
+          { "color": "#667eea", "position": 0 },
+          { "color": "#764ba2", "position": 100 }
+        ],
+        "direction": "135deg"
+      },
+      "elements": [
+        {
+          "id": "decorative-circle-1",
+          "type": "shape",
+          "shape": "circle",
+          "position": { "x": -100, "y": -100 },
+          "size": { "width": 300, "height": 300 },
+          "style": {
+            "backgroundColor": "rgba(255,255,255,0.1)",
+            "borderRadius": 9999
+          },
+          "visible": true
+        },
+        {
+          "id": "decorative-circle-2",
+          "type": "shape",
+          "shape": "circle",
+          "position": { "x": 900, "y": 900 },
+          "size": { "width": 400, "height": 400 },
+          "style": {
+            "backgroundColor": "rgba(255,255,255,0.08)",
+            "borderRadius": 9999
+          },
+          "visible": true
+        },
+        {
+          "id": "type-badge",
+          "type": "text",
+          "content": "{type.id}",
+          "position": { "x": "center", "y": "25%" },
+          "style": {
+            "fontSize": 140,
+            "fontWeight": 800,
+            "fontFamily": "Inter",
+            "color": "#FFFFFF",
+            "textShadow": "0 4px 20px rgba(0,0,0,0.3)"
+          },
+          "visible": true
+        },
+        {
+          "id": "type-name",
+          "type": "text",
+          "content": "{type.name}",
+          "position": { "x": "center", "y": "42%" },
+          "style": {
+            "fontSize": 48,
+            "fontWeight": 600,
+            "fontFamily": "Inter",
+            "color": "rgba(255,255,255,0.95)"
+          },
+          "visible": true
+        },
+        {
+          "id": "subtitle",
+          "type": "text",
+          "content": "{type.subtitle}",
+          "position": { "x": "center", "y": "52%" },
+          "style": {
+            "fontSize": 28,
+            "fontWeight": 400,
+            "fontFamily": "Inter",
+            "color": "rgba(255,255,255,0.8)"
+          },
+          "visible": true
+        },
+        {
+          "id": "divider",
+          "type": "divider",
+          "shape": "line",
+          "position": { "x": "center", "y": "58%" },
+          "size": { "width": 200, "height": 2 },
+          "style": {
+            "lineColor": "rgba(255,255,255,0.3)",
+            "lineWidth": 2
+          },
+          "visible": true
+        },
+        {
+          "id": "trait-badges",
+          "type": "trait-badges",
+          "position": { "x": "center", "y": "65%" },
+          "layout": "horizontal",
+          "spacing": 16,
+          "style": {
+            "backgroundColor": "rgba(255,255,255,0.2)",
+            "borderRadius": 20,
+            "fontSize": 24,
+            "color": "#FFFFFF"
+          },
+          "visible": true
+        },
+        {
+          "id": "powered-by",
+          "type": "text",
+          "content": "Powered by NBTI",
+          "position": { "x": "center", "y": "95%" },
+          "style": {
+            "fontSize": 18,
+            "color": "rgba(255,255,255,0.5)"
+          },
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "minimal",
+      "name": {
+        "zh": "简约款",
+        "en": "Minimal"
+      },
+      "thumbnail": "/templates/minimal-thumb.png",
+      "description": {
+        "zh": "简约风格的结果图，适合追求简洁的用户",
+        "en": "Minimal style result card, for users who prefer simplicity"
+      },
+      "dimensions": {
+        "width": 1080,
+        "height": 1920
+      },
+      "background": {
+        "type": "color",
+        "value": "#1A1A2E"
+      },
+      "elements": [
+        {
+          "id": "type-badge",
+          "type": "text",
+          "content": "{type.id}",
+          "position": { "x": "center", "y": "15%" },
+          "style": {
+            "fontSize": 200,
+            "fontWeight": 900,
+            "color": "#FFFFFF"
+          },
+          "visible": true
+        },
+        {
+          "id": "divider",
+          "type": "divider",
+          "shape": "line",
+          "position": { "x": "center", "y": "28%" },
+          "size": { "width": 200, "height": 3 },
+          "style": {
+            "lineColor": "#4ECDC4",
+            "lineWidth": 3
+          },
+          "visible": true
+        },
+        {
+          "id": "type-name",
+          "type": "text",
+          "content": "{type.name}",
+          "position": { "x": "center", "y": "32%" },
+          "style": {
+            "fontSize": 56,
+            "fontWeight": 600,
+            "color": "#FFFFFF"
+          },
+          "visible": true
+        },
+        {
+          "id": "radar-chart",
+          "type": "radar",
+          "position": { "x": "center", "y": "50%" },
+          "size": { "width": 600, "height": 600 },
+          "style": {
+            "fillColor": "rgba(78,205,196,0.3)",
+            "lineColor": "#4ECDC4"
+          },
+          "visible": true
+        },
+        {
+          "id": "subtitle",
+          "type": "text",
+          "content": "{type.subtitle}",
+          "position": { "x": "center", "y": "75%" },
+          "style": {
+            "fontSize": 28,
+            "fontWeight": 400,
+            "color": "rgba(255,255,255,0.7)"
+          },
+          "visible": true
+        },
+        {
+          "id": "powered-by",
+          "type": "text",
+          "content": "Powered by NBTI",
+          "position": { "x": "center", "y": "95%" },
+          "style": {
+            "fontSize": 18,
+            "color": "rgba(255,255,255,0.4)"
+          },
+          "visible": true
+        }
+      ]
+    }
+  ]
+}

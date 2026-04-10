@@ -8,7 +8,7 @@
     "noEmit": true,
     "composite": false,
     "isolatedDeclarations": false,
-    "types": ["vitest/globals", "node"],
+    "types": ["vitest/globals", "node", "react", "react-dom"],
     "paths": {
       "@baicie/*": ["packages/*/src"]
     }

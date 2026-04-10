@@ -1,0 +1,212 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://nbti.app/schemas/themes.schema.json",
+  "title": "NBTI Theme Configuration",
+  "description": "主题样式配置文件",
+  "type": "object",
+  "required": ["themes"],
+  "additionalProperties": true,
+  "properties": {
+    "defaultTheme": {
+      "type": "string",
+      "description": "默认主题 ID"
+    },
+    "themes": {
+      "type": "object",
+      "description": "主题列表",
+      "patternProperties": {
+        "^[a-z0-9-]+$": {
+          "type": "object",
+          "required": ["name", "colors"],
+          "properties": {
+            "name": {
+              "$ref": "manifest.schema.json#/definitions/localizedString",
+              "description": "主题名称"
+            },
+            "extends": {
+              "type": "string",
+              "description": "继承的主题 ID（可选）"
+            },
+            "colors": {
+              "type": "object",
+              "required": ["primary", "background", "foreground"],
+              "properties": {
+                "primary": {
+                  "type": "string",
+                  "pattern": "^#[0-9A-Fa-f]{6}$|^#[0-9A-Fa-f]{8}$"
+                },
+                "primaryForeground": {
+                  "type": "string",
+                  "pattern": "^#[0-9A-Fa-f]{6}$|^#[0-9A-Fa-f]{8}$"
+                },
+                "secondary": {
+                  "type": "string",
+                  "pattern": "^#[0-9A-Fa-f]{6}$|^#[0-9A-Fa-f]{8}$"
+                },
+                "secondaryForeground": {
+                  "type": "string",
+                  "pattern": "^#[0-9A-Fa-f]{6}$|^#[0-9A-Fa-f]{8}$"
+                },
+                "background": {
+                  "type": "string",
+                  "pattern": "^#[0-9A-Fa-f]{6}$|^#[0-9A-Fa-f]{8}$"
+                },
+                "foreground": {
+                  "type": "string",
+                  "pattern": "^#[0-9A-Fa-f]{6}$|^#[0-9A-Fa-f]{8}$"
+                },
+                "muted": {
+                  "type": "string",
+                  "pattern": "^#[0-9A-Fa-f]{6}$|^#[0-9A-Fa-f]{8}$"
+                },
+                "mutedForeground": {
+                  "type": "string",
+                  "pattern": "^#[0-9A-Fa-f]{6}$|^#[0-9A-Fa-f]{8}$"
+                },
+                "accent": {
+                  "type": "string",
+                  "pattern": "^#[0-9A-Fa-f]{6}$|^#[0-9A-Fa-f]{8}$"
+                },
+                "accentForeground": {
+                  "type": "string",
+                  "pattern": "^#[0-9A-Fa-f]{6}$|^#[0-9A-Fa-f]{8}$"
+                },
+                "destructive": {
+                  "type": "string",
+                  "pattern": "^#[0-9A-Fa-f]{6}$|^#[0-9A-Fa-f]{8}$"
+                },
+                "destructiveForeground": {
+                  "type": "string",
+                  "pattern": "^#[0-9A-Fa-f]{6}$|^#[0-9A-Fa-f]{8}$"
+                },
+                "success": {
+                  "type": "string",
+                  "pattern": "^#[0-9A-Fa-f]{6}$|^#[0-9A-Fa-f]{8}$"
+                },
+                "successForeground": {
+                  "type": "string",
+                  "pattern": "^#[0-9A-Fa-f]{6}$|^#[0-9A-Fa-f]{8}$"
+                },
+                "warning": {
+                  "type": "string",
+                  "pattern": "^#[0-9A-Fa-f]{6}$|^#[0-9A-Fa-f]{8}$"
+                },
+                "warningForeground": {
+                  "type": "string",
+                  "pattern": "^#[0-9A-Fa-f]{6}$|^#[0-9A-Fa-f]{8}$"
+                },
+                "border": {
+                  "type": "string",
+                  "pattern": "^#[0-9A-Fa-f]{6}$|^#[0-9A-Fa-f]{8}$"
+                },
+                "input": {
+                  "type": "string",
+                  "pattern": "^#[0-9A-Fa-f]{6}$|^#[0-9A-Fa-f]{8}$"
+                },
+                "ring": {
+                  "type": "string",
+                  "pattern": "^#[0-9A-Fa-f]{6}$|^#[0-9A-Fa-f]{8}$"
+                },
+                "card": {
+                  "type": "string",
+                  "pattern": "^#[0-9A-Fa-f]{6}$|^#[0-9A-Fa-f]{8}$"
+                },
+                "cardForeground": {
+                  "type": "string",
+                  "pattern": "^#[0-9A-Fa-f]{6}$|^#[0-9A-Fa-f]{8}$"
+                },
+                "popover": {
+                  "type": "string",
+                  "pattern": "^#[0-9A-Fa-f]{6}$|^#[0-9A-Fa-f]{8}$"
+                },
+                "popoverForeground": {
+                  "type": "string",
+                  "pattern": "^#[0-9A-Fa-f]{6}$|^#[0-9A-Fa-f]{8}$"
+                }
+              }
+            },
+            "font": {
+              "type": "object",
+              "properties": {
+                "heading": {
+                  "type": "string",
+                  "description": "标题字体"
+                },
+                "body": {
+                  "type": "string",
+                  "description": "正文字体"
+                },
+                "mono": {
+                  "type": "string",
+                  "description": "等宽字体（可选）"
+                },
+                "fallback": {
+                  "type": "array",
+                  "items": { "type": "string" }
+                }
+              }
+            },
+            "borderRadius": {
+              "type": "object",
+              "properties": {
+                "none": { "type": "number", "default": 0 },
+                "sm": { "type": "number", "default": 4 },
+                "md": { "type": "number", "default": 8 },
+                "lg": { "type": "number", "default": 12 },
+                "xl": { "type": "number", "default": 16 },
+                "2xl": { "type": "number", "default": 24 },
+                "3xl": { "type": "number", "default": 32 },
+                "full": { "type": "number", "default": 9999 }
+              }
+            },
+            "shadows": {
+              "type": "object",
+              "properties": {
+                "none": { "type": "string" },
+                "sm": { "type": "string" },
+                "md": { "type": "string" },
+                "lg": { "type": "string" },
+                "xl": { "type": "string" }
+              }
+            },
+            "spacing": {
+              "type": "object",
+              "properties": {
+                "unit": { "type": "number", "default": 4 },
+                "scale": {
+                  "type": "array",
+                  "items": { "type": "number" }
+                }
+              }
+            },
+            "animation": {
+              "type": "object",
+              "properties": {
+                "duration": {
+                  "type": "object",
+                  "properties": {
+                    "fast": { "type": "number", "default": 150 },
+                    "normal": { "type": "number", "default": 300 },
+                    "slow": { "type": "number", "default": 500 }
+                  }
+                },
+                "easing": {
+                  "type": "object",
+                  "properties": {
+                    "default": {
+                      "type": "string",
+                      "default": "cubic-bezier(0.4, 0, 0.2, 1)"
+                    },
+                    "in": { "type": "string" },
+                    "out": { "type": "string" },
+                    "bounce": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

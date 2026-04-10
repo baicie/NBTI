@@ -1,0 +1,137 @@
+import { describe, expect, it } from 'vitest'
+import { ScoringEngine, calculateScores } from '../../src/scoring/engine'
+import type { Answer, ManifestScoring } from '../../src/types'
+
+describe('ScoringEngine', () => {
+  const scoring: ManifestScoring = {
+    type: 'dimension',
+    dimensions: ['EI', 'NS', 'TF', 'JP'],
+    calculateMethod: 'difference',
+    normalizeOutput: true,
+  }
+
+  const questions = [
+    { id: 'q001', dimension: 'EI' },
+    { id: 'q002', dimension: 'EI' },
+    { id: 'q003', dimension: 'NS' },
+    { id: 'q004', dimension: 'NS' },
+    { id: 'q005', dimension: 'TF' },
+    { id: 'q006', dimension: 'TF' },
+    { id: 'q007', dimension: 'JP' },
+    { id: 'q008', dimension: 'JP' },
+  ]
+
+  describe('calculate', () => {
+    it('should calculate scores correctly for dimension type', () => {
+      const answers: Answer[] = [
+        {
+          questionId: 'q001',
+          optionId: 'opt_a',
+          weight: { E: 3, I: 0 },
+          timestamp: Date.now(),
+        },
+        {
+          questionId: 'q002',
+          optionId: 'opt_b',
+          weight: { E: 0, I: 3 },
+          timestamp: Date.now(),
+        },
+        {
+          questionId: 'q003',
+          optionId: 'opt_c',
+          weight: { S: 0, N: 3 },
+          timestamp: Date.now(),
+        },
+        {
+          questionId: 'q004',
+          optionId: 'opt_d',
+          weight: { S: 3, N: 0 },
+          timestamp: Date.now(),
+        },
+        {
+          questionId: 'q005',
+          optionId: 'opt_e',
+          weight: { T: 3, F: 0 },
+          timestamp: Date.now(),
+        },
+        {
+          questionId: 'q006',
+          optionId: 'opt_f',
+          weight: { T: 3, F: 0 },
+          timestamp: Date.now(),
+        },
+        {
+          questionId: 'q007',
+          optionId: 'opt_g',
+          weight: { J: 3, P: 0 },
+          timestamp: Date.now(),
+        },
+        {
+          questionId: 'q008',
+          optionId: 'opt_h',
+          weight: { J: 3, P: 0 },
+          timestamp: Date.now(),
+        },
+      ]
+
+      const engine = new ScoringEngine(scoring, questions)
+      const result = engine.calculate(answers)
+
+      expect(result.typeCode).toBe('ETJ')
+      expect(result.dimensions).toHaveLength(4)
+    })
+
+    it('should handle percentage scoring type', () => {
+      const percentageScoring: ManifestScoring = {
+        type: 'percentage',
+        dimensions: ['EI', 'NS'],
+        normalizeOutput: true,
+      }
+
+      const answers: Answer[] = [
+        {
+          questionId: 'q001',
+          optionId: 'opt_a',
+          weight: { E: 3, I: 0 },
+          timestamp: Date.now(),
+        },
+        {
+          questionId: 'q002',
+          optionId: 'opt_b',
+          weight: { E: 0, I: 3 },
+          timestamp: Date.now(),
+        },
+      ]
+
+      const engine = new ScoringEngine(percentageScoring, questions)
+      const result = engine.calculate(answers)
+
+      expect(result.dimensions).toHaveLength(2)
+    })
+  })
+})
+
+describe('calculateScores', () => {
+  it('should work with shorthand function', () => {
+    const scoring: ManifestScoring = {
+      type: 'dimension',
+      dimensions: ['EI'],
+      calculateMethod: 'difference',
+    }
+
+    const answers: Answer[] = [
+      {
+        questionId: 'q001',
+        optionId: 'opt_a',
+        weight: { E: 3, I: 0 },
+        timestamp: Date.now(),
+      },
+    ]
+
+    const questions = [{ id: 'q001', dimension: 'EI' }]
+    const result = calculateScores(answers, scoring, questions)
+
+    expect(result.typeCode).toBe('E')
+    expect(result.dimensions).toHaveLength(1)
+  })
+})
