@@ -1,0 +1,29 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "ignoreDeprecations": "6.0",
+    "baseUrl": ".",
+    "outDir": "temp",
+    "rootDir": ".",
+    "noEmit": true,
+    "composite": false,
+    "isolatedDeclarations": false,
+    "types": ["vitest/globals", "node"],
+    "paths": {
+      "@baicie/*": ["packages/*/src"]
+    }
+  },
+  "include": [
+    "packages/*/src",
+    "packages/*/__tests__",
+    "scripts/**/*",
+    "playground/**/*"
+  ],
+  "exclude": [
+    "**/dist",
+    "**/temp",
+    "**/node_modules",
+    "**/tsconfig.tsbuildinfo",
+    "playground/vue"
+  ]
+}

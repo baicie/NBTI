@@ -1,0 +1,20 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "types": ["node"],
+    "declaration": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": true,
+    "stripInternal": true,
+    "composite": false,
+    "noEmit": false
+  },
+  "include": ["packages/*/src"],
+  "exclude": [
+    "**/__tests__",
+    "**/dist",
+    "**/playground",
+    "**/node_modules",
+    "packages/napi"
+  ]
+}

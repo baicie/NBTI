@@ -1,0 +1,52 @@
+{
+  "name": "root",
+  "private": true,
+  "packageManager": "pnpm@10.33.0",
+  "type": "module",
+  "scripts": {
+    "dev": "echo dev",
+    "build": "echo build",
+    "clean": "rimraf --glob packages/*/dist temp .eslintcache",
+    "check": "tsc --incremental --noEmit",
+    "lint": "eslint --cache .",
+    "format": "prettier --write --cache .",
+    "format-check": "prettier --check --cache .",
+    "test": "vitest",
+    "test-unit": "vitest --project unit*",
+    "test-e2e": "node scripts/build.js zeus -f global -d && vitest --project e2e",
+    "test-coverage": "vitest run --project unit* --coverage",
+    "preinstall": "npx only-allow pnpm",
+    "postinstall": "simple-git-hooks"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm lint-staged && pnpm check",
+    "commit-msg": "node -e \"import('@baicie/scripts').then(m => m.verifyCommit())\""
+  },
+  "lint-staged": {
+    "*.{js,json}": [
+      "prettier --write"
+    ],
+    "*.ts?(x)": [
+      "eslint --fix",
+      "prettier --parser=typescript --write"
+    ]
+  },
+  "engines": {
+    "node": ">=18.12.0"
+  },
+  "devDependencies": {
+    "@baicie/scripts": "^0.1.2",
+    "@types/node": "^25.5.2",
+    "@vitest/eslint-plugin": "^1.6.15",
+    "eslint": "^10.2.0",
+    "eslint-plugin-import-x": "^4.16.2",
+    "jsdom": "^29.0.2",
+    "lint-staged": "^16.4.0",
+    "picocolors": "^1.1.1",
+    "prettier": "^3.8.1",
+    "simple-git-hooks": "^2.13.1",
+    "typescript": "^6.0.2",
+    "typescript-eslint": "^8.58.1",
+    "vitest": "^4.1.4"
+  }
+}
