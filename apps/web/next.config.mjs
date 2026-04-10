@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'standalone',
   transpilePackages: ['@nbti/core', '@nbti/shared'],
 
   // 路由重定向配置

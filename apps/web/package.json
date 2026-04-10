@@ -8,7 +8,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "check": "tsc --incremental --noEmit"
+    "check": "tsc --incremental --noEmit",
+    "docker:build": "docker build -t nbti-web:latest -f Dockerfile ..",
+    "docker:run": "docker run -d -p 3000:3000 --name nbti-web nbti-web:latest"
   },
   "dependencies": {
     "@nbti/core": "workspace:*",
