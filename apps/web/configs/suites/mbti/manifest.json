@@ -1,0 +1,30 @@
+{
+  "id": "mbti",
+  "name": { "zh": "MBTI 性格测试", "en": "MBTI Personality" },
+  "version": "1.0.0",
+  "description": {
+    "zh": "MBTI（迈尔斯-布里格斯类型指标）是一种自我报告式的人格类型问卷",
+    "en": "The Myers-Briggs Type Indicator is a self-report inventory"
+  },
+  "thumbnail": "/thumbnails/mbti.png",
+  "dimensions": ["EI", "NS", "TF", "JP"],
+  "config": {
+    "questions": "questions.json",
+    "types": "types.json",
+    "themes": "theme.json"
+  },
+  "settings": {
+    "allowBack": true,
+    "showTimer": false,
+    "shuffleQuestions": false,
+    "shuffleOptions": false,
+    "requiredAnswer": true,
+    "maxDuration": null
+  },
+  "scoring": {
+    "type": "dimension",
+    "dimensions": ["EI", "NS", "TF", "JP"],
+    "calculateMethod": "difference",
+    "normalizeOutput": true
+  }
+}

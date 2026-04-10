@@ -1,0 +1,486 @@
+{
+  "types": [
+    {
+      "id": "INTJ",
+      "name": { "zh": "建筑师", "en": "Architect" },
+      "subtitle": {
+        "zh": "富有想象力和战略性的思想家",
+        "en": "Imaginative and strategic thinkers"
+      },
+      "description": {
+        "zh": "INTJ 是十六种 MBTI 人格类型中最罕见的类型之一。他们以其深刻的分析能力、独立的思维和追求完美的特质而闻名。",
+        "en": "INTJ is one of the rarest MBTI types, known for deep analytical abilities, independent thinking, and pursuit of perfection."
+      },
+      "traits": [
+        {
+          "id": "strategic",
+          "name": { "zh": "战略思维", "en": "Strategic" },
+          "level": 95
+        },
+        {
+          "id": "independent",
+          "name": { "zh": "独立自主", "en": "Independent" },
+          "level": 90
+        },
+        {
+          "id": "analytical",
+          "name": { "zh": "善于分析", "en": "Analytical" },
+          "level": 88
+        }
+      ]
+    },
+    {
+      "id": "INTP",
+      "name": { "zh": "逻辑学家", "en": "Logician" },
+      "subtitle": {
+        "zh": "富有创造力的发明家",
+        "en": "Creative inventors"
+      },
+      "description": {
+        "zh": "INTP 是富有创造力的思想家，对知识和理解充满渴望。他们擅长逻辑分析，喜欢独立工作。",
+        "en": "INTPs are creative thinkers who crave knowledge and understanding. They excel at logical analysis and enjoy working independently."
+      },
+      "traits": [
+        {
+          "id": "curious",
+          "name": { "zh": "好奇心", "en": "Curious" },
+          "level": 95
+        },
+        {
+          "id": "logical",
+          "name": { "zh": "逻辑性强", "en": "Logical" },
+          "level": 92
+        },
+        {
+          "id": "objective",
+          "name": { "zh": "客观理性", "en": "Objective" },
+          "level": 88
+        }
+      ]
+    },
+    {
+      "id": "ENTJ",
+      "name": { "zh": "指挥官", "en": "Commander" },
+      "subtitle": {
+        "zh": "大胆、富有想象力的领导者",
+        "en": "Bold, imaginative leaders"
+      },
+      "description": {
+        "zh": "ENTJ 是天生的领导者，他们充满能量、果断、意志坚强。他们擅长战略规划，喜欢挑战。",
+        "en": "ENTJs are natural leaders with boundless energy, decisiveness, and strong will. They excel at strategic planning and love challenges."
+      },
+      "traits": [
+        {
+          "id": "confident",
+          "name": { "zh": "自信果断", "en": "Confident" },
+          "level": 95
+        },
+        {
+          "id": "leader",
+          "name": { "zh": "领导能力", "en": "Leadership" },
+          "level": 93
+        },
+        {
+          "id": "strategic",
+          "name": { "zh": "战略眼光", "en": "Strategic" },
+          "level": 90
+        }
+      ]
+    },
+    {
+      "id": "ENTP",
+      "name": { "zh": "辩论家", "en": "Debater" },
+      "subtitle": {
+        "zh": "聪明好奇的思想家",
+        "en": "Smart and curious thinkers"
+      },
+      "description": {
+        "zh": "ENTP 是富有创意的思想家，喜欢智识辩论。他们善于发现问题，提出创新解决方案。",
+        "en": "ENTPs are creative thinkers who love intellectual debate. They are skilled at identifying problems and proposing innovative solutions."
+      },
+      "traits": [
+        {
+          "id": "creative",
+          "name": { "zh": "创造力", "en": "Creative" },
+          "level": 95
+        },
+        {
+          "id": "curious",
+          "name": { "zh": "好奇心", "en": "Curious" },
+          "level": 92
+        },
+        {
+          "id": "quick-witted",
+          "name": { "zh": "机智敏捷", "en": "Quick-witted" },
+          "level": 88
+        }
+      ]
+    },
+    {
+      "id": "INFJ",
+      "name": { "zh": "提倡者", "en": "Advocate" },
+      "subtitle": {
+        "zh": "安静而神秘，富有启发性",
+        "en": "Quiet and mysterious, yet inspiring"
+      },
+      "description": {
+        "zh": "INFJ 是理想主义者，敏感且富有同理心。他们追求有意义的人际关系，致力于帮助他人。",
+        "en": "INFJs are idealists who are sensitive and empathetic. They seek meaningful relationships and are dedicated to helping others."
+      },
+      "traits": [
+        {
+          "id": "empathetic",
+          "name": { "zh": "同理心", "en": "Empathetic" },
+          "level": 95
+        },
+        {
+          "id": "idealistic",
+          "name": { "zh": "理想主义", "en": "Idealistic" },
+          "level": 90
+        },
+        {
+          "id": "creative",
+          "name": { "zh": "创意", "en": "Creative" },
+          "level": 88
+        }
+      ]
+    },
+    {
+      "id": "INFP",
+      "name": { "zh": "调停者", "en": "Mediator" },
+      "subtitle": {
+        "zh": "诗意、善良的利他主义者",
+        "en": "Poetic, kind, and altruistic"
+      },
+      "description": {
+        "zh": "INFP 是理想主义者，善良且有艺术气质。他们重视个人价值，追求真实和意义。",
+        "en": "INFPs are idealists who are kind and artistic. They value personal authenticity and seek meaning in life."
+      },
+      "traits": [
+        {
+          "id": "idealistic",
+          "name": { "zh": "理想主义", "en": "Idealistic" },
+          "level": 95
+        },
+        {
+          "id": "empathetic",
+          "name": { "zh": "同理心", "en": "Empathetic" },
+          "level": 92
+        },
+        {
+          "id": "creative",
+          "name": { "zh": "创造力", "en": "Creative" },
+          "level": 90
+        }
+      ]
+    },
+    {
+      "id": "ENFJ",
+      "name": { "zh": "主人公", "en": "Protagonist" },
+      "subtitle": {
+        "zh": "富有魅力和鼓舞人心的领导者",
+        "en": "Charismatic and inspiring leaders"
+      },
+      "description": {
+        "zh": "ENFJ 是天生的领导者，充满热情和魅力。他们善于激励他人，推动积极变革。",
+        "en": "ENFJs are natural leaders full of enthusiasm and charisma. They inspire others and drive positive change."
+      },
+      "traits": [
+        {
+          "id": "charismatic",
+          "name": { "zh": "魅力型", "en": "Charismatic" },
+          "level": 95
+        },
+        {
+          "id": "empathetic",
+          "name": { "zh": "同理心", "en": "Empathetic" },
+          "level": 92
+        },
+        {
+          "id": "leadership",
+          "name": { "zh": "领导力", "en": "Leadership" },
+          "level": 90
+        }
+      ]
+    },
+    {
+      "id": "ENFP",
+      "name": { "zh": "竞选者", "en": "Campaigner" },
+      "subtitle": {
+        "zh": "热情洋溢、富有想象力的社交者",
+        "en": "Enthusiastic, creative, and social"
+      },
+      "description": {
+        "zh": "ENFP 是充满热情和创造力的社交者。他们乐观开朗，善于与他人建立联系。",
+        "en": "ENFPs are enthusiastic and creative socializers. They are optimistic and excel at connecting with others."
+      },
+      "traits": [
+        {
+          "id": "enthusiastic",
+          "name": { "zh": "热情洋溢", "en": "Enthusiastic" },
+          "level": 95
+        },
+        {
+          "id": "creative",
+          "name": { "zh": "创造力", "en": "Creative" },
+          "level": 92
+        },
+        {
+          "id": "social",
+          "name": { "zh": "社交能力", "en": "Social" },
+          "level": 90
+        }
+      ]
+    },
+    {
+      "id": "ISTJ",
+      "name": { "zh": "物流师", "en": "Logistician" },
+      "subtitle": {
+        "zh": "务实且注重事实",
+        "en": "Practical and fact-based"
+      },
+      "description": {
+        "zh": "ISTJ 是可靠务实的人，负责任且有条理。他们重视传统和承诺，讲究实际。",
+        "en": "ISTJs are reliable and practical people who are responsible and organized. They value tradition and commitment."
+      },
+      "traits": [
+        {
+          "id": "responsible",
+          "name": { "zh": "责任感", "en": "Responsible" },
+          "level": 95
+        },
+        {
+          "id": "reliable",
+          "name": { "zh": "可靠", "en": "Reliable" },
+          "level": 92
+        },
+        {
+          "id": "practical",
+          "name": { "zh": "务实", "en": "Practical" },
+          "level": 90
+        }
+      ]
+    },
+    {
+      "id": "ISFJ",
+      "name": { "zh": "守护者", "en": "Defender" },
+      "subtitle": {
+        "zh": "温暖且保护性的守护者",
+        "en": "Warm and protective guardians"
+      },
+      "description": {
+        "zh": "ISFJ 是忠诚体贴的守护者，默默关心他人。他们勤奋可靠，重视和谐关系。",
+        "en": "ISFJs are loyal and caring defenders who quietly care for others. They are hardworking and reliable, valuing harmonious relationships."
+      },
+      "traits": [
+        { "id": "loyal", "name": { "zh": "忠诚", "en": "Loyal" }, "level": 95 },
+        {
+          "id": "caring",
+          "name": { "zh": "关心他人", "en": "Caring" },
+          "level": 92
+        },
+        {
+          "id": "practical",
+          "name": { "zh": "务实", "en": "Practical" },
+          "level": 88
+        }
+      ]
+    },
+    {
+      "id": "ESTJ",
+      "name": { "zh": "总经理", "en": "Executive" },
+      "subtitle": {
+        "zh": "卓越的执行者，组织者",
+        "en": "Excellent executors and organizers"
+      },
+      "description": {
+        "zh": "ESTJ 是优秀的组织者和领导者，讲究效率和传统。他们诚实直接，善于管理。",
+        "en": "ESTJs are excellent organizers and leaders who value efficiency and tradition. They are honest, direct, and good at management."
+      },
+      "traits": [
+        {
+          "id": "organized",
+          "name": { "zh": "有条理", "en": "Organized" },
+          "level": 95
+        },
+        {
+          "id": "responsible",
+          "name": { "zh": "责任感", "en": "Responsible" },
+          "level": 92
+        },
+        {
+          "id": "leadership",
+          "name": { "zh": "领导力", "en": "Leadership" },
+          "level": 90
+        }
+      ]
+    },
+    {
+      "id": "ESFJ",
+      "name": { "zh": "执政官", "en": "Consul" },
+      "subtitle": {
+        "zh": "富有爱心、热心的社交者",
+        "en": "Caring and enthusiastic socializers"
+      },
+      "description": {
+        "zh": "ESFJ 是热情友好的照顾者，重视社交和谐。他们乐于助人，善于组织活动。",
+        "en": "ESFJs are warm and friendly caregivers who value social harmony. They are helpful and excel at organizing activities."
+      },
+      "traits": [
+        {
+          "id": "caring",
+          "name": { "zh": "关心他人", "en": "Caring" },
+          "level": 95
+        },
+        {
+          "id": "social",
+          "name": { "zh": "社交能力", "en": "Social" },
+          "level": 92
+        },
+        {
+          "id": "cooperative",
+          "name": { "zh": "合作性", "en": "Cooperative" },
+          "level": 90
+        }
+      ]
+    },
+    {
+      "id": "ISTP",
+      "name": { "zh": "鉴赏家", "en": "Virtuoso" },
+      "subtitle": {
+        "zh": "大胆而实用的实验者",
+        "en": "Bold and practical experimenters"
+      },
+      "description": {
+        "zh": "ISTP 是灵活理性的分析者，喜欢动手操作。他们善于发现问题根源，擅长实际解决。",
+        "en": "ISTPs are flexible and rational analyzers who love hands-on work. They excel at identifying root causes and practical solutions."
+      },
+      "traits": [
+        {
+          "id": "practical",
+          "name": { "zh": "务实", "en": "Practical" },
+          "level": 95
+        },
+        {
+          "id": "analytical",
+          "name": { "zh": "分析能力", "en": "Analytical" },
+          "level": 92
+        },
+        {
+          "id": "adaptable",
+          "name": { "zh": "适应性强", "en": "Adaptable" },
+          "level": 88
+        }
+      ]
+    },
+    {
+      "id": "ISFP",
+      "name": { "zh": "探险家", "en": "Adventurer" },
+      "subtitle": {
+        "zh": "灵活、有魅力的艺术家",
+        "en": "Flexible and charming artists"
+      },
+      "description": {
+        "zh": "ISFP 是富有艺术气质的探险者，敏感且有审美眼光。他们活在当下，享受当下的美好。",
+        "en": "ISFPs are artistic adventurers who are sensitive and aesthetically minded. They live in the moment and enjoy the beauty around them."
+      },
+      "traits": [
+        {
+          "id": "artistic",
+          "name": { "zh": "艺术气质", "en": "Artistic" },
+          "level": 95
+        },
+        {
+          "id": "adaptable",
+          "name": { "zh": "适应性强", "en": "Adaptable" },
+          "level": 92
+        },
+        {
+          "id": "sensitive",
+          "name": { "zh": "敏感细腻", "en": "Sensitive" },
+          "level": 88
+        }
+      ]
+    },
+    {
+      "id": "ESTP",
+      "name": { "zh": "企业家", "en": "Entrepreneur" },
+      "subtitle": {
+        "zh": "聪明、精力充沛的观察者",
+        "en": "Smart, energetic perceptors"
+      },
+      "description": {
+        "zh": "ESTP 是充满活力的冒险家，喜欢即时行动。他们善于社交，擅长解决紧急问题。",
+        "en": "ESTPs are energetic adventurers who love taking immediate action. They are great at socializing and solving urgent problems."
+      },
+      "traits": [
+        {
+          "id": "energetic",
+          "name": { "zh": "精力充沛", "en": "Energetic" },
+          "level": 95
+        },
+        {
+          "id": "practical",
+          "name": { "zh": "务实", "en": "Practical" },
+          "level": 92
+        },
+        {
+          "id": "social",
+          "name": { "zh": "社交能力", "en": "Social" },
+          "level": 90
+        }
+      ]
+    },
+    {
+      "id": "ESFP",
+      "name": { "zh": "表演者", "en": "Entertainer" },
+      "subtitle": {
+        "zh": "自发性、魅力十足的表演者",
+        "en": "Spontaneous and enthusiastic performers"
+      },
+      "description": {
+        "zh": "ESFP 是充满魅力的表演者，喜欢成为焦点。他们热情友好，享受生活的乐趣。",
+        "en": "ESFPs are charismatic performers who love being the center of attention. They are warm, friendly, and enjoy life's pleasures."
+      },
+      "traits": [
+        {
+          "id": "charismatic",
+          "name": { "zh": "魅力型", "en": "Charismatic" },
+          "level": 95
+        },
+        {
+          "id": "spontaneous",
+          "name": { "zh": "自发性", "en": "Spontaneous" },
+          "level": 92
+        },
+        {
+          "id": "social",
+          "name": { "zh": "社交能力", "en": "Social" },
+          "level": 90
+        }
+      ]
+    }
+  ],
+  "dimensions": [
+    {
+      "id": "EI",
+      "left": { "letter": "E", "name": { "zh": "外向", "en": "Extraversion" } },
+      "right": { "letter": "I", "name": { "zh": "内向", "en": "Introversion" } }
+    },
+    {
+      "id": "NS",
+      "left": { "letter": "N", "name": { "zh": "直觉", "en": "Intuition" } },
+      "right": { "letter": "S", "name": { "zh": "感觉", "en": "Sensing" } }
+    },
+    {
+      "id": "TF",
+      "left": { "letter": "T", "name": { "zh": "思考", "en": "Thinking" } },
+      "right": { "letter": "F", "name": { "zh": "情感", "en": "Feeling" } }
+    },
+    {
+      "id": "JP",
+      "left": { "letter": "J", "name": { "zh": "判断", "en": "Judging" } },
+      "right": { "letter": "P", "name": { "zh": "知觉", "en": "Perceiving" } }
+    }
+  ]
+}

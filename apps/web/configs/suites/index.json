@@ -1,0 +1,16 @@
+{
+  "suites": [
+    {
+      "id": "mbti",
+      "name": { "zh": "MBTI 性格测试", "en": "MBTI Personality" },
+      "description": {
+        "zh": "国际通用的性格评估工具，帮助你了解自己的性格特点",
+        "en": "A comprehensive personality assessment tool"
+      },
+      "thumbnail": "/thumbnails/mbti.png",
+      "enabled": true,
+      "order": 1
+    }
+  ],
+  "updatedAt": "2026-04-10"
+}

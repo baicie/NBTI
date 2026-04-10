@@ -80,11 +80,32 @@
 /* 基础样式 */
 * {
   border-color: var(--color-border);
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
   background-color: var(--color-background);
   color: var(--color-foreground);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overscroll-behavior: none;
+}
+
+/* 触摸目标最小尺寸 */
+@media (pointer: coarse) {
+  button,
+  a,
+  [role='button'] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* 移动端滚动优化 */
+@media (max-width: 768px) {
+  body {
+    overflow-x: hidden;
+  }
 }
 
 /* Utility classes for compatibility */

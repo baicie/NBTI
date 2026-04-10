@@ -1,0 +1,55 @@
+{
+  "id": "mbti",
+  "name": { "zh": "MBTI 主题", "en": "MBTI Theme" },
+
+  "colors": {
+    "primary": "#6366f1",
+    "primaryForeground": "#ffffff",
+    "secondary": "#8b5cf6",
+    "secondaryForeground": "#ffffff",
+    "background": "#ffffff",
+    "foreground": "#1e293b",
+    "muted": "#f1f5f9",
+    "mutedForeground": "#64748b",
+    "accent": "#f1f5f9",
+    "accentForeground": "#1e293b",
+    "destructive": "#ef4444",
+    "destructiveForeground": "#ffffff",
+    "border": "#e2e8f0",
+    "input": "#e2e8f0",
+    "ring": "#6366f1",
+    "card": "#ffffff",
+    "cardForeground": "#1e293b",
+    "popover": "#ffffff",
+    "popoverForeground": "#1e293b"
+  },
+
+  "gradient": {
+    "enabled": true,
+    "from": "#6366f1",
+    "via": "#8b5cf6",
+    "to": "#a855f7"
+  },
+
+  "style": {
+    "borderRadius": {
+      "none": 0,
+      "sm": 0.25,
+      "md": 0.5,
+      "lg": 0.75,
+      "xl": 1,
+      "2xl": 1.5,
+      "full": 9999
+    },
+    "font": {
+      "heading": "Inter, system-ui, sans-serif",
+      "body": "Inter, system-ui, sans-serif"
+    }
+  },
+
+  "result": {
+    "dimensionChart": "bar",
+    "showTraits": true,
+    "shareCardStyle": "gradient"
+  }
+}

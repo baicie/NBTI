@@ -5,6 +5,7 @@
     "lib": ["ES2016", "DOM", "DOM.Iterable"],
     "jsx": "preserve",
     "baseUrl": ".",
+    "resolveJsonModule": true,
     "paths": {
       "@/*": ["./*"],
       "@nbti/core": ["../../packages/core/src"],
