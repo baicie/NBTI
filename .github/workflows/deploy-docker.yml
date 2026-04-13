@@ -81,26 +81,16 @@ jobs:
           timeout: 15m
           script: |
             set -e
-            
-            # Configure Docker mirror if main registry fails
+
             configure_mirror() {
               echo "Configuring Docker mirror..."
               sudo mkdir -p /etc/docker
-              sudo tee /etc/docker/daemon.json > /dev/null <<EOF
-            {
-              "registry-mirrors": [
-                "https://docker.cnnb.xyz",
-                "https://dockerproxy.cn",
-                "https://registry.docker-cn.com"
-              ]
-            }
-EOF
-              sudo systemctl daemon-reload
-              sudo systemctl restart docker
+              printf '%s\n' '{"registry-mirrors":["https://docker.cnnb.xyz","https://dockerproxy.cn","https://registry.docker-cn.com"]}' | sudo tee /etc/docker/daemon.json
+              sudo systemctl daemon-reload 2>/dev/null || true
+              sudo systemctl restart docker 2>/dev/null || true
               echo "Mirror configured"
             }
-            
-            # Retry docker pull up to 5 times with longer intervals
+
             for i in 1 2 3 4 5; do
               echo "Attempt $i: Pulling image..."
               if docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }} && \
@@ -110,13 +100,11 @@ EOF
               fi
               echo "Pull failed, retrying in $((i * 20)) seconds..."
               sleep $((i * 20))
-              
-              # Configure mirror on second failure
               if [ $i -eq 2 ]; then
                 configure_mirror
               fi
             done
-            
+
             docker stop nbti-web-staging 2>/dev/null || true
             docker rm nbti-web-staging 2>/dev/null || true
             docker run -d \
@@ -143,26 +131,16 @@ EOF
           timeout: 15m
           script: |
             set -e
-            
-            # Configure Docker mirror if main registry fails
+
             configure_mirror() {
               echo "Configuring Docker mirror..."
               sudo mkdir -p /etc/docker
-              sudo tee /etc/docker/daemon.json > /dev/null <<EOF
-            {
-              "registry-mirrors": [
-                "https://docker.cnnb.xyz",
-                "https://dockerproxy.cn",
-                "https://registry.docker-cn.com"
-              ]
-            }
-EOF
-              sudo systemctl daemon-reload
-              sudo systemctl restart docker
+              printf '%s\n' '{"registry-mirrors":["https://docker.cnnb.xyz","https://dockerproxy.cn","https://registry.docker-cn.com"]}' | sudo tee /etc/docker/daemon.json
+              sudo systemctl daemon-reload 2>/dev/null || true
+              sudo systemctl restart docker 2>/dev/null || true
               echo "Mirror configured"
             }
-            
-            # Retry docker pull up to 5 times with longer intervals
+
             for i in 1 2 3 4 5; do
               echo "Attempt $i: Pulling image..."
               if docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }} && \
@@ -172,13 +150,11 @@ EOF
               fi
               echo "Pull failed, retrying in $((i * 20)) seconds..."
               sleep $((i * 20))
-              
-              # Configure mirror on second failure
               if [ $i -eq 2 ]; then
                 configure_mirror
               fi
             done
-            
+
             docker stop nbti-web 2>/dev/null || true
             docker rm nbti-web 2>/dev/null || true
             docker run -d \

@@ -1864,10 +1864,27 @@ export const analyticsService = new AnalyticsService()
 
 ```yaml
 # vercel.json
-{ 'regions': [
-      'hkg1',
-      'sin1',
-    ], 'env': { 'DATABASE_URL': '@database-url', 'REDIS_URL': '@redis-url', 'JWT_SECRET': '@jwt-secret' }, 'headers': [{ 'source': '/api/(.*)', 'headers': [{ 'key': 'Cache-Control', 'value': 'no-cache' }] }, { 'source': '/api/v1/configs/(.*)', 'headers': [{ 'key': 'Cache-Control', 'value': 'public, max-age=3600' }] }] } # 亚太地区
+{
+  'regions': ['hkg1', 'sin1'],
+  'env':
+    {
+      'DATABASE_URL': '@database-url',
+      'REDIS_URL': '@redis-url',
+      'JWT_SECRET': '@jwt-secret',
+    },
+  'headers':
+    [
+      {
+        'source': '/api/(.*)',
+        'headers': [{ 'key': 'Cache-Control', 'value': 'no-cache' }],
+      },
+      {
+        'source': '/api/v1/configs/(.*)',
+        'headers':
+          [{ 'key': 'Cache-Control', 'value': 'public, max-age=3600' }],
+      },
+    ],
+} # 亚太地区
 ```
 
 ```bash
