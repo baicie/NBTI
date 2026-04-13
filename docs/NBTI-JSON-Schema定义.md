@@ -176,9 +176,7 @@ schemas/
         "type": "string",
         "minLength": 1
       },
-      "examples": [
-        { "zh": "性格测试", "en": "Personality Test" }
-      ]
+      "examples": [{ "zh": "性格测试", "en": "Personality Test" }]
     }
   }
 }
@@ -543,7 +541,10 @@ schemas/
               "type": "string",
               "pattern": "^[A-Z]{2,6}$"
             },
-            "examples": [["ENFP", "ENTP"], ["INFJ", "INFP"]]
+            "examples": [
+              ["ENFP", "ENTP"],
+              ["INFJ", "INFP"]
+            ]
           },
           "incompatibleTypes": {
             "type": "array",
@@ -798,7 +799,10 @@ schemas/
                 "content": {
                   "oneOf": [
                     { "type": "string" },
-                    { "type": "object", "$ref": "manifest.schema.json#/definitions/localizedString" }
+                    {
+                      "type": "object",
+                      "$ref": "manifest.schema.json#/definitions/localizedString"
+                    }
                   ],
                   "description": "文本内容，支持模板变量插值"
                 },
@@ -809,7 +813,13 @@ schemas/
                 },
                 "shape": {
                   "type": "string",
-                  "enum": ["circle", "rectangle", "line", "triangle", "polygon"],
+                  "enum": [
+                    "circle",
+                    "rectangle",
+                    "line",
+                    "triangle",
+                    "polygon"
+                  ],
                   "description": "形状类型（type=shape 时）"
                 },
                 "layout": {
@@ -835,7 +845,10 @@ schemas/
                     "fontWeight": {
                       "oneOf": [
                         { "type": "number" },
-                        { "type": "string", "enum": ["normal", "bold", "lighter", "bolder"] }
+                        {
+                          "type": "string",
+                          "enum": ["normal", "bold", "lighter", "bolder"]
+                        }
                       ],
                       "default": 400
                     },
@@ -863,10 +876,7 @@ schemas/
                       "type": "string"
                     },
                     "borderRadius": {
-                      "oneOf": [
-                        { "type": "number" },
-                        { "type": "string" }
-                      ]
+                      "oneOf": [{ "type": "number" }, { "type": "string" }]
                     },
                     "border": {
                       "type": "string",
@@ -874,16 +884,10 @@ schemas/
                       "examples": ["1px solid #fff", "2px dashed #000"]
                     },
                     "padding": {
-                      "oneOf": [
-                        { "type": "number" },
-                        { "type": "object" }
-                      ]
+                      "oneOf": [{ "type": "number" }, { "type": "object" }]
                     },
                     "margin": {
-                      "oneOf": [
-                        { "type": "number" },
-                        { "type": "object" }
-                      ]
+                      "oneOf": [{ "type": "number" }, { "type": "object" }]
                     },
                     "opacity": {
                       "type": "number",
@@ -897,10 +901,7 @@ schemas/
                       "type": "string"
                     },
                     "lineHeight": {
-                      "oneOf": [
-                        { "type": "number" },
-                        { "type": "string" }
-                      ]
+                      "oneOf": [{ "type": "number" }, { "type": "string" }]
                     },
                     "letterSpacing": {
                       "type": "number"
@@ -1173,7 +1174,10 @@ schemas/
                 "easing": {
                   "type": "object",
                   "properties": {
-                    "default": { "type": "string", "default": "cubic-bezier(0.4, 0, 0.2, 1)" },
+                    "default": {
+                      "type": "string",
+                      "default": "cubic-bezier(0.4, 0, 0.2, 1)"
+                    },
                     "in": { "type": "string" },
                     "out": { "type": "string" },
                     "bounce": { "type": "string" }
@@ -1201,10 +1205,7 @@ schemas/
   "description": "国际化翻译文件",
   "type": "object",
   "additionalProperties": {
-    "oneOf": [
-      { "type": "string" },
-      { "type": "object" }
-    ]
+    "oneOf": [{ "type": "string" }, { "type": "object" }]
   },
   "definitions": {
     "translationNode": {
@@ -1347,56 +1348,56 @@ npm install zod ajv
 ### 代码示例
 
 ```typescript
-import { z } from 'zod';
-import Ajv from 'ajv';
-import addFormats from 'ajv-formats';
+import { z } from 'zod'
+import Ajv from 'ajv'
+import addFormats from 'ajv-formats'
 
 // 加载 Schema
-import manifestSchema from './schemas/manifest.schema.json';
-import questionsSchema from './schemas/questions.schema.json';
-import typesSchema from './schemas/types.schema.json';
-import templatesSchema from './schemas/templates.schema.json';
-import themesSchema from './schemas/themes.schema.json';
+import manifestSchema from './schemas/manifest.schema.json'
+import questionsSchema from './schemas/questions.schema.json'
+import typesSchema from './schemas/types.schema.json'
+import templatesSchema from './schemas/templates.schema.json'
+import themesSchema from './schemas/themes.schema.json'
 
 // 创建 Ajv 实例
-const ajv = new Ajv({ allErrors: true });
-addFormats(ajv);
+const ajv = new Ajv({ allErrors: true })
+addFormats(ajv)
 
 // 编译验证函数
-const validateManifest = ajv.compile(manifestSchema);
-const validateQuestions = ajv.compile(questionsSchema);
-const validateTypes = ajv.compile(typesSchema);
-const validateTemplates = ajv.compile(templatesSchema);
-const validateThemes = ajv.compile(themesSchema);
+const validateManifest = ajv.compile(manifestSchema)
+const validateQuestions = ajv.compile(questionsSchema)
+const validateTypes = ajv.compile(typesSchema)
+const validateTemplates = ajv.compile(templatesSchema)
+const validateThemes = ajv.compile(themesSchema)
 
 // 使用示例
 function validateConfig(config: unknown) {
-  const errors: string[] = [];
+  const errors: string[] = []
 
   if (!validateManifest(config.manifest)) {
-    errors.push(`Manifest: ${JSON.stringify(validateManifest.errors)}`);
+    errors.push(`Manifest: ${JSON.stringify(validateManifest.errors)}`)
   }
 
   if (!validateQuestions(config.questions)) {
-    errors.push(`Questions: ${JSON.stringify(validateQuestions.errors)}`);
+    errors.push(`Questions: ${JSON.stringify(validateQuestions.errors)}`)
   }
 
   if (!validateTypes(config.types)) {
-    errors.push(`Types: ${JSON.stringify(validateTypes.errors)}`);
+    errors.push(`Types: ${JSON.stringify(validateTypes.errors)}`)
   }
 
   if (!validateTemplates(config.templates)) {
-    errors.push(`Templates: ${JSON.stringify(validateTemplates.errors)}`);
+    errors.push(`Templates: ${JSON.stringify(validateTemplates.errors)}`)
   }
 
   if (!validateThemes(config.themes)) {
-    errors.push(`Themes: ${JSON.stringify(validateThemes.errors)}`);
+    errors.push(`Themes: ${JSON.stringify(validateThemes.errors)}`)
   }
 
   return {
     valid: errors.length === 0,
-    errors
-  };
+    errors,
+  }
 }
 ```
 
@@ -1418,25 +1419,25 @@ npx ajv validate -s ./schemas/questions.schema.json -d ./data/questions.json --s
   "json.schemas": [
     {
       "fileMatch": ["manifest.json"],
-      "url": "./schemas/manifest.schema.json"
+      "url": "./schemas/manifest.schema.json",
     },
     {
       "fileMatch": ["questions.json"],
-      "url": "./schemas/questions.schema.json"
+      "url": "./schemas/questions.schema.json",
     },
     {
       "fileMatch": ["types.json"],
-      "url": "./schemas/types.schema.json"
+      "url": "./schemas/types.schema.json",
     },
     {
       "fileMatch": ["templates.json"],
-      "url": "./schemas/templates.schema.json"
+      "url": "./schemas/templates.schema.json",
     },
     {
       "fileMatch": ["themes.json"],
-      "url": "./schemas/themes.schema.json"
-    }
-  ]
+      "url": "./schemas/themes.schema.json",
+    },
+  ],
 }
 ```
 
@@ -1444,26 +1445,26 @@ npx ajv validate -s ./schemas/questions.schema.json -d ./data/questions.json --s
 
 ## 附录 A：必填字段速查
 
-| Schema | 必填字段 |
-|--------|----------|
-| `manifest.json` | `id`, `name`, `version`, `config` |
-| `questions.json` | `meta`, `questions` |
-| `types.json` | `types` |
-| `templates.json` | `templates` |
-| `themes.json` | `themes` |
-| `i18n/*.json` | 无（层级结构自由定义） |
+| Schema           | 必填字段                          |
+| ---------------- | --------------------------------- |
+| `manifest.json`  | `id`, `name`, `version`, `config` |
+| `questions.json` | `meta`, `questions`               |
+| `types.json`     | `types`                           |
+| `templates.json` | `templates`                       |
+| `themes.json`    | `themes`                          |
+| `i18n/*.json`    | 无（层级结构自由定义）            |
 
 ## 附录 B：类型速查
 
-| Schema | 核心类型 |
-|--------|----------|
-| `manifest.json` | `LocalizedString`, `ScoringConfig`, `Settings` |
-| `questions.json` | `Question`, `Option`, `Dimension`, `Weight` |
-| `types.json` | `PersonalityType`, `Trait`, `LocalizedString` |
-| `templates.json` | `Template`, `Element`, `Position`, `Style` |
-| `themes.json` | `Theme`, `Colors`, `Font`, `BorderRadius` |
+| Schema           | 核心类型                                       |
+| ---------------- | ---------------------------------------------- |
+| `manifest.json`  | `LocalizedString`, `ScoringConfig`, `Settings` |
+| `questions.json` | `Question`, `Option`, `Dimension`, `Weight`    |
+| `types.json`     | `PersonalityType`, `Trait`, `LocalizedString`  |
+| `templates.json` | `Template`, `Element`, `Position`, `Style`     |
+| `themes.json`    | `Theme`, `Colors`, `Font`, `BorderRadius`      |
 
 ---
 
-*Schema 版本：1.0*
-*最后更新：2026-04-10*
+_Schema 版本：1.0_
+_最后更新：2026-04-10_

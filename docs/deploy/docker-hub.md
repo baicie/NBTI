@@ -3,9 +3,11 @@
 ## 1. 创建 Docker Hub 仓库
 
 ### 1.1 注册 Docker Hub
+
 访问 [Docker Hub](https://hub.docker.com/) 注册账号
 
 ### 1.2 创建公开仓库
+
 1. 登录后点击「Create Repository」
 2. 仓库名称：`nbti-web`
 3. 可见性：Public（免费）
@@ -26,18 +28,18 @@
 
 在 GitHub 仓库 → Settings → Secrets and variables → Actions 中添加：
 
-| Secret 名称 | 说明 | 示例 |
-|------------|------|------|
-| `DOCKERHUB_USERNAME` | Docker Hub 用户名 | `myusername` |
-| `DOCKERHUB_TOKEN` | Access Token | `dckr_pat_xxxxx` |
-| `STAGING_HOST` | Staging 服务器 IP | `1.2.3.4` |
-| `STAGING_USER` | Staging 用户名 | `root` |
-| `STAGING_PASSWORD` | Staging 密码 | `your-password` |
-| `STAGING_SSH_PORT` | SSH 端口 | `22` |
-| `PRODUCTION_HOST` | 生产服务器 IP | `5.6.7.8` |
-| `PRODUCTION_USER` | 生产用户名 | `root` |
-| `PRODUCTION_PASSWORD` | 生产密码 | `your-password` |
-| `PRODUCTION_SSH_PORT` | SSH 端口 | `22` |
+| Secret 名称           | 说明              | 示例             |
+| --------------------- | ----------------- | ---------------- |
+| `DOCKERHUB_USERNAME`  | Docker Hub 用户名 | `myusername`     |
+| `DOCKERHUB_TOKEN`     | Access Token      | `dckr_pat_xxxxx` |
+| `STAGING_HOST`        | Staging 服务器 IP | `1.2.3.4`        |
+| `STAGING_USER`        | Staging 用户名    | `root`           |
+| `STAGING_PASSWORD`    | Staging 密码      | `your-password`  |
+| `STAGING_SSH_PORT`    | SSH 端口          | `22`             |
+| `PRODUCTION_HOST`     | 生产服务器 IP     | `5.6.7.8`        |
+| `PRODUCTION_USER`     | 生产用户名        | `root`           |
+| `PRODUCTION_PASSWORD` | 生产密码          | `your-password`  |
+| `PRODUCTION_SSH_PORT` | SSH 端口          | `22`             |
 
 ## 4. 服务器初始化
 
@@ -73,6 +75,7 @@ firewall-cmd --reload
 ## 6. 验证部署
 
 部署完成后访问：
+
 - 生产环境：`http://服务器IP:3000`
 - Staging 环境：`http://服务器IP:3001`
 
@@ -97,8 +100,8 @@ docker run -d --name nbti-web -p 3000:3000 --restart unless-stopped \
 
 ## 8. 镜像标签说明
 
-| 触发条件 | 镜像标签 | 示例 |
-|---------|---------|------|
-| 推送到 main 分支 | `main` | `myusername/nbti-web:main` |
+| 触发条件          | 镜像标签 | 示例                         |
+| ----------------- | -------- | ---------------------------- |
+| 推送到 main 分支  | `main`   | `myusername/nbti-web:main`   |
 | 推送 tag `v1.0.0` | `v1.0.0` | `myusername/nbti-web:v1.0.0` |
-| 推送 PR | `pr-123` | `myusername/nbti-web:pr-123` |
+| 推送 PR           | `pr-123` | `myusername/nbti-web:pr-123` |

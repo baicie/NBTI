@@ -111,22 +111,34 @@ my-test-package/
     {
       "id": "EI",
       "name": { "zh": "外向 — 内向", "en": "Extraversion — Introversion" },
-      "description": { "zh": "你从哪里获得能量？", "en": "Where do you get your energy?" }
+      "description": {
+        "zh": "你从哪里获得能量？",
+        "en": "Where do you get your energy?"
+      }
     },
     {
       "id": "NS",
       "name": { "zh": "直觉 — 实感", "en": "Intuition — Sensing" },
-      "description": { "zh": "你如何获取信息？", "en": "How do you take in information?" }
+      "description": {
+        "zh": "你如何获取信息？",
+        "en": "How do you take in information?"
+      }
     },
     {
       "id": "TF",
       "name": { "zh": "思考 — 情感", "en": "Thinking — Feeling" },
-      "description": { "zh": "你如何做决定？", "en": "How do you make decisions?" }
+      "description": {
+        "zh": "你如何做决定？",
+        "en": "How do you make decisions?"
+      }
     },
     {
       "id": "JP",
       "name": { "zh": "判断 — 知觉", "en": "Judging — Perceiving" },
-      "description": { "zh": "你如何与外界互动？", "en": "How do you deal with the outside world?" }
+      "description": {
+        "zh": "你如何与外界互动？",
+        "en": "How do you deal with the outside world?"
+      }
     }
   ],
   "questions": [
@@ -249,11 +261,17 @@ my-test-package/
         }
       ],
       "strengths": [
-        { "zh": "逻辑清晰，分析能力强", "en": "Clear logic and strong analytical ability" },
+        {
+          "zh": "逻辑清晰，分析能力强",
+          "en": "Clear logic and strong analytical ability"
+        },
         { "zh": "目标导向，意志坚定", "en": "Goal-oriented and determined" }
       ],
       "weaknesses": [
-        { "zh": "可能显得冷漠或挑剔", "en": "May seem cold or overly critical" },
+        {
+          "zh": "可能显得冷漠或挑剔",
+          "en": "May seem cold or overly critical"
+        },
         { "zh": "不擅长表达情感", "en": "Not good at expressing emotions" }
       ],
       "compatibleTypes": ["ENFP", "ENTP"],
@@ -642,41 +660,41 @@ nbti (workspace root)
 ```typescript
 // packages/core/src/config/loader.ts
 export interface ConfigSource {
-  type: 'local' | 'remote' | 'npm';
-  basePath: string;
-  manifestPath?: string;
+  type: 'local' | 'remote' | 'npm'
+  basePath: string
+  manifestPath?: string
 }
 
 export interface LoadedConfig {
-  manifest: Manifest;
-  questions: QuestionsData;
-  types: TypesData;
-  templates: TemplatesData;
-  theme: ThemeData;
-  i18n: Record<string, I18nDict>;
+  manifest: Manifest
+  questions: QuestionsData
+  types: TypesData
+  templates: TemplatesData
+  theme: ThemeData
+  i18n: Record<string, I18nDict>
 }
 
 export class ConfigLoader {
-  constructor(source: ConfigSource);
+  constructor(source: ConfigSource)
 
   // 加载完整配置
-  async load(): Promise<LoadedConfig>;
+  async load(): Promise<LoadedConfig>
 
   // 加载单个配置文件
-  async loadManifest(): Promise<Manifest>;
-  async loadQuestions(): Promise<QuestionsData>;
-  async loadTypes(): Promise<TypesData>;
-  async loadTemplates(): Promise<TemplatesData>;
-  async loadTheme(): Promise<ThemeData>;
-  async loadI18n(locale: string): Promise<I18nDict>;
+  async loadManifest(): Promise<Manifest>
+  async loadQuestions(): Promise<QuestionsData>
+  async loadTypes(): Promise<TypesData>
+  async loadTemplates(): Promise<TemplatesData>
+  async loadTheme(): Promise<ThemeData>
+  async loadI18n(locale: string): Promise<I18nDict>
 
   // 验证配置
-  validate(config: Partial<LoadedConfig>): ValidationResult;
+  validate(config: Partial<LoadedConfig>): ValidationResult
 
   // 缓存管理
-  getCache(): LoadedConfig | null;
-  clearCache(): void;
-  refresh(): Promise<LoadedConfig>;
+  getCache(): LoadedConfig | null
+  clearCache(): void
+  refresh(): Promise<LoadedConfig>
 }
 ```
 
@@ -686,23 +704,23 @@ export class ConfigLoader {
 // 方式 1: 从本地文件夹加载
 const loader = new ConfigLoader({
   type: 'local',
-  basePath: '/data/nbti-mbti'
-});
-const config = await loader.load();
+  basePath: '/data/nbti-mbti',
+})
+const config = await loader.load()
 
 // 方式 2: 从远程 API 加载
 const loader = new ConfigLoader({
   type: 'remote',
-  basePath: 'https://api.example.com/configs/nbti-mbti'
-});
-const config = await loader.load();
+  basePath: 'https://api.example.com/configs/nbti-mbti',
+})
+const config = await loader.load()
 
 // 方式 3: 从 npm 包加载
 const loader = new ConfigLoader({
   type: 'npm',
-  basePath: 'nbti-test-mbti'  // npm 包名
-});
-const config = await loader.load();
+  basePath: 'nbti-test-mbti', // npm 包名
+})
+const config = await loader.load()
 ```
 
 ### 4.2 计分引擎 (Scoring Engine)
@@ -714,33 +732,33 @@ const config = await loader.load();
 
 // 支持的计分类型
 export type ScoringType =
-  | 'dimension'      // 维度差值法（MBTI）
-  | 'percentage'     // 百分比法（大五人格）
-  | 'weighted-sum';   // 加权求和法
+  | 'dimension' // 维度差值法（MBTI）
+  | 'percentage' // 百分比法（大五人格）
+  | 'weighted-sum' // 加权求和法
 
 // 计分配置
 export interface ScoringConfig {
-  type: ScoringType;
-  dimensions: string[];
-  calculateMethod: 'difference' | 'ratio' | 'absolute';
-  normalizeOutput?: boolean;
+  type: ScoringType
+  dimensions: string[]
+  calculateMethod: 'difference' | 'ratio' | 'absolute'
+  normalizeOutput?: boolean
 }
 
 // 维度分数
 export interface DimensionScore {
-  dimensionId: string;
-  leftScore: number;
-  rightScore: number;
-  dominant: string;  // 占主导的维度字母
-  percentage: number; // 百分比 (0-100)
+  dimensionId: string
+  leftScore: number
+  rightScore: number
+  dominant: string // 占主导的维度字母
+  percentage: number // 百分比 (0-100)
 }
 
 // 计算结果
 export interface ScoringResult {
-  dimensions: DimensionScore[];
-  typeCode: string;  // e.g., "INTJ"
-  rawScores: Record<string, number>;
-  normalizedScores: Record<string, number>;
+  dimensions: DimensionScore[]
+  typeCode: string // e.g., "INTJ"
+  rawScores: Record<string, number>
+  normalizedScores: Record<string, number>
 }
 ```
 
@@ -750,49 +768,54 @@ export interface ScoringResult {
 // 维度差值法（MBTI）
 function calculateDimensionScoring(
   answers: Answer[],
-  dimensions: string[]
+  dimensions: string[],
 ): ScoringResult {
-  const scores: Record<string, { left: number; right: number }> = {};
+  const scores: Record<string, { left: number; right: number }> = {}
 
   // 初始化维度分数
   dimensions.forEach(dim => {
-    const [left, right] = dim.split('');
-    scores[dim] = { left: 0, right: 0 };
-  });
+    const [left, right] = dim.split('')
+    scores[dim] = { left: 0, right: 0 }
+  })
 
   // 汇总答案权重
   answers.forEach(answer => {
-    const weight = answer.selectedOption.weight;
+    const weight = answer.selectedOption.weight
     Object.entries(weight).forEach(([key, value]) => {
       // 匹配到维度（如 E、I 匹配到 EI 维度）
       dimensions.forEach(dim => {
-        const [left, right] = dim.split('');
-        if (key === left) scores[dim].left += value;
-        if (key === right) scores[dim].right += value;
-      });
-    });
-  });
+        const [left, right] = dim.split('')
+        if (key === left) scores[dim].left += value
+        if (key === right) scores[dim].right += value
+      })
+    })
+  })
 
   // 计算主导类型
   const dimensionScores = dimensions.map(dim => {
-    const { left, right } = scores[dim];
-    const total = left + right;
-    const dominant = left >= right ? dim[0] : dim[1];
-    const percentage = total > 0 ? (Math.max(left, right) / total) * 100 : 50;
+    const { left, right } = scores[dim]
+    const total = left + right
+    const dominant = left >= right ? dim[0] : dim[1]
+    const percentage = total > 0 ? (Math.max(left, right) / total) * 100 : 50
 
     return {
       dimensionId: dim,
       leftScore: left,
       rightScore: right,
       dominant,
-      percentage: Math.round(percentage)
-    };
-  });
+      percentage: Math.round(percentage),
+    }
+  })
 
   // 生成类型代码
-  const typeCode = dimensionScores.map(d => d.dominant).join('');
+  const typeCode = dimensionScores.map(d => d.dominant).join('')
 
-  return { dimensions: dimensionScores, typeCode, rawScores: scores, normalizedScores: {} };
+  return {
+    dimensions: dimensionScores,
+    typeCode,
+    rawScores: scores,
+    normalizedScores: {},
+  }
 }
 ```
 
@@ -806,26 +829,30 @@ function calculateDimensionScoring(
 // 支持的变量类型
 export type TemplateVariable =
   | { type: 'type'; path: 'code' | 'name' | 'subtitle' | 'description' }
-  | { type: 'dimension'; dimensionId: string; path: 'left' | 'right' | 'percentage' }
+  | {
+      type: 'dimension'
+      dimensionId: string
+      path: 'left' | 'right' | 'percentage'
+    }
   | { type: 'trait'; traitId: string; path: 'name' | 'level' }
   | { type: 'share'; path: 'url' | 'title' | 'text' }
   | { type: 'datetime'; format: string }
-  | { type: 'config'; path: string };
+  | { type: 'config'; path: string }
 
 // 变量插值
 export function interpolateTemplate(
   template: string,
-  context: RenderContext
+  context: RenderContext,
 ): string {
   return template.replace(/\{(\w+(?:\.\w+)*)\}/g, (match, path) => {
-    const value = getNestedValue(context, path);
-    return value ?? match;
-  });
+    const value = getNestedValue(context, path)
+    return value ?? match
+  })
 }
 
 // 获取嵌套值
 function getNestedValue(obj: any, path: string): any {
-  return path.split('.').reduce((current, key) => current?.[key], obj);
+  return path.split('.').reduce((current, key) => current?.[key], obj)
 }
 ```
 
@@ -836,24 +863,24 @@ function getNestedValue(obj: any, path: string): any {
 
 export interface RenderContext {
   type: {
-    code: string;
-    name: LocalizedString;
-    subtitle: LocalizedString;
-    description: LocalizedString;
-    traits: Trait[];
-    strengths: LocalizedString[];
-    weaknesses: LocalizedString[];
-    careers: LocalizedString[];
-  };
-  dimensions: DimensionScore[];
-  scoring: ScoringResult;
+    code: string
+    name: LocalizedString
+    subtitle: LocalizedString
+    description: LocalizedString
+    traits: Trait[]
+    strengths: LocalizedString[]
+    weaknesses: LocalizedString[]
+    careers: LocalizedString[]
+  }
+  dimensions: DimensionScore[]
+  scoring: ScoringResult
   config: {
-    appName: string;
-    shareUrl: string;
-  };
-  locale: string;
-  theme: ThemeConfig;
-  timestamp: number;
+    appName: string
+    shareUrl: string
+  }
+  locale: string
+  theme: ThemeConfig
+  timestamp: number
 }
 ```
 
@@ -899,37 +926,40 @@ export interface RenderContext {
 // packages/core/src/image/generator.ts
 
 export interface ImageGeneratorOptions {
-  templateId: string;
-  template: ShareCardTemplate;
-  context: RenderContext;
-  format: 'png' | 'jpeg';
-  quality: number;
-  pixelRatio: number;
-  backgroundColor?: string;
+  templateId: string
+  template: ShareCardTemplate
+  context: RenderContext
+  format: 'png' | 'jpeg'
+  quality: number
+  pixelRatio: number
+  backgroundColor?: string
 }
 
 export interface GeneratedImage {
-  blob: Blob;
-  dataUrl: string;
-  base64: string;
-  width: number;
-  height: number;
+  blob: Blob
+  dataUrl: string
+  base64: string
+  width: number
+  height: number
 }
 
 export class ImageGenerator {
-  constructor(container: HTMLElement);
+  constructor(container: HTMLElement)
 
   // 生成图片
-  async generate(options: ImageGeneratorOptions): Promise<GeneratedImage>;
+  async generate(options: ImageGeneratorOptions): Promise<GeneratedImage>
 
   // 下载图片
-  async download(options: ImageGeneratorOptions, filename: string): Promise<void>;
+  async download(
+    options: ImageGeneratorOptions,
+    filename: string,
+  ): Promise<void>
 
   // 分享图片（使用 Web Share API）
-  async share(options: ImageGeneratorOptions): Promise<void>;
+  async share(options: ImageGeneratorOptions): Promise<void>
 
   // 预览图片（返回 data URL）
-  async preview(options: ImageGeneratorOptions): Promise<string>;
+  async preview(options: ImageGeneratorOptions): Promise<string>
 }
 ```
 
@@ -1101,43 +1131,43 @@ export function ResultDisplay({
 
 ```typescript
 // apps/web/stores/test-store.ts
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 
 interface TestState {
   // 配置状态（来自 JSON）
-  config: LoadedConfig | null;
-  configStatus: 'idle' | 'loading' | 'loaded' | 'error';
-  configError: Error | null;
+  config: LoadedConfig | null
+  configStatus: 'idle' | 'loading' | 'loaded' | 'error'
+  configError: Error | null
 
   // 测试会话状态
-  session: TestSession | null;
+  session: TestSession | null
 
   // 用户答案
-  answers: Map<string, string>;  // questionId -> optionId
+  answers: Map<string, string> // questionId -> optionId
 
   // 结果数据
-  result: ResultAnalysis | null;
+  result: ResultAnalysis | null
 
   // 用户设置
-  settings: UserSettings;
+  settings: UserSettings
 
   // Actions
-  loadConfig: (source: ConfigSource) => Promise<void>;
-  startSession: () => void;
-  answerQuestion: (questionId: string, optionId: string) => void;
-  nextQuestion: () => void;
-  prevQuestion: () => void;
-  submitTest: () => ResultAnalysis;
-  resetTest: () => void;
-  updateSettings: (settings: Partial<UserSettings>) => void;
+  loadConfig: (source: ConfigSource) => Promise<void>
+  startSession: () => void
+  answerQuestion: (questionId: string, optionId: string) => void
+  nextQuestion: () => void
+  prevQuestion: () => void
+  submitTest: () => ResultAnalysis
+  resetTest: () => void
+  updateSettings: (settings: Partial<UserSettings>) => void
 }
 
 interface UserSettings {
-  locale: string;
-  theme: 'light' | 'dark' | 'system';
-  animationEnabled: boolean;
-  soundEnabled: boolean;
+  locale: string
+  theme: 'light' | 'dark' | 'system'
+  animationEnabled: boolean
+  soundEnabled: boolean
 }
 ```
 
@@ -1380,7 +1410,7 @@ export function ConfigProvider({ children }: { children: React.ReactNode }) {
 
 ```typescript
 // packages/core/src/config/validator.ts
-import { z } from 'zod';
+import { z } from 'zod'
 
 // Manifest Schema
 export const ManifestSchema = z.object({
@@ -1392,22 +1422,24 @@ export const ManifestSchema = z.object({
     types: z.string(),
     templates: z.string(),
     themes: z.string().optional(),
-    i18n: z.string().optional()
+    i18n: z.string().optional(),
   }),
-  settings: z.object({
-    allowBack: z.boolean(),
-    showTimer: z.boolean(),
-    shuffleQuestions: z.boolean(),
-    shuffleOptions: z.boolean(),
-    requiredAnswer: z.boolean(),
-    maxDuration: z.number().nullable()
-  }).optional(),
+  settings: z
+    .object({
+      allowBack: z.boolean(),
+      showTimer: z.boolean(),
+      shuffleQuestions: z.boolean(),
+      shuffleOptions: z.boolean(),
+      requiredAnswer: z.boolean(),
+      maxDuration: z.number().nullable(),
+    })
+    .optional(),
   scoring: z.object({
     type: z.enum(['dimension', 'percentage', 'weighted-sum']),
     dimensions: z.array(z.string()),
-    calculateMethod: z.enum(['difference', 'ratio', 'absolute'])
-  })
-});
+    calculateMethod: z.enum(['difference', 'ratio', 'absolute']),
+  }),
+})
 
 // Question Schema
 export const QuestionSchema = z.object({
@@ -1416,12 +1448,12 @@ export const QuestionSchema = z.object({
   category: z.string().optional(),
   content: LocalizedStringSchema,
   image: z.string().nullable().optional(),
-  options: z.array(OptionSchema).min(2)
-});
+  options: z.array(OptionSchema).min(2),
+})
 
 // 使用 Zod 进行运行时校验
 export function validateManifest(data: unknown): Manifest {
-  return ManifestSchema.parse(data);
+  return ManifestSchema.parse(data)
 }
 ```
 
@@ -1431,39 +1463,39 @@ export function validateManifest(data: unknown): Manifest {
 
 ### 10.1 优化策略
 
-| 优化项 | 方案 | 效果 |
-|--------|------|------|
-| 配置预加载 | App 启动时预加载 manifest 和 questions | 减少测试开始延迟 |
-| 图片懒加载 | 模板图片和题库图片使用懒加载 | 减少首屏加载时间 |
-| 结果图缓存 | 相同结果的图片生成后缓存 | 减少重复生成 |
-| 代码分割 | 动态导入图片生成器 | 减少主包体积 |
-| 字体优化 | 使用 next/font 优化字体加载 | 减少 FCP 时间 |
-| 预渲染 | 静态页面预渲染 | 提升 SEO 和加载速度 |
+| 优化项     | 方案                                   | 效果                |
+| ---------- | -------------------------------------- | ------------------- |
+| 配置预加载 | App 启动时预加载 manifest 和 questions | 减少测试开始延迟    |
+| 图片懒加载 | 模板图片和题库图片使用懒加载           | 减少首屏加载时间    |
+| 结果图缓存 | 相同结果的图片生成后缓存               | 减少重复生成        |
+| 代码分割   | 动态导入图片生成器                     | 减少主包体积        |
+| 字体优化   | 使用 next/font 优化字体加载            | 减少 FCP 时间       |
+| 预渲染     | 静态页面预渲染                         | 提升 SEO 和加载速度 |
 
 ### 10.2 预加载实现
 
 ```typescript
 // packages/core/src/config/preloader.ts
 export class ConfigPreloader {
-  private preloaded = false;
+  private preloaded = false
 
   async preload(source: ConfigSource): Promise<void> {
-    if (this.preloaded) return;
+    if (this.preloaded) return
 
-    const loader = new ConfigLoader(source);
+    const loader = new ConfigLoader(source)
 
     // 预加载关键配置
     await Promise.all([
       loader.loadManifest(),
       loader.loadQuestions(),
-      loader.loadI18n('zh')
-    ]);
+      loader.loadI18n('zh'),
+    ])
 
-    this.preloaded = true;
+    this.preloaded = true
   }
 
   isPreloaded(): boolean {
-    return this.preloaded;
+    return this.preloaded
   }
 }
 ```
@@ -1556,25 +1588,25 @@ my-custom-test/
 
 ### A. 数据协议速查
 
-| 文件 | 必填 | 说明 |
-|------|------|------|
-| `manifest.json` | ✅ | 包元信息、配置路径、计分方式 |
-| `questions.json` | ✅ | 题目列表、选项、维度权重 |
-| `types.json` | ✅ | 结果类型定义、描述、特质 |
-| `templates.json` | ❌ | 结果图模板配置 |
-| `themes.json` | ❌ | 颜色、字体等主题配置 |
-| `i18n/*.json` | ❌ | 翻译文案 |
+| 文件             | 必填 | 说明                         |
+| ---------------- | ---- | ---------------------------- |
+| `manifest.json`  | ✅   | 包元信息、配置路径、计分方式 |
+| `questions.json` | ✅   | 题目列表、选项、维度权重     |
+| `types.json`     | ✅   | 结果类型定义、描述、特质     |
+| `templates.json` | ❌   | 结果图模板配置               |
+| `themes.json`    | ❌   | 颜色、字体等主题配置         |
+| `i18n/*.json`    | ❌   | 翻译文案                     |
 
 ### B. 变量引用速查
 
-| 变量 | 来源 | 说明 |
-|------|------|------|
-| `{type.code}` | types.json | 人格类型代码 |
-| `{type.name}` | types.json | 类型名称 |
-| `{type.traits[0].name}` | types.json | 第一个特质名称 |
-| `{dimension.EI.percentage}` | 计算结果 | EI 维度百分比 |
-| `{share.url}` | 系统生成 | 分享链接 |
-| `{i18n.xxx}` | i18n/*.json | 翻译文本 |
+| 变量                        | 来源         | 说明           |
+| --------------------------- | ------------ | -------------- |
+| `{type.code}`               | types.json   | 人格类型代码   |
+| `{type.name}`               | types.json   | 类型名称       |
+| `{type.traits[0].name}`     | types.json   | 第一个特质名称 |
+| `{dimension.EI.percentage}` | 计算结果     | EI 维度百分比  |
+| `{share.url}`               | 系统生成     | 分享链接       |
+| `{i18n.xxx}`                | i18n/\*.json | 翻译文本       |
 
 ### C. 部署清单
 
@@ -1594,6 +1626,6 @@ my-custom-test/
 
 ---
 
-*文档版本：2.0*
-*核心变化：数据驱动架构，App 作为框架，内容由 JSON 协议定义*
-*最后更新：2026-04-10*
+_文档版本：2.0_
+_核心变化：数据驱动架构，App 作为框架，内容由 JSON 协议定义_
+_最后更新：2026-04-10_

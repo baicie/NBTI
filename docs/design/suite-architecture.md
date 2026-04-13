@@ -32,14 +32,14 @@
 
 ### 2.2 路由说明
 
-| 路径 | 说明 | 示例 |
-|------|------|------|
-| `/` | 展示所有可用套件 | - |
-| `/mbti` | MBTI 测试入口 | `/mbti` → 重定向到 `/mbti/test` |
-| `/mbti/test` | MBTI 测试页 | - |
-| `/mbti/result` | MBTI 结果页 | - |
-| `/bigfive` | 大五人格入口 | - |
-| `/bigfive/test` | 大五人格测试页 | - |
+| 路径            | 说明             | 示例                            |
+| --------------- | ---------------- | ------------------------------- |
+| `/`             | 展示所有可用套件 | -                               |
+| `/mbti`         | MBTI 测试入口    | `/mbti` → 重定向到 `/mbti/test` |
+| `/mbti/test`    | MBTI 测试页      | -                               |
+| `/mbti/result`  | MBTI 结果页      | -                               |
+| `/bigfive`      | 大五人格入口     | -                               |
+| `/bigfive/test` | 大五人格测试页   | -                               |
 
 ### 2.3 向后兼容
 
@@ -386,8 +386,10 @@ export default async function TestPage({
   return (
     <div className="min-h-screen bg-background">
       {/* 使用主题变量 */}
-      <header className="sticky top-0 bg-background/95 backdrop-blur border-b"
-        style={{ borderColor: theme.colors.border }}>
+      <header
+        className="sticky top-0 bg-background/95 backdrop-blur border-b"
+        style={{ borderColor: theme.colors.border }}
+      >
         {/* ... */}
       </header>
 
@@ -396,18 +398,16 @@ export default async function TestPage({
         <Card className="max-w-2xl mx-auto">
           {/* 题目渲染 */}
           {questions.questions.map(q => (
-            <QuestionCard
-              key={q.id}
-              question={q}
-              theme={theme}
-            />
+            <QuestionCard key={q.id} question={q} theme={theme} />
           ))}
         </Card>
       </main>
 
       {/* 底部导航 */}
-      <footer className="fixed bottom-0 left-0 right-0 bg-background border-t"
-        style={{ borderColor: theme.colors.border }}>
+      <footer
+        className="fixed bottom-0 left-0 right-0 bg-background border-t"
+        style={{ borderColor: theme.colors.border }}
+      >
         {/* ... */}
       </footer>
     </div>
@@ -437,12 +437,14 @@ export default async function ResultPage({
   return (
     <div className="min-h-screen bg-background">
       {/* 渐变头部 - 使用主题色 */}
-      <header className="bg-gradient-to-br py-16"
+      <header
+        className="bg-gradient-to-br py-16"
         style={{
           background: theme.gradient?.enabled
             ? `linear-gradient(to right, ${theme.gradient.from}, ${theme.gradient.via}, ${theme.gradient.to})`
-            : theme.colors.primary
-        }}>
+            : theme.colors.primary,
+        }}
+      >
         {/* ... */}
       </header>
 
@@ -502,13 +504,13 @@ const config = {
         suite: {
           DEFAULT: 'var(--suite-primary)',
           foreground: 'var(--suite-primary-foreground)',
-        }
+        },
       },
       borderRadius: {
         suite: 'var(--suite-radius)',
-      }
-    }
-  }
+      },
+    },
+  },
 }
 ```
 
@@ -579,7 +581,7 @@ interface ISuiteRepository {
 }
 
 // 本地实现
-class LocalSuiteRepository implements ISuiteRepository { }
+class LocalSuiteRepository implements ISuiteRepository {}
 
 // API 实现
 class ApiSuiteRepository implements ISuiteRepository {
@@ -593,35 +595,35 @@ class ApiSuiteRepository implements ISuiteRepository {
 
 ### 10.1 新增文件
 
-| 文件路径 | 说明 |
-|----------|------|
-| `configs/suites/index.json` | 套件索引 |
-| `configs/suites/mbti/manifest.json` | MBTI 元信息 |
-| `configs/suites/mbti/questions.json` | MBTI 题目 |
-| `configs/suites/mbti/types.json` | MBTI 类型 |
-| `configs/suites/mbti/theme.json` | MBTI 主题 |
-| `lib/suite-loader.ts` | 套件加载器 |
-| `lib/suite-validator.ts` | 配置校验 |
-| `lib/types/suite.ts` | 类型定义 |
-| `components/theme-provider.tsx` | 主题提供者 |
-| `components/suite-selector.tsx` | 套件选择器 |
-| `components/question-card.tsx` | 答题卡片 |
+| 文件路径                             | 说明        |
+| ------------------------------------ | ----------- |
+| `configs/suites/index.json`          | 套件索引    |
+| `configs/suites/mbti/manifest.json`  | MBTI 元信息 |
+| `configs/suites/mbti/questions.json` | MBTI 题目   |
+| `configs/suites/mbti/types.json`     | MBTI 类型   |
+| `configs/suites/mbti/theme.json`     | MBTI 主题   |
+| `lib/suite-loader.ts`                | 套件加载器  |
+| `lib/suite-validator.ts`             | 配置校验    |
+| `lib/types/suite.ts`                 | 类型定义    |
+| `components/theme-provider.tsx`      | 主题提供者  |
+| `components/suite-selector.tsx`      | 套件选择器  |
+| `components/question-card.tsx`       | 答题卡片    |
 
 ### 10.2 改造文件
 
-| 文件路径 | 改动说明 |
-|----------|----------|
-| `app/page.tsx` | 改为套件选择首页 |
-| `app/[suite]/layout.tsx` | 新增，套件级布局 |
-| `app/[suite]/page.tsx` | 新增，动态测试页 |
+| 文件路径                      | 改动说明         |
+| ----------------------------- | ---------------- |
+| `app/page.tsx`                | 改为套件选择首页 |
+| `app/[suite]/layout.tsx`      | 新增，套件级布局 |
+| `app/[suite]/page.tsx`        | 新增，动态测试页 |
 | `app/[suite]/result/page.tsx` | 新增，动态结果页 |
-| `app/globals.css` | 添加主题变量支持 |
+| `app/globals.css`             | 添加主题变量支持 |
 
 ### 10.3 删除文件
 
-| 文件路径 | 说明 |
-|----------|------|
-| `app/test/page.tsx` | 迁移到 `[suite]/page.tsx` |
+| 文件路径              | 说明                             |
+| --------------------- | -------------------------------- |
+| `app/test/page.tsx`   | 迁移到 `[suite]/page.tsx`        |
 | `app/result/page.tsx` | 迁移到 `[suite]/result/page.tsx` |
 
 ---
@@ -638,5 +640,5 @@ class ApiSuiteRepository implements ISuiteRepository {
 
 ---
 
-*文档版本：1.0.0*
-*最后更新：2026-04-10*
+_文档版本：1.0.0_
+_最后更新：2026-04-10_
