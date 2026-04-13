@@ -1,4 +1,4 @@
-# Dependencies (but not node_modules in the build context)
+# Dependencies
 **/node_modules
 **/.pnpm-store
 
@@ -34,12 +34,32 @@ pnpm-debug.log*
 tmp
 *.tmp
 
-# Test files (exclude test files but keep the directories)
+# Test files
 **/*.test.ts
 **/*.test.tsx
 **/*.spec.ts
 **/*.spec.tsx
 **/coverage
 
-# Docs (exclude markdown but keep configs)
+# Documentation
+docs/
 *.md
+
+# Agent files
+.agents
+skills-lock.json
+
+# GitHub
+.github/
+
+# Scripts
+scripts/
+
+# Config files that aren't needed for Docker build
+.eslintrc*
+.prettier*
+tsconfig*.json
+eslint.config.js
+netlify.toml
+.node-version
+pnpm-workspace.yaml
