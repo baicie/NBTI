@@ -78,19 +78,43 @@ jobs:
           username: ${{ secrets.STAGING_USER }}
           password: ${{ secrets.STAGING_PASSWORD }}
           port: ${{ secrets.STAGING_SSH_PORT || '22' }}
-          timeout: 10m
+          timeout: 15m
           script: |
             set -e
-            # Retry docker pull up to 3 times with exponential backoff
-            for i in 1 2 3; do
+            
+            # Configure Docker mirror if main registry fails
+            configure_mirror() {
+              echo "Configuring Docker mirror..."
+              sudo mkdir -p /etc/docker
+              sudo tee /etc/docker/daemon.json > /dev/null <<EOF
+            {
+              "registry-mirrors": [
+                "https://docker.cnnb.xyz",
+                "https://dockerproxy.cn",
+                "https://registry.docker-cn.com"
+              ]
+            }
+EOF
+              sudo systemctl daemon-reload
+              sudo systemctl restart docker
+              echo "Mirror configured"
+            }
+            
+            # Retry docker pull up to 5 times with longer intervals
+            for i in 1 2 3 4 5; do
               echo "Attempt $i: Pulling image..."
               if docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }} && \
                  docker pull ${{ env.IMAGE_NAME }}:main; then
                 echo "Image pulled successfully"
                 break
               fi
-              echo "Pull failed, retrying in $((i * 10)) seconds..."
-              sleep $((i * 10))
+              echo "Pull failed, retrying in $((i * 20)) seconds..."
+              sleep $((i * 20))
+              
+              # Configure mirror on second failure
+              if [ $i -eq 2 ]; then
+                configure_mirror
+              fi
             done
             
             docker stop nbti-web-staging 2>/dev/null || true
@@ -116,19 +140,43 @@ jobs:
           username: ${{ secrets.PRODUCTION_USER }}
           password: ${{ secrets.PRODUCTION_PASSWORD }}
           port: ${{ secrets.PRODUCTION_SSH_PORT || '22' }}
-          timeout: 10m
+          timeout: 15m
           script: |
             set -e
-            # Retry docker pull up to 3 times with exponential backoff
-            for i in 1 2 3; do
+            
+            # Configure Docker mirror if main registry fails
+            configure_mirror() {
+              echo "Configuring Docker mirror..."
+              sudo mkdir -p /etc/docker
+              sudo tee /etc/docker/daemon.json > /dev/null <<EOF
+            {
+              "registry-mirrors": [
+                "https://docker.cnnb.xyz",
+                "https://dockerproxy.cn",
+                "https://registry.docker-cn.com"
+              ]
+            }
+EOF
+              sudo systemctl daemon-reload
+              sudo systemctl restart docker
+              echo "Mirror configured"
+            }
+            
+            # Retry docker pull up to 5 times with longer intervals
+            for i in 1 2 3 4 5; do
               echo "Attempt $i: Pulling image..."
               if docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }} && \
                  docker pull ${{ env.IMAGE_NAME }}:${{ github.ref_name }}; then
                 echo "Image pulled successfully"
                 break
               fi
-              echo "Pull failed, retrying in $((i * 10)) seconds..."
-              sleep $((i * 10))
+              echo "Pull failed, retrying in $((i * 20)) seconds..."
+              sleep $((i * 20))
+              
+              # Configure mirror on second failure
+              if [ $i -eq 2 ]; then
+                configure_mirror
+              fi
             done
             
             docker stop nbti-web 2>/dev/null || true
