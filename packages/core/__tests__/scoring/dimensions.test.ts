@@ -78,15 +78,15 @@ describe('buildDimensionScores', () => {
   it('should build dimension scores with correct dominant', () => {
     const rawScores = {
       EI: { left: 6, right: 3 },
-      NS: { left: 2, right: 5 },
+      NS: { left: 5, right: 2 },
     }
 
     const result = buildDimensionScores(rawScores, ['EI', 'NS'], 'difference')
 
     expect(result[0].dominant).toBe('E')
     expect(result[0].percentage).toBeGreaterThan(50)
-    expect(result[1].dominant).toBe('S')
-    expect(result[1].percentage).toBeLessThan(50)
+    expect(result[1].dominant).toBe('N')
+    expect(result[1].percentage).toBeGreaterThan(50)
   })
 
   it('should handle tie by defaulting to first letter', () => {

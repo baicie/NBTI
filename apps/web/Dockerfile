@@ -6,13 +6,18 @@ RUN corepack enable && corepack prepare pnpm@10.33.0 --activate
 
 WORKDIR /app
 
-# Copy package files
-COPY package.json pnpm-lock.yaml ./
-COPY packages ./packages
-COPY apps/web ./apps/web
+# Copy pnpm workspace config and lockfile
+COPY pnpm-workspace.yaml package.json pnpm-lock.yaml ./
 
-# Install dependencies
-RUN pnpm install --frozen-lockfile
+# Copy TypeScript base config (needed by apps/tsconfig.json extends)
+COPY tsconfig.base.json ./
+
+# Copy all packages and apps
+COPY packages ./packages
+COPY apps ./apps
+
+# Install dependencies (skip frozen lockfile for Docker build)
+RUN pnpm install
 
 # Build the application
 RUN pnpm build
@@ -29,7 +34,6 @@ RUN addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 nextjs
 
 # Copy necessary files from builder
-COPY --from=builder --chown=nextjs:nodejs /app/apps/web/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/apps/web/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/apps/web/.next/static ./.next/static
 

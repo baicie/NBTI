@@ -77,7 +77,7 @@ describe('ScoringEngine', () => {
       const engine = new ScoringEngine(scoring, questions)
       const result = engine.calculate(answers)
 
-      expect(result.typeCode).toBe('ETJ')
+      expect(result.typeCode).toBe('ENTJ')
       expect(result.dimensions).toHaveLength(4)
     })
 

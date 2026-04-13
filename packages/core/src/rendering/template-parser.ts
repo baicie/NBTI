@@ -195,7 +195,11 @@ export function interpolateTemplate(
 ): string {
   return template.replace(VARIABLE_PATTERN, (match, path) => {
     const value = resolveVariable(context, path)
-    return value !== undefined ? value : match
+    // 如果返回 undefined 或原始路径（未识别），保留原始变量格式
+    if (value === undefined || value === path) {
+      return match
+    }
+    return value
   })
 }
 
