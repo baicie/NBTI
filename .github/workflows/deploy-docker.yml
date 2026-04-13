@@ -88,8 +88,12 @@ jobs:
               printf '%s\n' '{"registry-mirrors":["https://mirror.ccs.tencentyun.com"]}' | sudo tee /etc/docker/daemon.json
               sudo systemctl daemon-reload 2>/dev/null || true
               sudo systemctl restart docker 2>/dev/null || true
-              echo "Mirror configured"
+              echo "Mirror configured, waiting for Docker to restart..."
+              sleep 10
+              docker info | grep -A 3 "Registry Mirrors" || true
             }
+
+            configure_mirror
 
             for i in 1 2 3 4 5; do
               echo "Attempt $i: Pulling image..."
@@ -100,9 +104,6 @@ jobs:
               fi
               echo "Pull failed, retrying in $((i * 20)) seconds..."
               sleep $((i * 20))
-              if [ $i -eq 2 ]; then
-                configure_mirror
-              fi
             done
 
             docker stop nbti-web-staging 2>/dev/null || true
@@ -138,8 +139,12 @@ jobs:
               printf '%s\n' '{"registry-mirrors":["https://mirror.ccs.tencentyun.com"]}' | sudo tee /etc/docker/daemon.json
               sudo systemctl daemon-reload 2>/dev/null || true
               sudo systemctl restart docker 2>/dev/null || true
-              echo "Mirror configured"
+              echo "Mirror configured, waiting for Docker to restart..."
+              sleep 10
+              docker info | grep -A 3 "Registry Mirrors" || true
             }
+
+            configure_mirror
 
             for i in 1 2 3 4 5; do
               echo "Attempt $i: Pulling image..."
@@ -150,9 +155,6 @@ jobs:
               fi
               echo "Pull failed, retrying in $((i * 20)) seconds..."
               sleep $((i * 20))
-              if [ $i -eq 2 ]; then
-                configure_mirror
-              fi
             done
 
             docker stop nbti-web 2>/dev/null || true
