@@ -85,7 +85,7 @@ jobs:
             configure_mirror() {
               echo "Configuring Docker mirror..."
               sudo mkdir -p /etc/docker
-              printf '%s\n' '{"registry-mirrors":["https://docker.cnnb.xyz","https://dockerproxy.cn","https://registry.docker-cn.com"]}' | sudo tee /etc/docker/daemon.json
+              printf '%s\n' '{"registry-mirrors":["https://mirror.ccs.tencentyun.com"]}' | sudo tee /etc/docker/daemon.json
               sudo systemctl daemon-reload 2>/dev/null || true
               sudo systemctl restart docker 2>/dev/null || true
               echo "Mirror configured"
@@ -135,7 +135,7 @@ jobs:
             configure_mirror() {
               echo "Configuring Docker mirror..."
               sudo mkdir -p /etc/docker
-              printf '%s\n' '{"registry-mirrors":["https://docker.cnnb.xyz","https://dockerproxy.cn","https://registry.docker-cn.com"]}' | sudo tee /etc/docker/daemon.json
+              printf '%s\n' '{"registry-mirrors":["https://mirror.ccs.tencentyun.com"]}' | sudo tee /etc/docker/daemon.json
               sudo systemctl daemon-reload 2>/dev/null || true
               sudo systemctl restart docker 2>/dev/null || true
               echo "Mirror configured"
