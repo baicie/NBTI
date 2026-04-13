@@ -33,9 +33,11 @@ ENV NODE_ENV=production
 RUN addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 nextjs
 
-# Copy necessary files from builder
+# Copy necessary files from builder (standalone includes apps/web/server.js)
 COPY --from=builder --chown=nextjs:nodejs /app/apps/web/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/apps/web/.next/static ./.next/static
+
+# Copy static assets (server.js runs from apps/web/ due to process.chdir)
+COPY --from=builder --chown=nextjs:nodejs /app/apps/web/.next/static ./apps/web/.next/static
 
 USER nextjs
 
@@ -44,4 +46,4 @@ EXPOSE 3000
 ENV PORT=3000
 ENV HOST_NAME=0.0.0.0
 
-CMD ["node", "server.js"]
+CMD ["node", "apps/web/server.js"]
