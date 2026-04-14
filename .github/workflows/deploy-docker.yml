@@ -95,9 +95,6 @@ jobs:
 
             configure_mirror
 
-            echo "Attempting docker login..."
-            docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }} || true
-
             for i in 1 2 3 4 5; do
               echo "Attempt $i: Pulling image..."
               if docker pull ${{ env.IMAGE_NAME }}:main; then
@@ -147,9 +144,6 @@ jobs:
             }
 
             configure_mirror
-
-            echo "Attempting docker login..."
-            docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }} || true
 
             for i in 1 2 3 4 5; do
               echo "Attempt $i: Pulling image..."
