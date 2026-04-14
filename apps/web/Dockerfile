@@ -1,52 +1,66 @@
-# Build stage
-FROM node:24-alpine AS builder
+# ============================================
+# Stage 1: Install dependencies
+# ============================================
+ARG NODE_VERSION=24.13.0-slim
 
-# Install pnpm
-RUN corepack enable && corepack prepare pnpm@10.33.0 --activate
+FROM node:${NODE_VERSION} AS dependencies
 
 WORKDIR /app
 
-# Copy pnpm workspace config and lockfile
-COPY pnpm-workspace.yaml package.json pnpm-lock.yaml ./
-
-# Copy TypeScript base config (needed by apps/tsconfig.json extends)
+# Copy lockfiles and workspace config
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY tsconfig.base.json ./
 
-# Copy all packages and apps
+# Install dependencies
+RUN --mount=type=cache,target=/root/.local/share/pnpm/store \
+ corepack enable pnpm && pnpm install --frozen-lockfile
+
+# ============================================
+# Stage 2: Build Next.js application
+# ============================================
+FROM node:${NODE_VERSION} AS builder
+
+WORKDIR /app
+
+# Enable pnpm
+RUN corepack enable && corepack prepare pnpm@10.19.0 --activate
+
+# Copy all files
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml tsconfig.base.json ./
 COPY packages ./packages
 COPY apps ./apps
 
-# Install dependencies (skip frozen lockfile for Docker build)
-RUN pnpm install
+# Reinstall dependencies (don't rely on dependencies stage)
+RUN --mount=type=cache,target=/root/.local/share/pnpm/store \
+    pnpm install --frozen-lockfile
 
-# Build the application
-RUN pnpm build
+ENV NODE_ENV=production
 
-# Production stage
-FROM node:24-alpine AS runner
+RUN pnpm --filter @nbti/web build
+
+# ============================================
+# Stage 3: Run Next.js application
+# ============================================
+FROM node:${NODE_VERSION} AS runner
 
 WORKDIR /app
 
 ENV NODE_ENV=production
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
 
-# Create non-root user for security
-RUN addgroup --system --gid 1001 nodejs && \
-    adduser --system --uid 1001 nextjs
+# Copy public directory
+COPY --from=builder --chown=node:node /app/apps/web/public ./public
 
-# Copy necessary files from builder (standalone includes apps/web/server.js)
-COPY --from=builder --chown=nextjs:nodejs /app/apps/web/.next/standalone ./
+# Copy standalone output (contains apps/web/ with server.js and .next/)
+COPY --from=builder --chown=node:node /app/apps/web/.next/standalone ./
 
-# Copy static assets (server.js runs from apps/web/ due to process.chdir)
-COPY --from=builder --chown=nextjs:nodejs /app/apps/web/.next/static ./apps/web/.next/static
+# Copy static files (if not already in standalone)
+COPY --from=builder --chown=node:node /app/apps/web/.next/static ./apps/web/.next/static
 
-# Copy public assets (favicon, etc.)
-COPY --from=builder --chown=nextjs:nodejs /app/apps/web/public ./apps/web/public
-
-USER nextjs
+# Switch to non-root user
+USER node
 
 EXPOSE 3000
-
-ENV PORT=3000
-ENV HOST_NAME=0.0.0.0
 
 CMD ["node", "apps/web/server.js"]
