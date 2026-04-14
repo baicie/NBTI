@@ -5,6 +5,9 @@ import { Providers } from '@/providers'
 export const metadata: Metadata = {
   title: 'NBTI - 在线性格测试',
   description: '基于数据驱动架构的通用在线测试框架',
+  icons: {
+    icon: '/favicon.ico',
+  },
 }
 
 export const viewport: Viewport = {

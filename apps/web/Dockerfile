@@ -1,5 +1,5 @@
 # Build stage
-FROM node:20-alpine AS builder
+FROM node:24-alpine AS builder
 
 # Install pnpm
 RUN corepack enable && corepack prepare pnpm@10.33.0 --activate
@@ -23,7 +23,7 @@ RUN pnpm install
 RUN pnpm build
 
 # Production stage
-FROM node:20-alpine AS runner
+FROM node:24-alpine AS runner
 
 WORKDIR /app
 

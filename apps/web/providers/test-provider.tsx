@@ -15,6 +15,7 @@ import type {
   UserSettings,
 } from '@nbti/core'
 import { calculateScores } from '@nbti/core'
+import { uuidV4 } from '@/lib/uuid'
 
 const STORAGE_KEY_PREFIX = 'nbti_test_'
 
@@ -174,7 +175,7 @@ export function TestProvider({ children }: { children: ReactNode }) {
       // 没有保存的进度，创建新会话
       const questions = config.questions.questions
       const newSession: TestSession = {
-        id: crypto.randomUUID(),
+        id: uuidV4(),
         packageId: config.manifest.id,
         startTime: Date.now(),
         currentIndex: 0,
