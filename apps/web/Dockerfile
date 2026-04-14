@@ -39,6 +39,9 @@ COPY --from=builder --chown=nextjs:nodejs /app/apps/web/.next/standalone ./
 # Copy static assets (server.js runs from apps/web/ due to process.chdir)
 COPY --from=builder --chown=nextjs:nodejs /app/apps/web/.next/static ./apps/web/.next/static
 
+# Copy public assets (favicon, etc.)
+COPY --from=builder --chown=nextjs:nodejs /app/apps/web/public ./apps/web/public
+
 USER nextjs
 
 EXPOSE 3000
