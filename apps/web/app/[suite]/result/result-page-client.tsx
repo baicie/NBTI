@@ -1,11 +1,20 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useTest } from '@/providers/test-provider'
-import { ChevronDown, Download, RefreshCw, Share2 } from 'lucide-react'
+import {
+  Check,
+  ChevronDown,
+  Download,
+  RefreshCw,
+  Share2,
+  X,
+} from 'lucide-react'
 import type { PersonalityType } from '@nbti/core'
 import { type TypeMatchResult, getTypeMatchResult } from '@/lib/type-mapper'
+import type { Template, TemplateVariables } from '@/lib/types/template'
+import { renderTemplate } from '@/lib/template-renderer'
 
 interface ResultPageClientProps {
   suiteId: string
@@ -29,6 +38,10 @@ interface ResultPageClientProps {
       size?: string
     }
   }
+  templates?: {
+    defaultTemplate?: string
+    templates: Template[]
+  }
   locale?: string
 }
 
@@ -46,6 +59,7 @@ export function ResultPageClient({
   types,
   dimensions,
   manifest,
+  templates,
   locale = 'zh',
 }: ResultPageClientProps) {
   const router = useRouter()
@@ -53,6 +67,13 @@ export function ResultPageClient({
   const [isGenerating, setIsGenerating] = useState(false)
   const [expandedSection, setExpandedSection] = useState<string | null>(null)
   const [animateIn, setAnimateIn] = useState(false)
+  const [showShareModal, setShowShareModal] = useState(false)
+  const [selectedTemplateId, setSelectedTemplateId] = useState<string | null>(
+    null,
+  )
+  const [qrImageUrl, setQrImageUrl] = useState<string>('')
+  const [downloadSuccess, setDownloadSuccess] = useState(false)
+  const shareCardRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     setAnimateIn(true)
@@ -150,12 +171,24 @@ export function ResultPageClient({
     return Math.round(100 - avgDiff * 2)
   }, [result, typeMatchResult])
 
-  const handleDownload = () => {
+  const handleDownload = useCallback(async () => {
+    if (!typeResult || !templates?.templates.length) return
     setIsGenerating(true)
-    new Promise<void>(resolve => setTimeout(resolve, 2000)).finally(() => {
+    setDownloadSuccess(false)
+    try {
+      await generateShareCard()
+    } finally {
       setIsGenerating(false)
-    })
-  }
+    }
+  }, [
+    typeResult,
+    matchScore,
+    dimensionResults,
+    selectedTemplateId,
+    locale,
+    suiteId,
+    templates,
+  ])
 
   const handleShare = () => {
     if (typeof navigator !== 'undefined' && navigator.share) {
@@ -165,13 +198,206 @@ export function ResultPageClient({
           text: `我的 ${suiteName} 类型是 ${typeResult?.id || '???'}（${getLocalizedContent(typeResult?.name || { zh: '未知' })})`,
         })
         .catch(() => {})
+    } else {
+      setShowShareModal(true)
     }
   }
+
+  const generateShareCard = async () => {
+    if (!typeResult || !templates?.templates.length) return
+
+    const defaultTemplateId = templates.defaultTemplate || 'gradient'
+    const template =
+      templates.templates.find(t => t.id === selectedTemplateId) ||
+      templates.templates.find(t => t.id === defaultTemplateId) ||
+      templates.templates[0]
+
+    const shareUrl =
+      typeof window !== 'undefined'
+        ? `${window.location.origin}/${suiteId}/result`
+        : `https://example.com/${suiteId}/result`
+
+    // Generate QR code first
+    let qrDataUrl = ''
+    try {
+      const QRCode = (await import('qrcode')).default
+      qrDataUrl = await QRCode.toDataURL(shareUrl, {
+        width: 300,
+        margin: 2,
+        color: {
+          dark: '#18181b',
+          light: '#ffffff',
+        },
+      })
+    } catch {
+      // Continue without QR code
+    }
+
+    const dimensionData = dimensionResults.map(dim => ({
+      name: dim.name,
+      leftLetter: dim.leftLetter,
+      rightLetter: dim.rightLetter,
+      percentage: dim.percentage,
+    }))
+
+    const variables: TemplateVariables = {
+      typeCode: typeResult.id,
+      typeName: getLocalizedContent(typeResult.name),
+      typeImage: getLocalizedContent(typeResult.posterImage),
+      subtitle: getLocalizedContent(typeResult.subtitle),
+      description: getLocalizedContent(typeResult.description),
+      shortDescription: getLocalizedContent(typeResult.subtitle),
+      traits: (typeResult.traits || []).map(t => ({
+        name: getLocalizedContent(t.name),
+        level: t.level,
+      })),
+      matchScore,
+      shareUrl,
+      suiteName,
+      dominantDimensions: dimensionData,
+    }
+
+    let html = renderTemplate(template, variables)
+
+    // Inject QR code image into the template HTML
+    if (qrDataUrl) {
+      html = html.replace(
+        '>二维码</div>',
+        `><img src="${qrDataUrl}" style="width:100%;height:100%;object-fit:contain;" /></div>`,
+      )
+    }
+
+    // Create a hidden container for rendering
+    const container = document.createElement('div')
+    container.style.position = 'fixed'
+    container.style.left = '-9999px'
+    container.style.top = '0'
+    container.style.zIndex = '-1'
+    container.style.background = 'transparent'
+    container.innerHTML = html
+    document.body.appendChild(container)
+
+    try {
+      await new Promise(resolve => setTimeout(resolve, 200))
+
+      const html2canvas = (await import('html2canvas')).default
+      const canvas = await html2canvas(
+        container.firstElementChild as HTMLElement,
+        {
+          scale: 2,
+          useCORS: true,
+          backgroundColor: null,
+          logging: false,
+        },
+      )
+
+      canvas.toBlob(blob => {
+        if (!blob) return
+        const url = URL.createObjectURL(blob)
+        const link = document.createElement('a')
+        link.href = url
+        link.download = `${suiteId}-${typeResult.id}-result.png`
+        link.click()
+        URL.revokeObjectURL(url)
+        setDownloadSuccess(true)
+        setTimeout(() => setDownloadSuccess(false), 3000)
+      }, 'image/png')
+    } finally {
+      document.body.removeChild(container)
+    }
+  }
+
+  const handleSelectTemplate = useCallback((templateId: string) => {
+    setSelectedTemplateId(templateId)
+  }, [])
+
+  // Render template preview when selection changes
+  useEffect(() => {
+    if (!selectedTemplateId || !typeResult || !templates?.templates.length)
+      return
+
+    const template = templates.templates.find(t => t.id === selectedTemplateId)
+    if (!template) return
+
+    const shareUrl =
+      typeof window !== 'undefined'
+        ? `${window.location.origin}/${suiteId}/result`
+        : `https://example.com/${suiteId}/result`
+
+    const dimensionData = dimensionResults.map(dim => ({
+      name: dim.name,
+      leftLetter: dim.leftLetter,
+      rightLetter: dim.rightLetter,
+      percentage: dim.percentage,
+    }))
+
+    const variables: TemplateVariables = {
+      typeCode: typeResult.id,
+      typeName: getLocalizedContent(typeResult.name),
+      typeImage: getLocalizedContent(typeResult.posterImage),
+      subtitle: getLocalizedContent(typeResult.subtitle),
+      description: getLocalizedContent(typeResult.description),
+      shortDescription: getLocalizedContent(typeResult.subtitle),
+      traits: (typeResult.traits || []).map(t => ({
+        name: getLocalizedContent(t.name),
+        level: t.level,
+      })),
+      matchScore,
+      shareUrl,
+      suiteName,
+      dominantDimensions: dimensionData,
+    }
+
+    const html = renderTemplate(template, variables)
+    if (shareCardRef.current) {
+      shareCardRef.current.innerHTML = html
+    }
+
+    // Generate QR code
+    ;(async () => {
+      try {
+        const QRCode = (await import('qrcode')).default
+        const qrDataUrl = await QRCode.toDataURL(shareUrl, {
+          width: 300,
+          margin: 2,
+          color: {
+            dark: '#18181b',
+            light: '#ffffff',
+          },
+        })
+        setQrImageUrl(qrDataUrl)
+      } catch {
+        setQrImageUrl('')
+      }
+    })()
+  }, [
+    selectedTemplateId,
+    typeResult,
+    templates,
+    suiteId,
+    dimensionResults,
+    matchScore,
+    locale,
+    suiteName,
+  ])
 
   const handleRetake = () => {
     resetTest()
     router.push(`/${suiteId}`)
   }
+
+  // Initialize selected template
+  useEffect(() => {
+    if (templates?.templates.length && !selectedTemplateId) {
+      const defaultId = templates.defaultTemplate || 'gradient'
+      const targetId =
+        templates.templates.find(t => t.id === defaultId)?.id ||
+        templates.templates[0]?.id
+      if (targetId) {
+        setSelectedTemplateId(targetId)
+      }
+    }
+  }, [templates, selectedTemplateId])
 
   const dominantDims = dimensionResults.filter(d => d.percentage !== 50)
 
@@ -834,9 +1060,8 @@ export function ResultPageClient({
               分享结果
             </button>
             <button
-              onClick={handleDownload}
-              disabled={isGenerating}
-              className="flex-1 min-w-[140px] py-3 rounded-xl font-bold transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
+              onClick={() => setShowShareModal(true)}
+              className="flex-1 min-w-[120px] py-3 rounded-xl font-bold transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
               style={{
                 background:
                   'linear-gradient(135deg, var(--suite-primary), var(--suite-secondary))',
@@ -847,11 +1072,154 @@ export function ResultPageClient({
               }}
             >
               <Download className="w-4 h-4 inline mr-2" />
-              {isGenerating ? '生成中...' : '保存图片'}
+              保存图片
             </button>
           </div>
         </div>
       </div>
+
+      {/* Share Card Modal */}
+      {showShareModal && templates && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          style={{
+            backgroundColor: 'rgba(0,0,0,0.6)',
+            backdropFilter: 'blur(4px)',
+          }}
+          onClick={e => {
+            if (e.target === e.currentTarget) setShowShareModal(false)
+          }}
+        >
+          <div
+            className="relative w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-3xl"
+            style={{ background: 'var(--suite-card)' }}
+          >
+            {/* Modal Header */}
+            <div
+              className="sticky top-0 z-10 flex items-center justify-between p-4"
+              style={{
+                background: 'var(--suite-card)',
+                borderBottom: '1px solid var(--suite-border)',
+              }}
+            >
+              <h2
+                className="text-lg font-bold"
+                style={{ color: 'var(--suite-foreground)' }}
+              >
+                生成分享图片
+              </h2>
+              <button
+                onClick={() => setShowShareModal(false)}
+                className="w-8 h-8 flex items-center justify-center rounded-full transition-colors"
+                style={{
+                  background: 'var(--suite-muted)',
+                  color: 'var(--suite-muted-foreground)',
+                }}
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Template Selector */}
+            {templates.templates.length > 1 && (
+              <div className="px-4 pt-4">
+                <p
+                  className="text-xs mb-2"
+                  style={{ color: 'var(--suite-muted-foreground)' }}
+                >
+                  选择模板
+                </p>
+                <div className="flex gap-2 overflow-x-auto pb-2">
+                  {templates.templates.map(t => (
+                    <button
+                      key={t.id}
+                      onClick={() => handleSelectTemplate(t.id)}
+                      className="flex-shrink-0 px-3 py-2 rounded-xl text-sm font-medium transition-all"
+                      style={
+                        selectedTemplateId === t.id
+                          ? {
+                              background:
+                                'linear-gradient(135deg, var(--suite-primary), var(--suite-secondary))',
+                              color: 'var(--suite-primary-foreground)',
+                            }
+                          : {
+                              background: 'var(--suite-muted)',
+                              color: 'var(--suite-muted-foreground)',
+                            }
+                      }
+                    >
+                      {getLocalizedContent(t.name)}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Card Preview */}
+            <div className="p-4">
+              <div
+                className="mx-auto overflow-hidden rounded-2xl shadow-xl"
+                style={{
+                  width: '270px',
+                  height: '270px',
+                  transform: 'scale(1)',
+                  transformOrigin: 'top center',
+                }}
+              >
+                <div ref={shareCardRef} className="w-full h-full" />
+              </div>
+            </div>
+
+            {/* QR Code & Download */}
+            <div className="px-4 pb-4 space-y-3">
+              {qrImageUrl && (
+                <div className="flex justify-center">
+                  <div
+                    className="p-2 rounded-xl"
+                    style={{ background: '#fff' }}
+                  >
+                    <img src={qrImageUrl} alt="QR Code" className="w-24 h-24" />
+                    <p
+                      className="text-[10px] text-center mt-1"
+                      style={{ color: '#999' }}
+                    >
+                      扫码分享
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {downloadSuccess && (
+                <div
+                  className="flex items-center justify-center gap-2 py-2 rounded-xl text-sm"
+                  style={{
+                    background: 'color-mix(in srgb, #10b981 10%, transparent)',
+                    color: '#10b981',
+                  }}
+                >
+                  <Check className="w-4 h-4" />
+                  图片已保存
+                </div>
+              )}
+
+              <button
+                onClick={handleDownload}
+                disabled={isGenerating}
+                className="w-full py-3.5 rounded-xl font-bold transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
+                style={{
+                  background:
+                    'linear-gradient(135deg, var(--suite-primary), var(--suite-secondary))',
+                  color: 'var(--suite-primary-foreground)',
+                  boxShadow:
+                    '0 4px 16px color-mix(in srgb, var(--suite-primary) 25%, transparent)',
+                }}
+              >
+                {isGenerating ? '生成中...' : '下载图片'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Global Styles */}
       <style jsx global>{`

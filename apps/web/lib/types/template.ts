@@ -49,6 +49,7 @@ export interface TemplateElementStyle {
   lineColor?: string
   lineWidth?: number
   fillColor?: string
+  objectFit?: 'cover' | 'contain' | 'fill' | 'none' | 'scale-down'
 }
 
 /**
@@ -115,6 +116,7 @@ export interface TemplatesConfig {
 export interface TemplateVariables {
   typeCode: string
   typeName: string
+  typeImage?: string
   subtitle: string
   description: string
   shortDescription: string

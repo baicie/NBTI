@@ -27,6 +27,17 @@
       },
       "elements": [
         {
+          "id": "type-image",
+          "type": "image",
+          "position": { "x": 540, "y": 80 },
+          "size": { "width": 600, "height": 400 },
+          "image": "{{typeImage}}",
+          "style": {
+            "objectFit": "contain",
+            "opacity": 1
+          }
+        },
+        {
           "id": "logo-area",
           "type": "shape",
           "shape": "rectangle",

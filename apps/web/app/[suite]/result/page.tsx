@@ -1,6 +1,7 @@
 import { loadFullSuite } from '@/lib/suite-loader'
 import { ResultPageClient } from './result-page-client'
 import type { PersonalityType } from '@nbti/core'
+import type { TemplatesConfig } from '@/lib/types/template'
 
 interface ResultPageProps {
   params: Promise<{ suite: string }>
@@ -24,7 +25,7 @@ export default async function ResultPage({ params }: ResultPageProps) {
   const { suite: suiteId } = await params
 
   // 加载套件数据
-  const { manifest, types, questions } = await loadFullSuite(suiteId)
+  const { manifest, types, questions, templates } = await loadFullSuite(suiteId)
 
   // 类型断言
   const typedManifest = manifest as {
@@ -63,6 +64,7 @@ export default async function ResultPage({ params }: ResultPageProps) {
       types={typedTypes.types || []}
       dimensions={dimensions}
       manifest={typedManifest}
+      templates={templates as TemplatesConfig | undefined}
     />
   )
 }

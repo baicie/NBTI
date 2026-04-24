@@ -72,6 +72,11 @@ function generateElementStyle(element: TemplateElement): string {
     }
   }
 
+  // Handle object-fit for images
+  if (element.type === 'image' && style.objectFit) {
+    parts.push(`object-fit: ${style.objectFit}`)
+  }
+
   if (
     element.type === 'text' ||
     element.type === 'qrcode' ||
@@ -217,6 +222,41 @@ function renderShapeElement(
 }
 
 /**
+ * 渲染图片元素
+ */
+function renderImageElement(
+  element: TemplateElement,
+  variables: TemplateVariables,
+  width: number,
+  height: number,
+): string {
+  const pos = element.position as { x: number | string; y: number | string }
+  const x = parsePosition(pos.x, width)
+  const y = parsePosition(pos.y, height)
+  const size = element.size || { width: 400, height: 400 }
+  const style = generateElementStyle(element)
+
+  // 支持从变量中获取图片 URL（如 {{typeImage}}）
+  let imageUrl = (element.image as string) || ''
+  if (imageUrl.startsWith('{{') && imageUrl.endsWith('}}')) {
+    const varName = imageUrl.slice(2, -2)
+    imageUrl = (variables as unknown as Record<string, string>)[varName] || ''
+  }
+
+  return `
+    <img src="${imageUrl}" style="
+      position: absolute;
+      left: ${x};
+      top: ${y};
+      width: ${typeof size.width === 'number' ? `${size.width}px` : size.width};
+      height: ${typeof size.height === 'number' ? `${size.height}px` : size.height};
+      object-fit: cover;
+      ${style};
+      box-sizing: border-box;
+    " />`
+}
+
+/**
  * 渲染分隔线元素
  */
 function renderDividerElement(
@@ -329,6 +369,76 @@ function renderQrcodeElement(
 }
 
 /**
+ * 渲染维度条元素
+ */
+function renderDimensionBarElement(
+  element: TemplateElement,
+  variables: TemplateVariables,
+  width: number,
+  height: number,
+): string {
+  const pos = element.position as { x: number | string; y: number | string }
+  const x = parsePosition(pos.x, width)
+  const y = parsePosition(pos.y, height)
+  const style = element.style || {}
+  const barWidth = (element.size?.width || 400) * 0.6
+  const barHeight = element.size?.height || 20
+
+  if (!variables.dominantDimensions?.length) return ''
+
+  const barsHtml = variables.dominantDimensions
+    .slice(0, 3)
+    .map(dim => {
+      const leftColor = style.color || 'rgba(255,255,255,0.7)'
+      const rightColor = '#ffffff'
+      const fillColor = '#ffffff'
+      const percentage = dim.percentage / 100
+
+      return `
+        <div style="
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          margin-bottom: 8px;
+        ">
+          <span style="color: ${leftColor}; font-size: 18px; font-weight: 500; width: 40px; text-align: right;">${dim.leftLetter}</span>
+          <div style="
+            position: relative;
+            width: ${barWidth}px;
+            height: ${barHeight}px;
+            background: rgba(255,255,255,0.2);
+            border-radius: ${barHeight / 2}px;
+            overflow: hidden;
+          ">
+            <div style="
+              position: absolute;
+              left: 0;
+              top: 0;
+              width: ${barWidth * percentage}px;
+              height: ${barHeight}px;
+              background: ${fillColor};
+              border-radius: ${barHeight / 2}px;
+            "></div>
+          </div>
+          <span style="color: ${rightColor}; font-size: 18px; font-weight: 500; width: 40px;">${dim.rightLetter}</span>
+        </div>
+      `
+    })
+    .join('')
+
+  return `
+    <div style="
+      position: absolute;
+      left: ${x};
+      top: ${y};
+      display: flex;
+      flex-direction: column;
+    ">${barsHtml}</div>
+  `
+}
+
+/**
  * 渲染单个元素
  */
 function renderElement(
@@ -350,6 +460,10 @@ function renderElement(
       return renderTraitBadgesElement(element, variables, width, height)
     case 'qrcode':
       return renderQrcodeElement(element, width, height)
+    case 'image':
+      return renderImageElement(element, variables, width, height)
+    case 'dimension-bar':
+      return renderDimensionBarElement(element, variables, width, height)
     default:
       return ''
   }
