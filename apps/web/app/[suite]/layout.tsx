@@ -26,5 +26,5 @@ export default async function SuiteLayout({
   // 加载主题
   const theme = await loadSuiteTheme(suite)
 
-  return <ThemeProvider theme={theme}>{children}</ThemeProvider>
+  return <ThemeProvider theme={theme!}>{children}</ThemeProvider>
 }

@@ -1,0 +1,222 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://nbti.app/schemas/types.schema.json",
+  "title": "NBTI Personality Types",
+  "description": "结果类型定义配置文件",
+  "type": "object",
+  "required": ["types"],
+  "additionalProperties": true,
+  "properties": {
+    "meta": {
+      "type": "object",
+      "description": "元信息",
+      "properties": {
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "lastUpdated": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "dimensions": {
+      "type": "array",
+      "description": "维度定义（可选，用于补充 manifest 中的维度信息）",
+      "items": {
+        "type": "object",
+        "required": ["id", "left", "right"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Z]{2}$"
+          },
+          "name": {
+            "$ref": "manifest.schema.json#/definitions/localizedString"
+          },
+          "left": {
+            "type": "object",
+            "required": ["letter", "name"],
+            "properties": {
+              "letter": {
+                "type": "string",
+                "pattern": "^[A-Z]$",
+                "description": "左侧字母"
+              },
+              "name": {
+                "$ref": "manifest.schema.json#/definitions/localizedString"
+              },
+              "description": {
+                "$ref": "manifest.schema.json#/definitions/localizedString"
+              }
+            }
+          },
+          "right": {
+            "type": "object",
+            "required": ["letter", "name"],
+            "properties": {
+              "letter": {
+                "type": "string",
+                "pattern": "^[A-Z]$"
+              },
+              "name": {
+                "$ref": "manifest.schema.json#/definitions/localizedString"
+              },
+              "description": {
+                "$ref": "manifest.schema.json#/definitions/localizedString"
+              }
+            }
+          }
+        }
+      }
+    },
+    "types": {
+      "type": "array",
+      "description": "人格类型列表",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "name"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "类型代码",
+            "pattern": "^[A-Z]{2,6}$",
+            "examples": ["INTJ", "ENFP", "ISTP"]
+          },
+          "name": {
+            "$ref": "manifest.schema.json#/definitions/localizedString",
+            "description": "类型名称（如：建筑师、冒险家）"
+          },
+          "subtitle": {
+            "$ref": "manifest.schema.json#/definitions/localizedString",
+            "description": "类型副标题/描述语"
+          },
+          "description": {
+            "$ref": "manifest.schema.json#/definitions/localizedString",
+            "description": "详细描述"
+          },
+          "icon": {
+            "type": "string",
+            "description": "图标名称（lucide-react 图标名）",
+            "examples": ["brain", "target", "compass"]
+          },
+          "color": {
+            "type": "string",
+            "description": "类型主题色（用于结果图）",
+            "pattern": "^#[0-9A-Fa-f]{6}$",
+            "examples": ["#667eea", "#764ba2"]
+          },
+          "traits": {
+            "type": "array",
+            "description": "特质列表",
+            "items": {
+              "type": "object",
+              "required": ["id", "name", "level"],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9-]+$"
+                },
+                "name": {
+                  "$ref": "manifest.schema.json#/definitions/localizedString"
+                },
+                "icon": {
+                  "type": "string",
+                  "description": "特质图标"
+                },
+                "level": {
+                  "type": "integer",
+                  "description": "特质强度（1-100）",
+                  "minimum": 1,
+                  "maximum": 100
+                },
+                "description": {
+                  "$ref": "manifest.schema.json#/definitions/localizedString"
+                }
+              }
+            }
+          },
+          "strengths": {
+            "type": "array",
+            "description": "优势列表",
+            "items": {
+              "$ref": "manifest.schema.json#/definitions/localizedString"
+            },
+            "minItems": 1,
+            "maxItems": 10
+          },
+          "weaknesses": {
+            "type": "array",
+            "description": "劣势/成长空间列表",
+            "items": {
+              "$ref": "manifest.schema.json#/definitions/localizedString"
+            },
+            "minItems": 1,
+            "maxItems": 10
+          },
+          "compatibleTypes": {
+            "type": "array",
+            "description": "兼容类型列表",
+            "items": {
+              "type": "string",
+              "pattern": "^[A-Z]{2,6}$"
+            },
+            "examples": [
+              ["ENFP", "ENTP"],
+              ["INFJ", "INFP"]
+            ]
+          },
+          "incompatibleTypes": {
+            "type": "array",
+            "description": "不兼容类型列表（可选）",
+            "items": {
+              "type": "string",
+              "pattern": "^[A-Z]{2,6}$"
+            }
+          },
+          "careers": {
+            "type": "array",
+            "description": "适合职业",
+            "items": {
+              "$ref": "manifest.schema.json#/definitions/localizedString"
+            },
+            "maxItems": 10
+          },
+          "relationships": {
+            "$ref": "manifest.schema.json#/definitions/localizedString",
+            "description": "人际关系描述"
+          },
+          "workStyle": {
+            "$ref": "manifest.schema.json#/definitions/localizedString",
+            "description": "工作风格描述"
+          },
+          "communicationStyle": {
+            "$ref": "manifest.schema.json#/definitions/localizedString",
+            "description": "沟通风格描述"
+          },
+          "famousPeople": {
+            "type": "array",
+            "description": "名人/榜样",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 10
+          },
+          "quotes": {
+            "type": "array",
+            "description": "名言（可选）",
+            "items": {
+              "type": "object",
+              "properties": {
+                "text": { "type": "string" },
+                "author": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -21,7 +21,18 @@
       "thumbnail": "/thumbnails/disc.png",
       "enabled": true,
       "order": 2
+    },
+    {
+      "id": "pr01",
+      "name": { "zh": "打工人人格测试", "en": "Work Persona Test" },
+      "description": {
+        "zh": "揭示你在职场和生活中的隐藏人格特质",
+        "en": "Discover your hidden personality traits in work and life"
+      },
+      "thumbnail": "/thumbnails/pr01.png",
+      "enabled": true,
+      "order": 3
     }
   ],
-  "updatedAt": "2026-04-10"
+  "updatedAt": "2026-04-24"
 }

@@ -1,0 +1,43 @@
+{
+  "id": "pr01",
+  "name": {
+    "zh": "打工人人格测试",
+    "en": "Work Persona Test"
+  },
+  "version": "1.0.0",
+  "description": {
+    "zh": "揭示你在职场和生活中的隐藏人格特质",
+    "en": "Discover your hidden personality traits in work and life"
+  },
+  "thumbnail": "/thumbnails/pr01.png",
+  "dimensions": ["SA", "EE", "AM"],
+  "config": {
+    "questions": "questions.json",
+    "types": "types.json",
+    "themes": "theme.json",
+    "templates": "templates.json"
+  },
+  "settings": {
+    "layout": "single",
+    "allowBack": true,
+    "showTimer": false,
+    "shuffleQuestions": false,
+    "shuffleOptions": false,
+    "requiredAnswer": false,
+    "maxDuration": null,
+    "showDimensions": true
+  },
+  "background": {
+    "enabled": false,
+    "image": "",
+    "opacity": 0.5,
+    "position": "center",
+    "size": "cover"
+  },
+  "scoring": {
+    "type": "multi-dimensional",
+    "dimensions": ["SA", "EE", "AM"],
+    "calculateMethod": "difference",
+    "normalizeOutput": true
+  }
+}

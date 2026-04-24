@@ -1,0 +1,158 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://nbti.app/schemas/manifest.schema.json",
+  "title": "NBTI Test Package Manifest",
+  "description": "测试包的元信息配置文件",
+  "type": "object",
+  "required": ["id", "name", "version", "config"],
+  "additionalProperties": true,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "测试包唯一标识符",
+      "pattern": "^[a-z0-9-]+$",
+      "examples": ["nbti-mbti-2024", "my-custom-test"]
+    },
+    "name": {
+      "$ref": "#/definitions/localizedString",
+      "description": "测试包显示名称"
+    },
+    "version": {
+      "type": "string",
+      "description": "语义化版本号",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "examples": ["1.0.0", "0.1.0-beta"]
+    },
+    "description": {
+      "$ref": "#/definitions/localizedString",
+      "description": "测试包详细描述"
+    },
+    "author": {
+      "type": "string",
+      "description": "作者名称",
+      "examples": ["NBTI Team", "John Doe"]
+    },
+    "thumbnail": {
+      "type": "string",
+      "format": "uri",
+      "description": "封面图片 URL"
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "标签列表，用于分类和搜索",
+      "examples": [["personality", "mbri", "career"]]
+    },
+    "config": {
+      "type": "object",
+      "description": "配置文件路径映射",
+      "required": ["questions", "types"],
+      "properties": {
+        "questions": {
+          "type": "string",
+          "description": "题库文件路径（相对于包根目录）",
+          "default": "questions.json"
+        },
+        "types": {
+          "type": "string",
+          "description": "结果类型文件路径",
+          "default": "types.json"
+        },
+        "templates": {
+          "type": "string",
+          "description": "结果图模板文件路径",
+          "default": "templates.json"
+        },
+        "themes": {
+          "type": "string",
+          "description": "主题配置文件路径",
+          "default": "themes.json"
+        },
+        "i18n": {
+          "type": "string",
+          "description": "国际化文件夹路径"
+        }
+      }
+    },
+    "settings": {
+      "type": "object",
+      "description": "测试行为设置",
+      "properties": {
+        "allowBack": {
+          "type": "boolean",
+          "description": "是否允许返回上一题",
+          "default": true
+        },
+        "showTimer": {
+          "type": "boolean",
+          "description": "是否显示计时器",
+          "default": false
+        },
+        "shuffleQuestions": {
+          "type": "boolean",
+          "description": "是否随机打乱题目顺序",
+          "default": false
+        },
+        "shuffleOptions": {
+          "type": "boolean",
+          "description": "是否随机打乱选项顺序",
+          "default": false
+        },
+        "requiredAnswer": {
+          "type": "boolean",
+          "description": "是否必须回答才能继续",
+          "default": true
+        },
+        "maxDuration": {
+          "type": ["integer", "null"],
+          "description": "最大测试时长（秒），null 表示不限时",
+          "minimum": 60,
+          "examples": [null, 600, 1800]
+        }
+      }
+    },
+    "scoring": {
+      "type": "object",
+      "description": "计分配置",
+      "required": ["type", "dimensions"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["dimension", "percentage", "weighted-sum"],
+          "description": "计分类型：dimension=维度差值法，percentage=百分比法，weighted-sum=加权求和法"
+        },
+        "dimensions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z]{2}$"
+          },
+          "description": "维度列表，每项为两个大写字母",
+          "examples": [["EI", "NS", "TF", "JP"], ["OCEAN"]]
+        },
+        "calculateMethod": {
+          "type": "string",
+          "enum": ["difference", "ratio", "absolute"],
+          "description": "计算方法：difference=差值，ratio=比值，absolute=绝对值",
+          "default": "difference"
+        },
+        "normalizeOutput": {
+          "type": "boolean",
+          "description": "是否归一化输出到 0-100",
+          "default": true
+        }
+      }
+    }
+  },
+  "definitions": {
+    "localizedString": {
+      "type": "object",
+      "description": "本地化字符串，支持多语言",
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1
+      },
+      "examples": [{ "zh": "性格测试", "en": "Personality Test" }]
+    }
+  }
+}

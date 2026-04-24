@@ -1,15 +1,21 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useTest } from '@/providers/test-provider'
 import { ChevronDown, Download, RefreshCw, Share2 } from 'lucide-react'
-import type { DimensionDefinition, PersonalityType } from '@nbti/core'
+import type { PersonalityType } from '@nbti/core'
+import { type TypeMatchResult, getTypeMatchResult } from '@/lib/type-mapper'
 
 interface ResultPageClientProps {
   suiteId: string
   types: PersonalityType[]
-  dimensions: DimensionDefinition[]
+  dimensions: Array<{
+    id: string
+    name: Record<string, string>
+    leftLabel: Record<string, string>
+    rightLabel: Record<string, string>
+  }>
   manifest: {
     name: Record<string, string>
     settings?: {
@@ -32,21 +38,7 @@ interface DimensionResult {
   leftLetter: string
   rightLetter: string
   percentage: number
-}
-
-interface TypeResult {
-  id: string
-  name: Record<string, string>
-  posterImage?: Record<string, string>
-  posterCaption?: Record<string, string>
-  subtitle: Record<string, string>
-  description: Record<string, string>
-  traits: Array<{
-    id: string
-    name: Record<string, string>
-    level: number
-  }>
-  color?: string
+  dominant: string
 }
 
 export function ResultPageClient({
@@ -78,37 +70,77 @@ export function ResultPageClient({
 
   const suiteName = getLocalizedContent(manifest.name)
 
-  const dimensionResults: DimensionResult[] = dimensions.map(dim => {
-    const dimResult = result?.dimensions.find(d => d.dimensionId === dim.id)
-    const percentage = dimResult?.percentage ?? 50
-    return {
+  // 使用 type-mapper 计算类型匹配结果
+  const typeMatchResult = useMemo<TypeMatchResult | null>(() => {
+    if (!result || !types.length) return null
+
+    // 构建维度定义
+    const dimDefinitions = dimensions.map(dim => ({
       id: dim.id,
-      name: dim.name ? getLocalizedContent(dim.name) : dim.id,
-      leftLetter: dim.left.letter,
-      rightLetter: dim.right.letter,
-      percentage,
+      name: dim.name,
+      leftLabel: dim.leftLabel,
+      rightLabel: dim.rightLabel,
+    }))
+
+    // 使用原始分数计算
+    return getTypeMatchResult(result.rawScores, types, dimDefinitions)
+  }, [result, types, dimensions])
+
+  // 维度结果
+  const dimensionResults: DimensionResult[] = useMemo(() => {
+    if (!result?.dimensions) {
+      // 如果没有 result，使用 typeMatchResult 的维度
+      return (
+        typeMatchResult?.dimensionResults.map(dim => ({
+          id: dim.id,
+          name: dim.name,
+          leftLetter: dim.leftLetter,
+          rightLetter: dim.rightLetter,
+          percentage: dim.percentage,
+          dominant: dim.dominant,
+        })) || []
+      )
     }
-  })
 
-  const getTypeResult = (): TypeResult | null => {
-    if (!result || !result.typeCode) return null
+    return result.dimensions.map(dim => {
+      const dimDef = dimensions.find(d => d.id === dim.dimensionId)
+      return {
+        id: dim.dimensionId,
+        name: dimDef ? getLocalizedContent(dimDef.name) : dim.dimensionId,
+        leftLetter: dim.leftLetter,
+        rightLetter: dim.rightLetter,
+        percentage: dim.percentage,
+        dominant: dim.dominant,
+      }
+    })
+  }, [result, dimensions, typeMatchResult])
 
-    const typeInfo = types.find(t => t.id === result.typeCode)
-    if (!typeInfo) return null
+  // 类型结果
+  const typeResult = typeMatchResult?.matchedType
+    ? {
+        id: typeMatchResult.matchedType.id,
+        name: typeMatchResult.matchedType.name,
+        posterImage: typeMatchResult.matchedType.posterImage,
+        posterCaption: typeMatchResult.matchedType.posterCaption,
+        subtitle: typeMatchResult.matchedType.subtitle || { zh: '', en: '' },
+        description: typeMatchResult.matchedType.description || {
+          zh: '',
+          en: '',
+        },
+        traits: typeMatchResult.matchedType.traits || [],
+        color: typeMatchResult.matchedType.color,
+      }
+    : null
 
-    return {
-      id: typeInfo.id,
-      name: typeInfo.name,
-      posterImage: typeInfo.posterImage,
-      posterCaption: typeInfo.posterCaption,
-      subtitle: typeInfo.subtitle || { zh: '', en: '' },
-      description: typeInfo.description || { zh: '', en: '' },
-      traits: typeInfo.traits || [],
-      color: typeInfo.color,
+  // 计算匹配度
+  const matchScore = useMemo(() => {
+    if (typeMatchResult) {
+      // 使用类型映射的匹配度
+      const scores = typeMatchResult.matchScores
+      if (scores.length > 0) {
+        return Math.round(scores[0].score)
+      }
     }
-  }
-
-  const getMatchScore = (): number => {
     if (!result?.dimensions || result.dimensions.length === 0) return 0
     const totalDiff = result.dimensions.reduce((sum, dim) => {
       const diff = Math.abs(dim.percentage - 50)
@@ -116,11 +148,53 @@ export function ResultPageClient({
     }, 0)
     const avgDiff = totalDiff / result.dimensions.length
     return Math.round(100 - avgDiff * 2)
+  }, [result, typeMatchResult])
+
+  const handleDownload = () => {
+    setIsGenerating(true)
+    new Promise<void>(resolve => setTimeout(resolve, 2000)).finally(() => {
+      setIsGenerating(false)
+    })
   }
 
-  const typeResult = getTypeResult()
+  const handleShare = () => {
+    if (typeof navigator !== 'undefined' && navigator.share) {
+      navigator
+        .share({
+          title: `${suiteName} 测试结果`,
+          text: `我的 ${suiteName} 类型是 ${typeResult?.id || '???'}（${getLocalizedContent(typeResult?.name || { zh: '未知' })})`,
+        })
+        .catch(() => {})
+    }
+  }
 
-  if (!result || !typeResult) {
+  const handleRetake = () => {
+    resetTest()
+    router.push(`/${suiteId}`)
+  }
+
+  const dominantDims = dimensionResults.filter(d => d.percentage !== 50)
+
+  const toggleSection = (section: string) => {
+    setExpandedSection(expandedSection === section ? null : section)
+  }
+
+  // 获取配置
+  const showDimensions = manifest.settings?.showDimensions !== false
+
+  // 背景图样式
+  const backgroundStyle =
+    manifest.background?.enabled && manifest.background?.image
+      ? {
+          backgroundImage: `url(${manifest.background.image})`,
+          backgroundPosition: manifest.background?.position || 'center',
+          backgroundSize: manifest.background?.size || 'cover',
+          backgroundAttachment: 'fixed' as const,
+        }
+      : {}
+
+  // 无结果状态
+  if (!result && !typeResult) {
     return (
       <div
         className="min-h-screen flex items-center justify-center px-4"
@@ -183,50 +257,6 @@ export function ResultPageClient({
     )
   }
 
-  const handleDownload = () => {
-    setIsGenerating(true)
-    new Promise<void>(resolve => setTimeout(resolve, 2000)).finally(() => {
-      setIsGenerating(false)
-    })
-  }
-
-  const handleShare = () => {
-    if (typeof navigator !== 'undefined' && navigator.share) {
-      navigator
-        .share({
-          title: `${suiteName} 测试结果`,
-          text: `我的 ${suiteName} 类型是 ${typeResult.id}（${getLocalizedContent(typeResult.name)}）`,
-        })
-        .catch(() => {})
-    }
-  }
-
-  const handleRetake = () => {
-    resetTest()
-    router.push(`/${suiteId}`)
-  }
-
-  const matchScore = getMatchScore()
-  const dominantDims = dimensionResults.filter(d => d.percentage !== 50)
-
-  const toggleSection = (section: string) => {
-    setExpandedSection(expandedSection === section ? null : section)
-  }
-
-  // 获取配置
-  const showDimensions = manifest.settings?.showDimensions !== false
-
-  // 背景图样式
-  const backgroundStyle =
-    manifest.background?.enabled && manifest.background?.image
-      ? {
-          backgroundImage: `url(${manifest.background.image})`,
-          backgroundPosition: manifest.background.position || 'center',
-          backgroundSize: manifest.background.size || 'cover',
-          backgroundAttachment: 'fixed' as const,
-        }
-      : {}
-
   return (
     <div
       className="min-h-screen py-8 md:py-12"
@@ -235,7 +265,9 @@ export function ResultPageClient({
       <div className="max-w-3xl mx-auto px-4">
         {/* Header Badge */}
         <div
-          className={`mb-6 transition-all duration-500 ${animateIn ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+          className={`mb-6 transition-all duration-500 ${
+            animateIn ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+          }`}
           style={{ transitionDelay: '0ms' }}
         >
           <div
@@ -264,7 +296,9 @@ export function ResultPageClient({
 
         {/* Main Result Card */}
         <div
-          className={`rounded-3xl overflow-hidden transition-all duration-700 ${animateIn ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+          className={`rounded-3xl overflow-hidden transition-all duration-700 ${
+            animateIn ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          }`}
           style={{ transitionDelay: '100ms' }}
         >
           {/* Poster Section */}
@@ -277,7 +311,7 @@ export function ResultPageClient({
           >
             <div className="grid md:grid-cols-2 gap-6 items-center">
               {/* Poster */}
-              {typeResult.posterImage ? (
+              {typeResult?.posterImage ? (
                 <div className="relative">
                   <div
                     className="absolute -top-4 -right-4 w-24 h-24 rounded-full opacity-20"
@@ -295,7 +329,7 @@ export function ResultPageClient({
                 <div
                   className="w-48 h-48 md:w-56 md:h-56 mx-auto rounded-2xl flex items-center justify-center relative overflow-hidden"
                   style={{
-                    background: `linear-gradient(135deg, ${typeResult.color || 'var(--suite-primary)'} 0%, var(--suite-secondary) 100%)`,
+                    background: `linear-gradient(135deg, ${typeResult?.color || 'var(--suite-primary)'} 0%, var(--suite-secondary) 100%)`,
                   }}
                 >
                   <div
@@ -309,7 +343,7 @@ export function ResultPageClient({
                     className="text-6xl md:text-7xl font-bold relative z-10"
                     style={{ color: '#ffffff' }}
                   >
-                    {typeResult.id}
+                    {typeResult?.id || '???'}
                   </span>
                 </div>
               )}
@@ -330,19 +364,19 @@ export function ResultPageClient({
                     lineHeight: 1,
                   }}
                 >
-                  {typeResult.id}
+                  {typeResult?.id || '???'}
                 </h1>
                 <div
                   className="text-xl mb-1"
                   style={{ color: 'var(--suite-foreground)', fontWeight: 500 }}
                 >
-                  {getLocalizedContent(typeResult.name)}
+                  {getLocalizedContent(typeResult?.name || { zh: '未知' })}
                 </div>
                 <div
                   className="text-sm mb-4"
                   style={{ color: 'var(--suite-muted-foreground)' }}
                 >
-                  {getLocalizedContent(typeResult.subtitle)}
+                  {getLocalizedContent(typeResult?.subtitle || { zh: '' })}
                 </div>
 
                 {/* Match Badge */}
@@ -387,7 +421,7 @@ export function ResultPageClient({
                   </div>
                 </div>
 
-                {typeResult.posterCaption && (
+                {typeResult?.posterCaption && (
                   <div
                     className="mt-3 text-sm"
                     style={{ color: 'var(--suite-muted-foreground)' }}
@@ -441,26 +475,32 @@ export function ResultPageClient({
                   </span>
                 </div>
                 <ChevronDown
-                  className={`w-5 h-5 transition-transform duration-300 ${expandedSection === 'analysis' ? 'rotate-180' : ''}`}
+                  className={`w-5 h-5 transition-transform duration-300 ${
+                    expandedSection === 'analysis' ? 'rotate-180' : ''
+                  }`}
                   style={{ color: 'var(--suite-muted-foreground)' }}
                 />
               </button>
               <div
-                className={`overflow-hidden transition-all duration-300 ${expandedSection === 'analysis' ? 'max-h-96' : 'max-h-0'}`}
+                className={`overflow-hidden transition-all duration-300 ${
+                  expandedSection === 'analysis' ? 'max-h-96' : 'max-h-0'
+                }`}
               >
                 <div className="px-4 pb-4">
                   <p
                     className="text-sm leading-relaxed"
                     style={{ color: 'var(--suite-muted-foreground)' }}
                   >
-                    {getLocalizedContent(typeResult.description)}
+                    {getLocalizedContent(
+                      typeResult?.description || { zh: '暂无描述' },
+                    )}
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* Dimensions Section - Only show if enabled */}
-            {showDimensions && (
+            {/* Dimensions Section */}
+            {showDimensions && dimensionResults.length > 0 && (
               <div
                 className="rounded-2xl overflow-hidden transition-all duration-300"
                 style={{
@@ -500,12 +540,16 @@ export function ResultPageClient({
                     </span>
                   </div>
                   <ChevronDown
-                    className={`w-5 h-5 transition-transform duration-300 ${expandedSection === 'dimensions' ? 'rotate-180' : ''}`}
+                    className={`w-5 h-5 transition-transform duration-300 ${
+                      expandedSection === 'dimensions' ? 'rotate-180' : ''
+                    }`}
                     style={{ color: 'var(--suite-muted-foreground)' }}
                   />
                 </button>
                 <div
-                  className={`overflow-hidden transition-all duration-300 ${expandedSection === 'dimensions' ? 'max-h-96' : 'max-h-0'}`}
+                  className={`overflow-hidden transition-all duration-300 ${
+                    expandedSection === 'dimensions' ? 'max-h-96' : 'max-h-0'
+                  }`}
                 >
                   <div className="px-4 pb-4 space-y-3">
                     {dimensionResults.map((dim, idx) => (
@@ -579,7 +623,7 @@ export function ResultPageClient({
             )}
 
             {/* Traits Section */}
-            {typeResult.traits && typeResult.traits.length > 0 && (
+            {typeResult?.traits && typeResult.traits.length > 0 && (
               <div
                 className="rounded-2xl overflow-hidden transition-all duration-300"
                 style={{
@@ -619,12 +663,16 @@ export function ResultPageClient({
                     </span>
                   </div>
                   <ChevronDown
-                    className={`w-5 h-5 transition-transform duration-300 ${expandedSection === 'traits' ? 'rotate-180' : ''}`}
+                    className={`w-5 h-5 transition-transform duration-300 ${
+                      expandedSection === 'traits' ? 'rotate-180' : ''
+                    }`}
                     style={{ color: 'var(--suite-muted-foreground)' }}
                   />
                 </button>
                 <div
-                  className={`overflow-hidden transition-all duration-300 ${expandedSection === 'traits' ? 'max-h-96' : 'max-h-0'}`}
+                  className={`overflow-hidden transition-all duration-300 ${
+                    expandedSection === 'traits' ? 'max-h-96' : 'max-h-0'
+                  }`}
                 >
                   <div className="px-4 pb-4">
                     <div className="grid grid-cols-2 gap-2">
@@ -656,6 +704,93 @@ export function ResultPageClient({
                 </div>
               </div>
             )}
+
+            {/* Top Matches Section (for pr01 with many types) */}
+            {typeMatchResult?.matchScores &&
+              typeMatchResult.matchScores.length > 1 && (
+                <div
+                  className="rounded-2xl overflow-hidden transition-all duration-300"
+                  style={{
+                    background: 'var(--suite-card)',
+                    border: '1px solid var(--suite-border)',
+                  }}
+                >
+                  <button
+                    onClick={() => toggleSection('topMatches')}
+                    className="w-full p-4 flex items-center justify-between"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div
+                        className="w-10 h-10 rounded-xl flex items-center justify-center"
+                        style={{ background: 'var(--suite-muted)' }}
+                      >
+                        <svg
+                          className="w-5 h-5"
+                          style={{ color: 'var(--suite-primary)' }}
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={1.5}
+                            d="M4 6h16M4 12h16m-7 6h7"
+                          />
+                        </svg>
+                      </div>
+                      <span
+                        className="font-semibold"
+                        style={{ color: 'var(--suite-foreground)' }}
+                      >
+                        其他可能
+                      </span>
+                    </div>
+                    <ChevronDown
+                      className={`w-5 h-5 transition-transform duration-300 ${
+                        expandedSection === 'topMatches' ? 'rotate-180' : ''
+                      }`}
+                      style={{ color: 'var(--suite-muted-foreground)' }}
+                    />
+                  </button>
+                  <div
+                    className={`overflow-hidden transition-all duration-300 ${
+                      expandedSection === 'topMatches' ? 'max-h-96' : 'max-h-0'
+                    }`}
+                  >
+                    <div className="px-4 pb-4 space-y-2">
+                      {typeMatchResult.matchScores.slice(1).map(match => (
+                        <div
+                          key={match.typeId}
+                          className="flex items-center justify-between rounded-xl p-3"
+                          style={{ background: 'var(--suite-muted)' }}
+                        >
+                          <div className="flex items-center gap-3">
+                            <span
+                              className="font-bold"
+                              style={{ color: 'var(--suite-foreground)' }}
+                            >
+                              {match.typeId}
+                            </span>
+                            <span
+                              className="text-sm"
+                              style={{ color: 'var(--suite-muted-foreground)' }}
+                            >
+                              {match.typeName}
+                            </span>
+                          </div>
+                          <span
+                            className="text-sm font-bold"
+                            style={{ color: 'var(--suite-primary)' }}
+                          >
+                            {Math.round(match.score)}%
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
           </div>
 
           {/* Footer Note */}

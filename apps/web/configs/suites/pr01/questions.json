@@ -1,0 +1,647 @@
+{
+  "dimensions": [
+    {
+      "id": "SA",
+      "name": { "zh": "社交活跃度", "en": "Social Activity" },
+      "leftLabel": { "zh": "独处", "en": "Solitary" },
+      "rightLabel": { "zh": "社交", "en": "Social" }
+    },
+    {
+      "id": "EE",
+      "name": { "zh": "情绪表达度", "en": "Emotional Expression" },
+      "leftLabel": { "zh": "内敛", "en": "Reserved" },
+      "rightLabel": { "zh": "外放", "en": "Expressive" }
+    },
+    {
+      "id": "AM",
+      "name": { "zh": "行动模式", "en": "Action Mode" },
+      "leftLabel": { "zh": "计划", "en": "Planned" },
+      "rightLabel": { "zh": "随性", "en": "Spontaneous" }
+    }
+  ],
+  "questions": [
+    {
+      "id": "q001",
+      "content": {
+        "zh": "开会时，你通常在做什么？",
+        "en": "What do you usually do during meetings?"
+      },
+      "options": [
+        {
+          "id": "opt_1a",
+          "content": {
+            "zh": "认真听讲，偶尔做笔记",
+            "en": "Listen carefully and take notes occasionally"
+          },
+          "weight": { "SA": 2, "EE": 1, "AM": 1 }
+        },
+        {
+          "id": "opt_1b",
+          "content": {
+            "zh": "脑子已经飘到午饭吃什么了",
+            "en": "Already thinking about lunch"
+          },
+          "weight": { "SA": 0, "EE": 1, "AM": 3 }
+        },
+        {
+          "id": "opt_1c",
+          "content": {
+            "zh": "假装在听，实际在摸鱼",
+            "en": "Pretending to listen, actually slacking off"
+          },
+          "weight": { "SA": 0, "EE": 0, "AM": 2 }
+        },
+        {
+          "id": "opt_1d",
+          "content": {
+            "zh": "积极发言，推动讨论",
+            "en": "Actively speaking up and driving discussion"
+          },
+          "weight": { "SA": 3, "EE": 3, "AM": 1 }
+        }
+      ]
+    },
+    {
+      "id": "q002",
+      "content": {
+        "zh": "消息发出去后，你第一反应是什么？",
+        "en": "What's your first reaction after sending a message?"
+      },
+      "options": [
+        {
+          "id": "opt_2a",
+          "content": {
+            "zh": "秒回啊，反正闲着也是闲着",
+            "en": "Reply instantly, have nothing better to do anyway"
+          },
+          "weight": { "SA": 3, "EE": 2, "AM": 1 }
+        },
+        {
+          "id": "opt_2b",
+          "content": {
+            "zh": "发了就后悔，想着要不要撤回",
+            "en": "Regret it immediately, wondering if I should recall it"
+          },
+          "weight": { "SA": 1, "EE": 3, "AM": 0 }
+        },
+        {
+          "id": "opt_2c",
+          "content": {
+            "zh": "消息已读不回，等心情好了再说",
+            "en": "Read but not replying, will respond when in the mood"
+          },
+          "weight": { "SA": 0, "EE": 1, "AM": 2 }
+        },
+        {
+          "id": "opt_2d",
+          "content": {
+            "zh": "看一眼，记住了，等有空再回",
+            "en": "Glance at it, remember it, reply when free"
+          },
+          "weight": { "SA": 1, "EE": 0, "AM": 1 }
+        }
+      ]
+    },
+    {
+      "id": "q003",
+      "content": {
+        "zh": "接到一个紧急任务，你的反应是？",
+        "en": "How do you react when given an urgent task?"
+      },
+      "options": [
+        {
+          "id": "opt_3a",
+          "content": {
+            "zh": "先放下手头的事，立刻开始做",
+            "en": "Put everything down and start immediately"
+          },
+          "weight": { "SA": 1, "EE": 1, "AM": 0 }
+        },
+        {
+          "id": "opt_3b",
+          "content": {
+            "zh": "先想一下能不能推掉",
+            "en": "First think about whether I can push it off"
+          },
+          "weight": { "SA": 0, "EE": 1, "AM": 2 }
+        },
+        {
+          "id": "opt_3c",
+          "content": {
+            "zh": "嘴上说好，手上继续摸鱼",
+            "en": "Say okay but keep slacking off"
+          },
+          "weight": { "SA": 1, "EE": 0, "AM": 3 }
+        },
+        {
+          "id": "opt_3d",
+          "content": {
+            "zh": "Deadline 前一天再开始冲刺",
+            "en": "Sprint on the day before deadline"
+          },
+          "weight": { "SA": 0, "EE": 1, "AM": 3 }
+        }
+      ]
+    },
+    {
+      "id": "q004",
+      "content": {
+        "zh": "群里有八卦，你的态度是？",
+        "en": "When there's gossip in the group chat, what's your attitude?"
+      },
+      "options": [
+        {
+          "id": "opt_4a",
+          "content": {
+            "zh": "默默吃瓜，绝不发言",
+            "en": "Silently enjoying the gossip, never commenting"
+          },
+          "weight": { "SA": 1, "EE": 0, "AM": 1 }
+        },
+        {
+          "id": "opt_4b",
+          "content": {
+            "zh": "冲在吃瓜第一线，追问细节",
+            "en": "On the front lines of gossip, asking for details"
+          },
+          "weight": { "SA": 3, "EE": 2, "AM": 1 }
+        },
+        {
+          "id": "opt_4c",
+          "content": {
+            "zh": "我是谁？我在哪？与我无关",
+            "en": "Who am I? Where am I? None of my business"
+          },
+          "weight": { "SA": 0, "EE": 0, "AM": 1 }
+        },
+        {
+          "id": "opt_4d",
+          "content": {
+            "zh": "假装没看到，但悄悄记住了",
+            "en": "Pretend not to see it, but quietly remember it"
+          },
+          "weight": { "SA": 1, "EE": 1, "AM": 0 }
+        }
+      ]
+    },
+    {
+      "id": "q005",
+      "content": {
+        "zh": "你觉得自己是什么时间段效率最高？",
+        "en": "When do you think your efficiency is highest?"
+      },
+      "options": [
+        {
+          "id": "opt_5a",
+          "content": {
+            "zh": "早上，脑子清醒的时候",
+            "en": "Morning, when my mind is fresh"
+          },
+          "weight": { "SA": 1, "EE": 0, "AM": 2 }
+        },
+        {
+          "id": "opt_5b",
+          "content": {
+            "zh": "下午，边犯困边硬撑",
+            "en": "Afternoon, fighting drowsiness while pushing through"
+          },
+          "weight": { "SA": 1, "EE": 1, "AM": 0 }
+        },
+        {
+          "id": "opt_5c",
+          "content": {
+            "zh": "晚上，灵感爆发期",
+            "en": "Night, when inspiration strikes"
+          },
+          "weight": { "SA": 0, "EE": 2, "AM": 2 }
+        },
+        {
+          "id": "opt_5d",
+          "content": {
+            "zh": "Deadline 前半小时",
+            "en": "Half an hour before deadline"
+          },
+          "weight": { "SA": 0, "EE": 1, "AM": 3 }
+        }
+      ]
+    },
+    {
+      "id": "q006",
+      "content": {
+        "zh": "你点外卖一般要花多久？",
+        "en": "How long does it take you to order food delivery?"
+      },
+      "options": [
+        {
+          "id": "opt_6a",
+          "content": {
+            "zh": "打开 App，三秒下单",
+            "en": "Open the app, order in three seconds"
+          },
+          "weight": { "SA": 1, "EE": 1, "AM": 0 }
+        },
+        {
+          "id": "opt_6b",
+          "content": {
+            "zh": "货比三家，看评论，纠结半小时",
+            "en": "Compare options, read reviews, agonize for half an hour"
+          },
+          "weight": { "SA": 0, "EE": 1, "AM": 3 }
+        },
+        {
+          "id": "opt_6c",
+          "content": {
+            "zh": "随便选一个，反正都差不多",
+            "en": "Just pick one randomly, they're all the same anyway"
+          },
+          "weight": { "SA": 0, "EE": 0, "AM": 1 }
+        },
+        {
+          "id": "opt_6d",
+          "content": {
+            "zh": "让别人帮忙选",
+            "en": "Let someone else decide"
+          },
+          "weight": { "SA": 1, "EE": 0, "AM": 2 }
+        }
+      ]
+    },
+    {
+      "id": "q007",
+      "content": {
+        "zh": "你如何看待「算了」这个词？",
+        "en": "What's your view on the word 'forget it'?"
+      },
+      "options": [
+        {
+          "id": "opt_7a",
+          "content": {
+            "zh": "人生哲学，能算则算",
+            "en": "Life philosophy, skip what you can"
+          },
+          "weight": { "SA": 0, "EE": 1, "AM": 2 }
+        },
+        {
+          "id": "opt_7b",
+          "content": {
+            "zh": "表面算了，心里过不去",
+            "en": "Say it's fine on the outside, but can't let it go inside"
+          },
+          "weight": { "SA": 1, "EE": 2, "AM": 1 }
+        },
+        {
+          "id": "opt_7c",
+          "content": {
+            "zh": "不算！必须争个对错",
+            "en": "No way! Must fight for what's right"
+          },
+          "weight": { "SA": 2, "EE": 3, "AM": 1 }
+        },
+        {
+          "id": "opt_7d",
+          "content": {
+            "zh": "算了，下次再说吧",
+            "en": "Forget it, we'll talk about it next time"
+          },
+          "weight": { "SA": 0, "EE": 0, "AM": 2 }
+        }
+      ]
+    },
+    {
+      "id": "q008",
+      "content": {
+        "zh": "聚会冷场时，你会怎么做？",
+        "en": "What do you do when a party gets awkward and quiet?"
+      },
+      "options": [
+        {
+          "id": "opt_8a",
+          "content": {
+            "zh": "主动说个笑话或带节奏",
+            "en": "Take the initiative to tell a joke or set the mood"
+          },
+          "weight": { "SA": 3, "EE": 3, "AM": 1 }
+        },
+        {
+          "id": "opt_8b",
+          "content": {
+            "zh": "低头玩手机，假装没注意到",
+            "en": "Look at phone, pretend not to notice"
+          },
+          "weight": { "SA": 0, "EE": 0, "AM": 1 }
+        },
+        {
+          "id": "opt_8c",
+          "content": {
+            "zh": "默默观察，心里已经写了八百字点评",
+            "en": "Quietly observe, already wrote an 800-word commentary in mind"
+          },
+          "weight": { "SA": 1, "EE": 2, "AM": 0 }
+        },
+        {
+          "id": "opt_8d",
+          "content": {
+            "zh": "突然说一句话，成功把气氛带歪",
+            "en": "Suddenly say something that successfully derails the mood"
+          },
+          "weight": { "SA": 2, "EE": 3, "AM": 2 }
+        }
+      ]
+    },
+    {
+      "id": "q009",
+      "content": {
+        "zh": "你做计划时，一般会？",
+        "en": "When making plans, what do you usually do?"
+      },
+      "options": [
+        {
+          "id": "opt_9a",
+          "content": {
+            "zh": "列清单、设闹钟、规划到分钟",
+            "en": "Make lists, set alarms, plan down to the minute"
+          },
+          "weight": { "SA": 1, "EE": 0, "AM": 0 }
+        },
+        {
+          "id": "opt_9b",
+          "content": {
+            "zh": "有个大概方向就行了",
+            "en": "Just have a general direction"
+          },
+          "weight": { "SA": 1, "EE": 1, "AM": 2 }
+        },
+        {
+          "id": "opt_9c",
+          "content": {
+            "zh": "计划写得很好，执行再说",
+            "en": "Plans are well-written, execution comes later"
+          },
+          "weight": { "SA": 1, "EE": 1, "AM": 1 }
+        },
+        {
+          "id": "opt_9d",
+          "content": {
+            "zh": "从不做计划，走一步看一步",
+            "en": "Never make plans, take it as it comes"
+          },
+          "weight": { "SA": 0, "EE": 1, "AM": 3 }
+        }
+      ]
+    },
+    {
+      "id": "q010",
+      "content": {
+        "zh": "别人发消息说「在吗」，你的反应是？",
+        "en": "When someone messages you 'Are you there?', what's your reaction?"
+      },
+      "options": [
+        {
+          "id": "opt_10a",
+          "content": {
+            "zh": "直接问什么事",
+            "en": "Directly ask what's up"
+          },
+          "weight": { "SA": 2, "EE": 1, "AM": 0 }
+        },
+        {
+          "id": "opt_10b",
+          "content": {
+            "zh": "看了消息，但假装没看到",
+            "en": "Saw the message, but pretend not to"
+          },
+          "weight": { "SA": 0, "EE": 0, "AM": 1 }
+        },
+        {
+          "id": "opt_10c",
+          "content": {
+            "zh": "等对方说正事再回",
+            "en": "Wait for them to state their business before responding"
+          },
+          "weight": { "SA": 1, "EE": 0, "AM": 1 }
+        },
+        {
+          "id": "opt_10d",
+          "content": {
+            "zh": "秒回，但心里在犯嘀咕",
+            "en": "Reply instantly, but secretly wondering"
+          },
+          "weight": { "SA": 2, "EE": 2, "AM": 0 }
+        }
+      ]
+    },
+    {
+      "id": "q011",
+      "content": {
+        "zh": "抽卡/抽奖时，你觉得自己运气如何？",
+        "en": "When drawing cards/entering raffles, how's your luck?"
+      },
+      "options": [
+        {
+          "id": "opt_11a",
+          "content": {
+            "zh": "从来不中，谢谢参与专业户",
+            "en": "Never win, professional 'thank you for participating' member"
+          },
+          "weight": { "SA": 1, "EE": 1, "AM": 1 }
+        },
+        {
+          "id": "opt_11b",
+          "content": {
+            "zh": "还行，偶尔能中",
+            "en": "Not bad, occasionally win something"
+          },
+          "weight": { "SA": 1, "EE": 1, "AM": 1 }
+        },
+        {
+          "id": "opt_11c",
+          "content": {
+            "zh": "欧皇附体，一抽就中",
+            "en": "Blessed by luck, win first try"
+          },
+          "weight": { "SA": 1, "EE": 2, "AM": 1 }
+        },
+        {
+          "id": "opt_11d",
+          "content": {
+            "zh": "总是差一点点就中",
+            "en": "Always just miss winning"
+          },
+          "weight": { "SA": 1, "EE": 1, "AM": 1 }
+        }
+      ]
+    },
+    {
+      "id": "q012",
+      "content": {
+        "zh": "你聊天时更喜欢？",
+        "en": "What do you prefer when chatting?"
+      },
+      "options": [
+        {
+          "id": "opt_12a",
+          "content": {
+            "zh": "发表情包，一图胜千言",
+            "en": "Send memes, a picture says a thousand words"
+          },
+          "weight": { "SA": 2, "EE": 2, "AM": 1 }
+        },
+        {
+          "id": "opt_12b",
+          "content": {
+            "zh": "发表情包，然后补一大段话",
+            "en": "Send meme, then add a long explanation"
+          },
+          "weight": { "SA": 2, "EE": 3, "AM": 1 }
+        },
+        {
+          "id": "opt_12c",
+          "content": {
+            "zh": "纯文字，惜字如金",
+            "en": "Plain text only, economical with words"
+          },
+          "weight": { "SA": 0, "EE": 0, "AM": 1 }
+        },
+        {
+          "id": "opt_12d",
+          "content": {
+            "zh": "看到什么都想吐槽几句",
+            "en": "Want to comment on everything I see"
+          },
+          "weight": { "SA": 3, "EE": 3, "AM": 1 }
+        }
+      ]
+    },
+    {
+      "id": "q013",
+      "content": {
+        "zh": "你更倾向于哪种休息方式？",
+        "en": "What kind of rest do you prefer?"
+      },
+      "options": [
+        {
+          "id": "opt_13a",
+          "content": {
+            "zh": "出门社交，充电靠朋友",
+            "en": "Go out and socialize, recharge with friends"
+          },
+          "weight": { "SA": 3, "EE": 2, "AM": 1 }
+        },
+        {
+          "id": "opt_13b",
+          "content": {
+            "zh": "在家躺着，谁也别找我",
+            "en": "Lie at home, don't bother me"
+          },
+          "weight": { "SA": 0, "EE": 0, "AM": 1 }
+        },
+        {
+          "id": "opt_13c",
+          "content": {
+            "zh": "换个地方继续卷",
+            "en": "Keep grinding in a different place"
+          },
+          "weight": { "SA": 2, "EE": 1, "AM": 0 }
+        },
+        {
+          "id": "opt_13d",
+          "content": {
+            "zh": "断网闭关，谁也别想找到我",
+            "en": "Go offline completely, no one can find me"
+          },
+          "weight": { "SA": 0, "EE": 1, "AM": 2 }
+        }
+      ]
+    },
+    {
+      "id": "q014",
+      "content": {
+        "zh": "当有人说了一句意味深长的话时，你？",
+        "en": "When someone says something thought-provoking, you?"
+      },
+      "options": [
+        {
+          "id": "opt_14a",
+          "content": {
+            "zh": "表面上：哦。实际上：他在暗示什么？",
+            "en": "Outwardly: Oh. Inwardly: What is he implying?"
+          },
+          "weight": { "SA": 1, "EE": 2, "AM": 1 }
+        },
+        {
+          "id": "opt_14b",
+          "content": {
+            "zh": "直接问清楚是什么意思",
+            "en": "Directly ask what they mean"
+          },
+          "weight": { "SA": 2, "EE": 1, "AM": 0 }
+        },
+        {
+          "id": "opt_14c",
+          "content": {
+            "zh": "脑子里已经演完一整部剧了",
+            "en": "Already acted out a whole drama in my head"
+          },
+          "weight": { "SA": 0, "EE": 3, "AM": 2 }
+        },
+        {
+          "id": "opt_14d",
+          "content": {
+            "zh": "没听懂，但假装懂了",
+            "en": "Don't understand but pretend I do"
+          },
+          "weight": { "SA": 1, "EE": 0, "AM": 1 }
+        }
+      ]
+    },
+    {
+      "id": "q015",
+      "content": {
+        "zh": "情绪上头时，你会？",
+        "en": "When you're emotional, what do you do?"
+      },
+      "options": [
+        {
+          "id": "opt_15a",
+          "content": {
+            "zh": "先发完再说，撤回算我输",
+            "en": "Post first, regret later. Recall and I lose"
+          },
+          "weight": { "SA": 2, "EE": 3, "AM": 0 }
+        },
+        {
+          "id": "opt_15b",
+          "content": {
+            "zh": "憋着，不想让人看出来",
+            "en": "Hold it in, don't want others to notice"
+          },
+          "weight": { "SA": 1, "EE": 0, "AM": 1 }
+        },
+        {
+          "id": "opt_15c",
+          "content": {
+            "zh": "写小作文，发疯但有逻辑",
+            "en": "Write an essay, crazy but logical"
+          },
+          "weight": { "SA": 1, "EE": 3, "AM": 2 }
+        },
+        {
+          "id": "opt_15d",
+          "content": {
+            "zh": "删掉已经打好的字，假装什么都没发生",
+            "en": "Delete typed words, pretend nothing happened"
+          },
+          "weight": { "SA": 0, "EE": 1, "AM": 1 }
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "totalQuestions": 15,
+    "timeEstimate": 180,
+    "description": {
+      "zh": "15道趣味测试题，揭示你的隐藏人格",
+      "en": "15 fun questions to reveal your hidden personality"
+    }
+  }
+}

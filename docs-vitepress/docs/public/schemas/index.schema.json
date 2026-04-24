@@ -1,0 +1,81 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://nbti.app/schemas/index.schema.json",
+  "title": "NBTI Schema Index",
+  "description": "NBTI 框架所有 JSON Schema 的统一入口，供 AI 和开发工具使用",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemas": {
+      "type": "object",
+      "description": "所有 Schema 文件的索引",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "$id": { "type": "string" },
+          "title": { "type": "string" },
+          "description": { "type": "string" },
+          "file": { "type": "string" },
+          "url": { "type": "string", "format": "uri" },
+          "requiredFields": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "examples": { "type": "string" },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+    "quickStart": {
+      "type": "object",
+      "description": "快速开始指引",
+      "properties": {
+        "minimumFiles": {
+          "type": "array",
+          "description": "创建套餐所需的最少文件",
+          "items": {
+            "type": "object",
+            "properties": {
+              "file": { "type": "string" },
+              "required": { "type": "boolean" },
+              "purpose": { "type": "string" }
+            }
+          }
+        },
+        "typicalWorkflow": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "localizedString": {
+      "type": "object",
+      "description": "localizedString 通用定义，所有 Schema 中的多语言字段都引用此定义",
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1
+      },
+      "examples": [{ "zh": "性格测试", "en": "Personality Test" }]
+    }
+  },
+  "definitions": {
+    "manifest": {
+      "$ref": "manifest.schema.json"
+    },
+    "questions": {
+      "$ref": "questions.schema.json"
+    },
+    "types": {
+      "$ref": "types.schema.json"
+    },
+    "templates": {
+      "$ref": "templates.schema.json"
+    },
+    "themes": {
+      "$ref": "themes.schema.json"
+    },
+    "i18n": {
+      "$ref": "i18n.schema.json"
+    }
+  }
+}

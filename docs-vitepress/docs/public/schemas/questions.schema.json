@@ -1,0 +1,182 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://nbti.app/schemas/questions.schema.json",
+  "title": "NBTI Questions Data",
+  "description": "题库数据配置文件",
+  "type": "object",
+  "required": ["meta", "questions"],
+  "additionalProperties": true,
+  "properties": {
+    "meta": {
+      "type": "object",
+      "description": "题库元信息",
+      "properties": {
+        "totalQuestions": {
+          "type": "integer",
+          "description": "题目总数",
+          "minimum": 1,
+          "maximum": 500
+        },
+        "timeEstimate": {
+          "type": "integer",
+          "description": "预估完成时间（秒）",
+          "minimum": 30,
+          "examples": [180, 300, 600]
+        },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "题库标签"
+        },
+        "description": {
+          "$ref": "manifest.schema.json#/definitions/localizedString"
+        }
+      }
+    },
+    "dimensions": {
+      "type": "array",
+      "description": "维度定义列表",
+      "items": {
+        "type": "object",
+        "required": ["id", "name"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Z]{2}$",
+            "description": "维度 ID，如 EI、NS"
+          },
+          "name": {
+            "$ref": "manifest.schema.json#/definitions/localizedString"
+          },
+          "description": {
+            "$ref": "manifest.schema.json#/definitions/localizedString"
+          },
+          "leftLabel": {
+            "$ref": "manifest.schema.json#/definitions/localizedString",
+            "description": "左侧标签（第一个字母）"
+          },
+          "rightLabel": {
+            "$ref": "manifest.schema.json#/definitions/localizedString",
+            "description": "右侧标签（第二个字母）"
+          }
+        }
+      }
+    },
+    "categories": {
+      "type": "array",
+      "description": "题目分类（可选）",
+      "items": {
+        "type": "object",
+        "required": ["id", "name"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+$"
+          },
+          "name": {
+            "$ref": "manifest.schema.json#/definitions/localizedString"
+          },
+          "description": {
+            "$ref": "manifest.schema.json#/definitions/localizedString"
+          },
+          "questionIds": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "该分类下的题目 ID 列表"
+          }
+        }
+      }
+    },
+    "questions": {
+      "type": "array",
+      "description": "题目列表",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "dimension", "content", "options"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "题目唯一标识符",
+            "pattern": "^q\\d{3,}$",
+            "examples": ["q001", "q002", "question_01"]
+          },
+          "dimension": {
+            "type": "string",
+            "description": "所属维度 ID",
+            "examples": ["EI", "NS", "TF", "JP"]
+          },
+          "category": {
+            "type": "string",
+            "description": "题目分类 ID（可选）"
+          },
+          "content": {
+            "$ref": "manifest.schema.json#/definitions/localizedString",
+            "description": "题目内容"
+          },
+          "image": {
+            "type": ["string", "null"],
+            "format": "uri",
+            "description": "题目配图 URL（可选）"
+          },
+          "isReverse": {
+            "type": "boolean",
+            "description": "是否反向计分",
+            "default": false
+          },
+          "required": {
+            "type": "boolean",
+            "description": "是否必答题",
+            "default": true
+          },
+          "options": {
+            "type": "array",
+            "description": "选项列表",
+            "minItems": 2,
+            "maxItems": 6,
+            "items": {
+              "type": "object",
+              "required": ["id", "content", "weight"],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "选项唯一标识符",
+                  "pattern": "^opt_[a-z0-9]+$"
+                },
+                "content": {
+                  "$ref": "manifest.schema.json#/definitions/localizedString",
+                  "description": "选项内容"
+                },
+                "image": {
+                  "type": ["string", "null"],
+                  "format": "uri",
+                  "description": "选项配图（可选）"
+                },
+                "weight": {
+                  "type": "object",
+                  "description": "选项权重，键为维度字母，值为权重值",
+                  "patternProperties": {
+                    "^[A-Z]$": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 10
+                    }
+                  },
+                  "examples": [
+                    { "E": 3, "I": 0 },
+                    { "E": 2, "I": 1 },
+                    { "T": 2, "F": 1 }
+                  ]
+                },
+                "tooltip": {
+                  "$ref": "manifest.schema.json#/definitions/localizedString",
+                  "description": "选项悬停提示（可选）"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

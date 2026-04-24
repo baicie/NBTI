@@ -17,6 +17,14 @@ interface QuestionInfo {
 
 /**
  * 计算维度分数
+ *
+ * @param answers - 用户答案列表
+ * @param questions - 题目信息列表
+ * @param dimensions - 维度列表，如 ['EI', 'NS', 'TF', 'JP']
+ *
+ * 反向计分逻辑 (isReverse: true):
+ * - 普通题目：选项的权重按字母分配（左字母加左分，右字母加右分）
+ * - 反向题目：选项的权重交换分配（左字母加右分，右字母加左分）
  */
 export function calculateDimensionScores(
   answers: Answer[],
@@ -43,13 +51,26 @@ export function calculateDimensionScores(
     const [leftLetter, rightLetter] = dim.split('')
 
     Object.entries(weight).forEach(([key, value]) => {
-      // 如果是反向计分，取反权重
-      const adjustedValue = isReverse ? -value : value
+      // 反向计分时，交换左右方向的分数分配
+      const isLeftKey = key === leftLetter
+      const isRightKey = key === rightLetter
 
-      if (key === leftLetter) {
-        scores[dim].left += Math.abs(adjustedValue)
-      } else if (key === rightLetter) {
-        scores[dim].right += Math.abs(adjustedValue)
+      if (!isLeftKey && !isRightKey) return
+
+      if (isReverse) {
+        // 反向计分：左字母加到右分，右字母加到左分
+        if (isLeftKey) {
+          scores[dim].right += value
+        } else if (isRightKey) {
+          scores[dim].left += value
+        }
+      } else {
+        // 普通计分：正常分配
+        if (isLeftKey) {
+          scores[dim].left += value
+        } else if (isRightKey) {
+          scores[dim].right += value
+        }
       }
     })
   })

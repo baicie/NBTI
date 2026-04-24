@@ -1,9 +1,20 @@
 import { loadFullSuite } from '@/lib/suite-loader'
 import { ResultPageClient } from './result-page-client'
-import type { DimensionDefinition, PersonalityType } from '@nbti/core'
+import type { PersonalityType } from '@nbti/core'
 
 interface ResultPageProps {
   params: Promise<{ suite: string }>
+}
+
+interface QuestionsData {
+  dimensions?: Array<{
+    id: string
+    name: Record<string, string>
+    leftLabel: Record<string, string>
+    rightLabel: Record<string, string>
+  }>
+  questions: Array<{ id: string }>
+  meta: { totalQuestions: number; timeEstimate: number }
 }
 
 /**
@@ -13,7 +24,7 @@ export default async function ResultPage({ params }: ResultPageProps) {
   const { suite: suiteId } = await params
 
   // 加载套件数据
-  const { manifest, types } = await loadFullSuite(suiteId)
+  const { manifest, types, questions } = await loadFullSuite(suiteId)
 
   // 类型断言
   const typedManifest = manifest as {
@@ -32,14 +43,25 @@ export default async function ResultPage({ params }: ResultPageProps) {
 
   const typedTypes = types as {
     types: PersonalityType[]
-    dimensions: DimensionDefinition[]
   }
+
+  const typedQuestions = questions as unknown as QuestionsData
+
+  // 获取维度定义（优先从 questions.json 的 dimensions 字段）
+  const dimensions = typedQuestions.dimensions || [
+    {
+      id: 'WORK',
+      name: { zh: '通用', en: 'General' },
+      leftLabel: { zh: 'A', en: 'A' },
+      rightLabel: { zh: 'B', en: 'B' },
+    },
+  ]
 
   return (
     <ResultPageClient
       suiteId={suiteId}
       types={typedTypes.types || []}
-      dimensions={typedTypes.dimensions || []}
+      dimensions={dimensions}
       manifest={typedManifest}
     />
   )

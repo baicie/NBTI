@@ -1,0 +1,228 @@
+{
+  "defaultTemplate": "gradient",
+  "templates": [
+    {
+      "id": "gradient",
+      "name": {
+        "zh": "渐变卡片",
+        "en": "Gradient Card"
+      },
+      "thumbnail": "/templates/pr01/gradient-thumb.png",
+      "description": {
+        "zh": "使用主题渐变色的经典分享卡片",
+        "en": "Classic share card with theme gradient"
+      },
+      "dimensions": {
+        "width": 1080,
+        "height": 1080
+      },
+      "background": {
+        "type": "gradient",
+        "value": [
+          { "color": "#6366f1", "position": 0 },
+          { "color": "#8b5cf6", "position": 50 },
+          { "color": "#f97316", "position": 100 }
+        ],
+        "direction": "135deg"
+      },
+      "elements": [
+        {
+          "id": "logo-area",
+          "type": "shape",
+          "shape": "rectangle",
+          "position": { "x": 0, "y": 0 },
+          "size": { "width": 100, "height": 60 },
+          "style": {
+            "backgroundColor": "rgba(255,255,255,0.1)",
+            "borderRadius": 0
+          }
+        },
+        {
+          "id": "type-code",
+          "type": "text",
+          "position": { "x": 540, "y": 280 },
+          "content": "{{typeCode}}",
+          "style": {
+            "fontSize": 200,
+            "fontWeight": 800,
+            "color": "#ffffff",
+            "textAlign": "center",
+            "letterSpacing": -10
+          }
+        },
+        {
+          "id": "type-name",
+          "type": "text",
+          "position": { "x": 540, "y": 520 },
+          "content": "{{typeName}}",
+          "style": {
+            "fontSize": 72,
+            "fontWeight": 600,
+            "color": "#ffffff",
+            "textAlign": "center",
+            "letterSpacing": 2
+          }
+        },
+        {
+          "id": "subtitle",
+          "type": "text",
+          "position": { "x": 540, "y": 620 },
+          "content": "{{subtitle}}",
+          "style": {
+            "fontSize": 36,
+            "fontWeight": 400,
+            "color": "rgba(255,255,255,0.8)",
+            "textAlign": "center"
+          }
+        },
+        {
+          "id": "divider",
+          "type": "divider",
+          "position": { "x": 340, "y": 700 },
+          "size": { "width": 400, "height": 2 },
+          "style": {
+            "backgroundColor": "rgba(255,255,255,0.3)",
+            "borderRadius": 1
+          }
+        },
+        {
+          "id": "description",
+          "type": "text",
+          "position": { "x": 100, "y": 750 },
+          "content": "{{description}}",
+          "style": {
+            "fontSize": 28,
+            "fontWeight": 400,
+            "color": "rgba(255,255,255,0.9)",
+            "textAlign": "center",
+            "lineHeight": 1.6,
+            "padding": "0 80"
+          }
+        },
+        {
+          "id": "qrcode",
+          "type": "qrcode",
+          "position": { "x": 465, "y": 900 },
+          "size": { "width": 150, "height": 150 },
+          "content": "{{shareUrl}}"
+        },
+        {
+          "id": "app-name",
+          "type": "text",
+          "position": { "x": 540, "y": 1030 },
+          "content": "打工人人格测试",
+          "style": {
+            "fontSize": 24,
+            "fontWeight": 500,
+            "color": "rgba(255,255,255,0.6)",
+            "textAlign": "center",
+            "letterSpacing": 4
+          }
+        }
+      ]
+    },
+    {
+      "id": "minimal",
+      "name": {
+        "zh": "简约白卡",
+        "en": "Minimal White"
+      },
+      "thumbnail": "/templates/pr01/minimal-thumb.png",
+      "description": {
+        "zh": "简洁白色背景，适合正式场合",
+        "en": "Clean white background, suitable for formal occasions"
+      },
+      "dimensions": {
+        "width": 1080,
+        "height": 1080
+      },
+      "background": {
+        "type": "color",
+        "value": "#ffffff"
+      },
+      "elements": [
+        {
+          "id": "accent-bar",
+          "type": "shape",
+          "shape": "rectangle",
+          "position": { "x": 0, "y": 0 },
+          "size": { "width": 12, "height": 1080 },
+          "style": {
+            "backgroundColor": "#6366f1"
+          }
+        },
+        {
+          "id": "type-code",
+          "type": "text",
+          "position": { "x": 540, "y": 200 },
+          "content": "{{typeCode}}",
+          "style": {
+            "fontSize": 180,
+            "fontWeight": 800,
+            "color": "#18181b",
+            "textAlign": "center",
+            "letterSpacing": -8
+          }
+        },
+        {
+          "id": "type-name",
+          "type": "text",
+          "position": { "x": 540, "y": 420 },
+          "content": "{{typeName}}",
+          "style": {
+            "fontSize": 64,
+            "fontWeight": 600,
+            "color": "#6366f1",
+            "textAlign": "center"
+          }
+        },
+        {
+          "id": "subtitle",
+          "type": "text",
+          "position": { "x": 540, "y": 510 },
+          "content": "{{subtitle}}",
+          "style": {
+            "fontSize": 32,
+            "fontWeight": 400,
+            "color": "#71717a",
+            "textAlign": "center"
+          }
+        },
+        {
+          "id": "traits",
+          "type": "trait-badges",
+          "position": { "x": 540, "y": 620 },
+          "layout": "horizontal",
+          "spacing": 16,
+          "content": "{{traits}}"
+        },
+        {
+          "id": "description",
+          "type": "text",
+          "position": { "x": 540, "y": 780 },
+          "content": "{{shortDescription}}",
+          "style": {
+            "fontSize": 28,
+            "fontWeight": 400,
+            "color": "#3f3f46",
+            "textAlign": "center",
+            "lineHeight": 1.8
+          }
+        },
+        {
+          "id": "footer",
+          "type": "text",
+          "position": { "x": 540, "y": 1000 },
+          "content": "打工人人格测试",
+          "style": {
+            "fontSize": 22,
+            "fontWeight": 500,
+            "color": "#a1a1aa",
+            "textAlign": "center",
+            "letterSpacing": 3
+          }
+        }
+      ]
+    }
+  ]
+}

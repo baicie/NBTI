@@ -1,0 +1,153 @@
+{
+  "schemas": {
+    "manifest": {
+      "$id": "https://nbti.app/schemas/manifest.schema.json",
+      "title": "NBTI Test Package Manifest",
+      "description": "测试包的元信息配置文件，定义套餐的基本信息、计分规则和行为设置",
+      "file": "manifest.schema.json",
+      "url": "/schemas/manifest.schema.json",
+      "requiredFields": ["id", "name", "version", "config"],
+      "examples": "apps/web/configs/suites/pr01/manifest.json",
+      "notes": "config.questions 和 config.types 是必填的，其他配置文件可选"
+    },
+    "questions": {
+      "$id": "https://nbti.app/schemas/questions.schema.json",
+      "title": "NBTI Questions Data",
+      "description": "题库数据配置文件，包含题目内容、选项、权重和维度定义",
+      "file": "questions.schema.json",
+      "url": "/schemas/questions.schema.json",
+      "requiredFields": ["meta", "questions"],
+      "examples": "apps/web/configs/suites/pr01/questions.json",
+      "notes": "每道题必须指定 dimension，选项的 weight 对象键必须是大写字母"
+    },
+    "types": {
+      "$id": "https://nbti.app/schemas/types.schema.json",
+      "title": "NBTI Personality Types",
+      "description": "结果类型定义配置文件，定义人格类型的名称、描述、特质等",
+      "file": "types.schema.json",
+      "url": "/schemas/types.schema.json",
+      "requiredFields": ["types"],
+      "examples": "apps/web/configs/suites/pr01/types.json",
+      "notes": "types 数组至少包含一个类型，id 通常为 2-6 个大写字母"
+    },
+    "templates": {
+      "$id": "https://nbti.app/schemas/templates.schema.json",
+      "title": "NBTI Share Card Templates",
+      "description": "结果图模板配置文件，定义分享卡的布局、背景和元素",
+      "file": "templates.schema.json",
+      "url": "/schemas/templates.schema.json",
+      "requiredFields": ["templates"],
+      "examples": "apps/web/configs/suites/pr01/templates.json",
+      "notes": "templates 数组至少包含一个模板，每个模板的 elements 数组至少一个元素"
+    },
+    "themes": {
+      "$id": "https://nbti.app/schemas/themes.schema.json",
+      "title": "NBTI Theme Configuration",
+      "description": "主题样式配置文件，定义颜色、字体、圆角、阴影等视觉样式",
+      "file": "themes.schema.json",
+      "url": "/schemas/themes.schema.json",
+      "requiredFields": ["themes"],
+      "examples": "apps/web/configs/suites/pr01/themes.json",
+      "notes": "themes 是一个对象，键为 theme ID，值包含 name 和 colors（必填）"
+    },
+    "i18n": {
+      "$id": "https://nbti.app/schemas/i18n.schema.json",
+      "title": "NBTI Internationalization",
+      "description": "国际化翻译文件，支持多语言文案",
+      "file": "i18n.schema.json",
+      "url": "/schemas/i18n.schema.json",
+      "requiredFields": [],
+      "examples": "apps/web/configs/suites/pr01/i18n/zh.json",
+      "notes": "无强制结构，以语言代码为键（如 zh、en），支持嵌套对象"
+    }
+  },
+  "quickStart": {
+    "minimumFiles": [
+      {
+        "file": "manifest.json",
+        "required": true,
+        "purpose": "套餐元信息、ID、版本、配置文件路径映射"
+      },
+      {
+        "file": "questions.json",
+        "required": true,
+        "purpose": "题目数据、维度定义、选项权重"
+      },
+      {
+        "file": "types.json",
+        "required": true,
+        "purpose": "结果类型定义、人格类型详情"
+      },
+      {
+        "file": "themes.json",
+        "required": false,
+        "purpose": "主题样式（颜色、字体等），可选，默认使用内置主题"
+      },
+      {
+        "file": "templates.json",
+        "required": false,
+        "purpose": "结果图模板，可选，默认使用内置模板"
+      },
+      {
+        "file": "i18n/*.json",
+        "required": false,
+        "purpose": "多语言翻译文件，可选，默认使用内置中文"
+      }
+    ],
+    "typicalWorkflow": [
+      "1. 在 configs/suites/ 下创建套餐目录（如 my-test）",
+      "2. 创建 manifest.json，定义套餐 ID、名称、版本",
+      "3. 创建 questions.json，编写题目和选项",
+      "4. 创建 types.json，定义结果类型",
+      "5. （可选）创建 themes.json 自定义主题",
+      "6. （可选）创建 templates.json 自定义分享图模板",
+      "7. （可选）创建 i18n/ 目录添加多语言翻译",
+      "8. 在 configs/suites/index.json 中注册套餐",
+      "9. 访问 /my-test 测试效果"
+    ]
+  },
+  "coreConcepts": {
+    "dimension": {
+      "description": "维度，测评的核心测量维度，通常为两个字母的缩写",
+      "examples": [
+        "EI（外向-内向）",
+        "NS（直觉-实感）",
+        "TF（思考-情感）",
+        "JP（判断-知觉）"
+      ]
+    },
+    "weight": {
+      "description": "权重，每个选项对各维度的贡献分数（0-10）",
+      "examples": [
+        { "E": 3, "I": 0 },
+        { "T": 2, "F": 1 }
+      ]
+    },
+    "localizedString": {
+      "description": "本地化字符串，以语言代码为键的多语言对象",
+      "examples": [
+        { "zh": "性格测试", "en": "Personality Test", "ja": "性格テスト" }
+      ]
+    },
+    "scoringType": {
+      "description": "计分类型",
+      "enum": ["dimension", "percentage", "weighted-sum"],
+      "examples": {
+        "dimension": "维度差值法（最常用，如 MBTI）",
+        "percentage": "百分比法",
+        "weighted-sum": "加权求和法"
+      }
+    }
+  },
+  "aiFriendly": {
+    "readableForAI": true,
+    "aiInstruction": "AI 助手可以直接读取 /schemas/index.schema.json 了解所有 Schema 结构和关联关系，无需阅读完整 Schema 文件",
+    "recommendedPrompts": [
+      "根据 manifest.schema.json 创建新套餐的 manifest.json",
+      "根据 questions.schema.json 为我的 MBTI 测试添加 10 道新题目",
+      "根据 types.schema.json 定义一个新的 16 种人格类型",
+      "根据 themes.schema.json 创建一套紫蓝色渐变主题",
+      "验证我的 questions.json 是否符合 questions.schema.json"
+    ]
+  }
+}
