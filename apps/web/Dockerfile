@@ -49,8 +49,8 @@ ENV NODE_ENV=production
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
-# Copy public directory
-COPY --from=builder --chown=node:node /app/apps/web/public ./public
+# Copy public directory (must be under apps/web/ for standalone server to find it)
+COPY --from=builder --chown=node:node /app/apps/web/public ./apps/web/public
 
 # Copy standalone output (contains apps/web/ with server.js and .next/)
 COPY --from=builder --chown=node:node /app/apps/web/.next/standalone ./

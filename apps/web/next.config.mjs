@@ -8,6 +8,12 @@ const nextConfig = {
     '/_next/static/chunks/**/*': [
       '../configs/suites/**/*.json',
     ],
+    '/types/**/*': [
+      './public/types/**/*',
+    ],
+    '/favicon.ico': [
+      './public/favicon.ico',
+    ],
   },
 }
 
