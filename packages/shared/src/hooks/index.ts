@@ -1,9 +1,9 @@
+export { useClickOutside } from './use-click-outside'
 export { useLocalStorage } from './use-local-storage'
 export {
-  useMediaQuery,
+  useIsDesktop,
   useIsMobile,
   useIsTablet,
-  useIsDesktop,
+  useMediaQuery,
   usePrefersDarkMode,
 } from './use-media-query'
-export { useClickOutside } from './use-click-outside'

@@ -1,3 +1,3 @@
-export { ConfigLoader } from './loader'
 export { ConfigCache } from './cache'
+export { ConfigLoader } from './loader'
 export * from './validator'

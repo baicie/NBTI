@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from 'next'
-import './globals.css'
 import { Providers } from '@/providers'
+import './globals.css'
 
 export const metadata: Metadata = {
   title: 'NBTI - 在线性格测试',

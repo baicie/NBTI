@@ -573,11 +573,11 @@ function validateSuite(suiteId: string): ValidationResult {
 // lib/suite-repository.ts
 
 interface ISuiteRepository {
-  list(): Promise<SuiteIndex>
-  get(id: string): Promise<SuiteDetail>
-  getQuestions(id: string): Promise<QuestionsData>
-  getTypes(id: string): Promise<TypesData>
-  getTheme(id: string): Promise<SuiteTheme>
+  list: () => Promise<SuiteIndex>
+  get: (id: string) => Promise<SuiteDetail>
+  getQuestions: (id: string) => Promise<QuestionsData>
+  getTypes: (id: string) => Promise<TypesData>
+  getTheme: (id: string) => Promise<SuiteTheme>
 }
 
 // 本地实现

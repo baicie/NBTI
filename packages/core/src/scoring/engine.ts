@@ -17,11 +17,11 @@ import {
  */
 export class ScoringEngine {
   private scoring: ManifestScoring
-  private questions: { id: string; dimension: string; isReverse?: boolean }[]
+  private questions: { id: string, dimension: string, isReverse?: boolean }[]
 
   constructor(
     scoring: ManifestScoring,
-    questions: { id: string; dimension: string; isReverse?: boolean }[] = [],
+    questions: { id: string, dimension: string, isReverse?: boolean }[] = [],
   ) {
     this.scoring = scoring
     this.questions = questions
@@ -76,7 +76,7 @@ export class ScoringEngine {
     const questionMap = new Map(this.questions.map(q => [q.id, q]))
 
     // 为答案补充题目信息
-    const enrichedAnswers = answers.map(answer => {
+    const enrichedAnswers = answers.map((answer) => {
       const question = questionMap.get(answer.questionId)
       return {
         ...answer,
@@ -126,14 +126,15 @@ export class ScoringEngine {
   ): ScoringResult {
     // 初始化分数
     const scores: Record<string, number> = {}
-    dimensions.forEach(dim => {
+    dimensions.forEach((dim) => {
       scores[dim] = 0
     })
 
     // 汇总答案
-    answers.forEach(answer => {
+    answers.forEach((answer) => {
       const question = this.questions.find(q => q.id === answer.questionId)
-      if (!question) return
+      if (!question)
+        return
 
       const dim = question.dimension
       if (!scores[dim] && scores[dim] !== 0) {
@@ -141,23 +142,23 @@ export class ScoringEngine {
       }
 
       // 累加权重
-      Object.values(answer.weight).forEach(value => {
+      Object.values(answer.weight).forEach((value) => {
         scores[dim] += value
       })
     })
 
     // 计算百分比
-    const dimensionScores = dimensions.map(dim => {
+    const dimensionScores = dimensions.map((dim) => {
       const total = scores[dim]
       const maxScore = this.questions
         .filter(q => q.dimension === dim)
-        .reduce(sum => {
+        .reduce((sum) => {
           // 假设每题最大权重为 3
           return sum + 3
         }, 0)
 
-      const percentage =
-        maxScore > 0 ? Math.round((total / maxScore) * 100) : 50
+      const percentage
+        = maxScore > 0 ? Math.round((total / maxScore) * 100) : 50
       const [leftLetter, rightLetter] = dim.split('')
 
       return {
@@ -194,12 +195,12 @@ export class ScoringEngine {
   ): ScoringResult {
     // 初始化分数
     const scores: Record<string, number> = {}
-    dimensions.forEach(dim => {
+    dimensions.forEach((dim) => {
       scores[dim] = 0
     })
 
     // 汇总答案
-    answers.forEach(answer => {
+    answers.forEach((answer) => {
       Object.entries(answer.weight).forEach(([key, value]) => {
         if (scores[key] !== undefined) {
           scores[key] += value
@@ -208,7 +209,7 @@ export class ScoringEngine {
     })
 
     // 构建维度分数
-    const dimensionScores = dimensions.map(dim => {
+    const dimensionScores = dimensions.map((dim) => {
       const [leftLetter, rightLetter] = dim.split('')
       const total = scores[dim] ?? 0
 
@@ -245,7 +246,7 @@ export class ScoringEngine {
 export function calculateScores(
   answers: Answer[],
   scoring: ManifestScoring,
-  questions: { id: string; dimension: string; isReverse?: boolean }[] = [],
+  questions: { id: string, dimension: string, isReverse?: boolean }[] = [],
   options?: ScoringOptions,
 ): ScoringResult {
   const engine = new ScoringEngine(scoring, questions)

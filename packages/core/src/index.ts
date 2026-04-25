@@ -2,32 +2,32 @@
  * @nbti/core - NBTI 测试框架核心包
  */
 
-// Types
-export * from './types'
-
 // Config
-export { ConfigLoader, ConfigCache } from './config'
+export { ConfigCache, ConfigLoader } from './config'
+
 export * from './config/validator'
+// i18n
+export { createI18n, getI18n, I18n, t } from './i18n'
 
-// Scoring
-export { ScoringEngine, calculateScores } from './scoring'
-export type { ScoringResult, ScoringOptions } from './scoring/types'
+export type { Translator } from './i18n/dictionary'
+// Image
+export { generateImage, ImageGenerator } from './image'
 
+export type { GeneratedImage, ImageGeneratorOptions } from './image/types'
 // Rendering
 export {
-  renderTemplate,
-  parsePosition,
   calculateElementPosition,
+  parsePosition,
+  renderTemplate,
 } from './rendering'
+
 export type { RenderContext } from './rendering/types'
+// Scoring
+export { calculateScores, ScoringEngine } from './scoring'
 
-// Image
-export { ImageGenerator, generateImage } from './image'
-export type { GeneratedImage, ImageGeneratorOptions } from './image/types'
-
-// i18n
-export { I18n, getI18n, createI18n, t } from './i18n'
-export type { Translator } from './i18n/dictionary'
+export type { ScoringOptions, ScoringResult } from './scoring/types'
+// Types
+export * from './types'
 
 // Re-export shared utilities
 export * from '@nbti/shared'

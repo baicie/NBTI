@@ -18,10 +18,12 @@ function parsePosition(
   value: number | string | undefined,
   containerSize: number,
 ): string {
-  if (value === undefined) return '0'
-  if (typeof value === 'number') return `${value}px`
+  if (value === undefined)
+    return '0'
+  if (typeof value === 'number')
+    return `${value}px`
   if (typeof value === 'string' && value.endsWith('%')) {
-    return `${(parseFloat(value) / 100) * containerSize}px`
+    return `${(Number.parseFloat(value) / 100) * containerSize}px`
   }
   return `${value}px`
 }
@@ -45,7 +47,8 @@ function generateGradient(background: TemplateBackground): string {
   let gradient: string
   if (direction.endsWith('deg')) {
     gradient = `linear-gradient(${direction}, ${colorStops})`
-  } else {
+  }
+  else {
     gradient = `linear-gradient(${direction}, ${colorStops})`
   }
 
@@ -78,17 +81,21 @@ function generateElementStyle(element: TemplateElement): string {
   }
 
   if (
-    element.type === 'text' ||
-    element.type === 'qrcode' ||
-    element.type === 'trait-badges'
+    element.type === 'text'
+    || element.type === 'qrcode'
+    || element.type === 'trait-badges'
   ) {
-    if (style.color) parts.push(`color: ${style.color}`)
-    if (style.fontSize) parts.push(`font-size: ${style.fontSize}px`)
+    if (style.color)
+      parts.push(`color: ${style.color}`)
+    if (style.fontSize)
+      parts.push(`font-size: ${style.fontSize}px`)
     if (style.fontWeight) {
       parts.push(`font-weight: ${style.fontWeight}`)
     }
-    if (style.fontFamily) parts.push(`font-family: ${style.fontFamily}`)
-    if (style.textAlign) parts.push(`text-align: ${style.textAlign}`)
+    if (style.fontFamily)
+      parts.push(`font-family: ${style.fontFamily}`)
+    if (style.textAlign)
+      parts.push(`text-align: ${style.textAlign}`)
     if (style.letterSpacing)
       parts.push(`letter-spacing: ${style.letterSpacing}px`)
     if (style.lineHeight) {
@@ -99,18 +106,19 @@ function generateElementStyle(element: TemplateElement): string {
   }
 
   if (style.borderRadius !== undefined) {
-    const radius =
-      typeof style.borderRadius === 'number'
+    const radius
+      = typeof style.borderRadius === 'number'
         ? `${style.borderRadius}px`
         : style.borderRadius
     parts.push(`border-radius: ${radius}`)
   }
 
-  if (style.opacity !== undefined) parts.push(`opacity: ${style.opacity}`)
+  if (style.opacity !== undefined)
+    parts.push(`opacity: ${style.opacity}`)
 
   if (style.padding) {
-    const p =
-      typeof style.padding === 'number' ? `${style.padding}px` : style.padding
+    const p
+      = typeof style.padding === 'number' ? `${style.padding}px` : style.padding
     parts.push(`padding: ${p}`)
   }
 
@@ -126,11 +134,11 @@ function renderTextElement(
   width: number,
   height: number,
 ): string {
-  const pos = element.position as { x: number | string; y: number | string }
+  const pos = element.position as { x: number | string, y: number | string }
   const x = parsePosition(pos.x, width)
   const y = parsePosition(pos.y, height)
   const size = element.size || {
-    width: width - parseFloat(x) * 2,
+    width: width - Number.parseFloat(x) * 2,
     height: 'auto',
   }
   const style = generateElementStyle(element)
@@ -172,7 +180,7 @@ function renderShapeElement(
   width: number,
   height: number,
 ): string {
-  const pos = element.position as { x: number | string; y: number | string }
+  const pos = element.position as { x: number | string, y: number | string }
   const x = parsePosition(pos.x, width)
   const y = parsePosition(pos.y, height)
   const size = element.size || { width: 100, height: 100 }
@@ -230,7 +238,7 @@ function renderImageElement(
   width: number,
   height: number,
 ): string {
-  const pos = element.position as { x: number | string; y: number | string }
+  const pos = element.position as { x: number | string, y: number | string }
   const x = parsePosition(pos.x, width)
   const y = parsePosition(pos.y, height)
   const size = element.size || { width: 400, height: 400 }
@@ -264,7 +272,7 @@ function renderDividerElement(
   width: number,
   height: number,
 ): string {
-  const pos = element.position as { x: number | string; y: number | string }
+  const pos = element.position as { x: number | string, y: number | string }
   const x = parsePosition(pos.x, width)
   const y = parsePosition(pos.y, height)
   const size = element.size || { width: 200, height: 2 }
@@ -292,7 +300,7 @@ function renderTraitBadgesElement(
   width: number,
   height: number,
 ): string {
-  const pos = element.position as { x: number | string; y: number | string }
+  const pos = element.position as { x: number | string, y: number | string }
   const x = parsePosition(pos.x, width)
   const y = parsePosition(pos.y, height)
   const style = element.style || {}
@@ -300,11 +308,11 @@ function renderTraitBadgesElement(
 
   const traitsHtml = variables.traits
     .slice(0, 3)
-    .map(trait => {
+    .map((trait) => {
       const bgColor = style.backgroundColor || 'rgba(255,255,255,0.2)'
       const textColor = style.color || '#ffffff'
-      const borderRadius =
-        typeof style.borderRadius === 'number' ? style.borderRadius : 20
+      const borderRadius
+        = typeof style.borderRadius === 'number' ? style.borderRadius : 20
 
       return `
         <div style="
@@ -344,7 +352,7 @@ function renderQrcodeElement(
   width: number,
   height: number,
 ): string {
-  const pos = element.position as { x: number | string; y: number | string }
+  const pos = element.position as { x: number | string, y: number | string }
   const x = parsePosition(pos.x, width)
   const y = parsePosition(pos.y, height)
   const size = element.size || { width: 150, height: 150 }
@@ -377,18 +385,19 @@ function renderDimensionBarElement(
   width: number,
   height: number,
 ): string {
-  const pos = element.position as { x: number | string; y: number | string }
+  const pos = element.position as { x: number | string, y: number | string }
   const x = parsePosition(pos.x, width)
   const y = parsePosition(pos.y, height)
   const style = element.style || {}
   const barWidth = (element.size?.width || 400) * 0.6
   const barHeight = element.size?.height || 20
 
-  if (!variables.dominantDimensions?.length) return ''
+  if (!variables.dominantDimensions?.length)
+    return ''
 
   const barsHtml = variables.dominantDimensions
     .slice(0, 3)
-    .map(dim => {
+    .map((dim) => {
       const leftColor = style.color || 'rgba(255,255,255,0.7)'
       const rightColor = '#ffffff'
       const fillColor = '#ffffff'
@@ -447,7 +456,8 @@ function renderElement(
   width: number,
   height: number,
 ): string {
-  if (element.visible === false) return ''
+  if (element.visible === false)
+    return ''
 
   switch (element.type) {
     case 'text':

@@ -3,8 +3,8 @@
  * 负责将模板渲染为实际的 HTML/DOM
  */
 
-import type { RenderContext } from './types'
 import type { ShareCardTemplate, TemplateElement } from '../types/template'
+import type { RenderContext } from './types'
 import { interpolateTemplate } from './template-parser'
 
 /**
@@ -18,7 +18,7 @@ export function parsePosition(
     return value
   }
   if (typeof value === 'string' && value.endsWith('%')) {
-    return (parseFloat(value) / 100) * containerSize
+    return (Number.parseFloat(value) / 100) * containerSize
   }
   return 0
 }
@@ -30,7 +30,7 @@ export function calculateElementPosition(
   element: TemplateElement,
   containerWidth: number,
   containerHeight: number,
-): { x: number; y: number } {
+): { x: number, y: number } {
   const position = element.position
 
   if (typeof position === 'string') {
@@ -90,12 +90,14 @@ export function generateElementStyle(
   if (typeof pos === 'object') {
     if (typeof pos.x === 'number') {
       styles.push(`left: ${pos.x}px`)
-    } else if (typeof pos.x === 'string') {
+    }
+    else if (typeof pos.x === 'string') {
       styles.push(`left: ${pos.x}`)
     }
     if (typeof pos.y === 'number') {
       styles.push(`top: ${pos.y}px`)
-    } else if (typeof pos.y === 'string') {
+    }
+    else if (typeof pos.y === 'string') {
       styles.push(`top: ${pos.y}`)
     }
   }
@@ -153,7 +155,8 @@ export function generateElementStyle(
   if (style.padding !== undefined) {
     if (typeof style.padding === 'number') {
       styles.push(`padding: ${style.padding}px`)
-    } else if (typeof style.padding === 'object') {
+    }
+    else if (typeof style.padding === 'object') {
       const { top = 0, right = 0, bottom = 0, left = 0 } = style.padding
       styles.push(`padding: ${top}px ${right}px ${bottom}px ${left}px`)
     }
@@ -161,7 +164,8 @@ export function generateElementStyle(
   if (style.margin !== undefined) {
     if (typeof style.margin === 'number') {
       styles.push(`margin: ${style.margin}px`)
-    } else if (typeof style.margin === 'object') {
+    }
+    else if (typeof style.margin === 'object') {
       const { top = 0, right = 0, bottom = 0, left = 0 } = style.margin
       styles.push(`margin: ${top}px ${right}px ${bottom}px ${left}px`)
     }
@@ -317,7 +321,7 @@ export function renderTraitBadgesElement(
   const traits = context.type.traits.slice(0, 4)
 
   const badges = traits
-    .map(trait => {
+    .map((trait) => {
       const name = trait.name[context.locale] || trait.name.zh || ''
       const badgeStyle = `
       display: inline-block;
@@ -345,7 +349,7 @@ export function renderDimensionBarElement(
   const style = generateElementStyle(element, context)
 
   const bars = context.dimensions
-    .map(dim => {
+    .map((dim) => {
       const width = `${dim.percentage}%`
       return `
       <div style="margin: 8px 0;">

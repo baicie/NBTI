@@ -1,7 +1,7 @@
 {
   "name": "nbti-docs",
-  "private": true,
   "type": "module",
+  "private": true,
   "scripts": {
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",

@@ -1,6 +1,6 @@
+import type { Question } from '@nbti/core'
 import { loadFullSuite } from '@/lib/suite-loader'
 import { TestPageClient } from './test-page-client'
-import type { Question } from '@nbti/core'
 
 interface TestPageProps {
   params: Promise<{ suite: string }>
@@ -17,7 +17,7 @@ export default async function TestPage({ params }: TestPageProps) {
 
   // 类型断言
   const typedManifest = manifest as {
-    name: { zh: string; en: string }
+    name: { zh: string, en: string }
     settings?: {
       layout?: 'list' | 'single'
       allowBack?: boolean

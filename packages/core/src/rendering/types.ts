@@ -50,14 +50,14 @@ export interface RenderOptions {
 /**
  * 变量类型
  */
-export type VariableType =
-  | 'type'
-  | 'dimension'
-  | 'trait'
-  | 'share'
-  | 'datetime'
-  | 'config'
-  | 'i18n'
+export type VariableType
+  = | 'type'
+    | 'dimension'
+    | 'trait'
+    | 'share'
+    | 'datetime'
+    | 'config'
+    | 'i18n'
 
 /**
  * 变量路径

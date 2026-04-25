@@ -1,40 +1,38 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
+    "composite": true,
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo/root.tsbuildinfo",
     "target": "ES2016",
-    "module": "ESNext",
-    "lib": ["ES2016", "DOM", "DOM.Iterable"],
-    "moduleResolution": "bundler",
-    "newLine": "LF",
 
-    "sourceMap": true,
-    "declaration": true,
-    "declarationMap": true,
-    "removeComments": false,
+    "jsx": "react-jsx",
+    "lib": ["ES2016", "DOM", "DOM.Iterable"],
+
+    "useDefineForClassFields": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
 
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "declaration": true,
+    "declarationMap": true,
+    "newLine": "LF",
+
+    "removeComments": false,
+    "sourceMap": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "forceConsistentCasingInFileNames": true,
 
-    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
+    "isolatedDeclarations": false,
     "isolatedModules": true,
     "skipLibCheck": true,
-    "allowJs": true,
-
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-
-    "useDefineForClassFields": false,
-
-    "composite": true,
-    "isolatedDeclarations": false,
-
-    "jsx": "react-jsx"
+    "allowJs": true
   }
 }

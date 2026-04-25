@@ -1348,16 +1348,16 @@ npm install zod ajv
 ### 代码示例
 
 ```typescript
-import { z } from 'zod'
 import Ajv from 'ajv'
 import addFormats from 'ajv-formats'
+import { z } from 'zod'
 
 // 加载 Schema
 import manifestSchema from './schemas/manifest.schema.json'
 import questionsSchema from './schemas/questions.schema.json'
-import typesSchema from './schemas/types.schema.json'
 import templatesSchema from './schemas/templates.schema.json'
 import themesSchema from './schemas/themes.schema.json'
+import typesSchema from './schemas/types.schema.json'
 
 // 创建 Ajv 实例
 const ajv = new Ajv({ allErrors: true })

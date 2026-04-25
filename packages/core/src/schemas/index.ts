@@ -1,5 +1,5 @@
 export { default as manifestSchema } from './manifest.schema.json'
 export { default as questionsSchema } from './questions.schema.json'
-export { default as typesSchema } from './types.schema.json'
 export { default as templatesSchema } from './templates.schema.json'
 export { default as themesSchema } from './themes.schema.json'
+export { default as typesSchema } from './types.schema.json'

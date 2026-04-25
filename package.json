@@ -1,8 +1,11 @@
 {
   "name": "root",
+  "type": "module",
   "private": true,
   "packageManager": "pnpm@10.33.2",
-  "type": "module",
+  "engines": {
+    "node": ">=18.12.0"
+  },
   "scripts": {
     "dev": "pnpm --filter @nbti/web dev",
     "dev:all": "pnpm --filter @nbti/web dev",
@@ -20,24 +23,10 @@
     "preinstall": "npx only-allow pnpm",
     "postinstall": "simple-git-hooks"
   },
-  "simple-git-hooks": {
-    "pre-commit": "pnpm lint-staged && pnpm check",
-    "commit-msg": "node -e \"import('@baicie/scripts').then(m => m.verifyCommit())\""
-  },
-  "lint-staged": {
-    "*.{js,json}": [
-      "prettier --write --cache --cache-location node_modules/.cache/prettier"
-    ],
-    "*.ts?(x)": [
-      "eslint --fix --cache --cache-location node_modules/.cache/eslint",
-      "prettier --parser=typescript --write --cache --cache-location node_modules/.cache/prettier"
-    ]
-  },
-  "engines": {
-    "node": ">=18.12.0"
-  },
   "devDependencies": {
+    "@antfu/eslint-config": "^8.2.0",
     "@baicie/scripts": "^0.1.2",
+    "@eslint-react/eslint-plugin": "^3.0.0",
     "@types/node": "^25.6.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
@@ -55,5 +44,12 @@
     "typescript-eslint": "^8.59.0",
     "vitest": "^4.1.5",
     "zod": "^4.3.6"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm lint-staged && pnpm check",
+    "commit-msg": "node -e \"import('@baicie/scripts').then(m => m.verifyCommit())\""
+  },
+  "lint-staged": {
+    "*": "eslint --fix"
   }
 }

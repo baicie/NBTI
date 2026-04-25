@@ -1,14 +1,14 @@
 {
   "name": "@nbti/test-data",
+  "type": "module",
   "version": "0.1.0",
   "private": true,
-  "type": "module",
-  "main": "./src/mbti/manifest.json",
   "exports": {
     "./mbti/manifest": "./src/mbti/manifest.json",
     "./mbti/questions": "./src/mbti/questions.json",
     "./mbti/types": "./src/mbti/types.json",
     "./mbti/templates": "./src/mbti/templates.json",
     "./mbti/themes": "./src/mbti/themes.json"
-  }
+  },
+  "main": "./src/mbti/manifest.json"
 }

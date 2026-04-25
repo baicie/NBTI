@@ -918,16 +918,16 @@ interface VisitorData {
 // apps/api/src/middleware/index.ts
 
 import { Hono } from 'hono'
-import { cors } from 'hono/cors'
-import { logger } from 'hono/logger'
-import { etag } from 'hono/etag'
 import { compress } from 'hono/compress'
+import { cors } from 'hono/cors'
+import { etag } from 'hono/etag'
+import { logger } from 'hono/logger'
 
-import { rateLimitMiddleware } from './rate-limit'
 import { authMiddleware } from './auth'
-import { errorHandler } from './error-handler'
-import { requestId } from './request-id'
 import { corsConfig } from './cors'
+import { errorHandler } from './error-handler'
+import { rateLimitMiddleware } from './rate-limit'
+import { requestId } from './request-id'
 
 // 应用中间件
 export function applyMiddleware(app: Hono) {
@@ -950,13 +950,13 @@ export function applyMiddleware(app: Hono) {
 ```typescript
 // apps/api/src/middleware/auth.ts
 
+import { eq } from 'drizzle-orm'
 import { Context, Next } from 'hono'
 import { bearerAuth } from 'hono/bearer-auth'
-import { getCookie, setCookie, deleteCookie } from 'hono/cookie'
 
+import { deleteCookie, getCookie, setCookie } from 'hono/cookie'
 import { db } from '../db/client'
 import { users } from '../db/schema'
-import { eq } from 'drizzle-orm'
 
 // 认证策略
 type AuthStrategy = 'required' | 'optional' | 'none'
@@ -1220,11 +1220,11 @@ export function errorHandler(error: Error, c: Context) {
 ```typescript
 // apps/api/src/services/result.service.ts
 
+import type { HonoContext } from '../types'
+import { nanoid } from 'nanoid'
+import { redis } from '../cache/redis'
 import { db } from '../db/client'
 import { results } from '../db/schema'
-import { redis } from '../cache/redis'
-import { nanoid } from 'nanoid'
-import type { HonoContext } from '../types'
 
 export class ResultService {
   // 创建结果
@@ -1377,11 +1377,11 @@ export const resultService = new ResultService()
 ```typescript
 // apps/api/src/services/config.service.ts
 
+import type { HonoContext } from '../types'
+import { redis } from '../cache/redis'
 import { db } from '../db/client'
 import { configVersions } from '../db/schema'
-import { redis } from '../cache/redis'
 import { s3 } from '../storage/s3'
-import type { HonoContext } from '../types'
 
 export class ConfigService {
   // 获取配置
@@ -1591,10 +1591,10 @@ export const configService = new ConfigService()
 ```typescript
 // apps/api/src/services/analytics.service.ts
 
-import { db } from '../db/client'
-import { results, analyticsEvents } from '../db/schema'
+import { and, eq, gte, lte, sql } from 'drizzle-orm'
 import { redis } from '../cache/redis'
-import { eq, sql, and, gte, lte } from 'drizzle-orm'
+import { db } from '../db/client'
+import { analyticsEvents, results } from '../db/schema'
 
 export class AnalyticsService {
   // 埋点上报
@@ -1864,27 +1864,20 @@ export const analyticsService = new AnalyticsService()
 
 ```yaml
 # vercel.json
-{
-  'regions': ['hkg1', 'sin1'],
-  'env':
-    {
-      'DATABASE_URL': '@database-url',
-      'REDIS_URL': '@redis-url',
-      'JWT_SECRET': '@jwt-secret',
-    },
-  'headers':
-    [
-      {
-        'source': '/api/(.*)',
-        'headers': [{ 'key': 'Cache-Control', 'value': 'no-cache' }],
-      },
-      {
-        'source': '/api/v1/configs/(.*)',
-        'headers':
-          [{ 'key': 'Cache-Control', 'value': 'public, max-age=3600' }],
-      },
-    ],
-} # 亚太地区
+regions: [hkg1, sin1]
+env:
+  DATABASE_URL: '@database-url'
+  REDIS_URL: '@redis-url'
+  JWT_SECRET: '@jwt-secret'
+
+headers:
+  - source: '/api/(.*)'
+    headers: [{ key: Cache-Control, value: no-cache }]
+
+  - source: '/api/v1/configs/(.*)'
+    headers: [{ key: Cache-Control, value: 'public, max-age=3600' }]
+
+  # 亚太地区
 ```
 
 ```bash
@@ -2041,8 +2034,8 @@ export const requestLogger = honoLogger((str, variables) => {
     requestId: variables.requestId,
     method: variables.method,
     path: variables.path,
-    status: parseInt(variables.status),
-    duration: parseInt(variables.duration),
+    status: Number.parseInt(variables.status),
+    duration: Number.parseInt(variables.duration),
   }
 
   // 输出到日志系统

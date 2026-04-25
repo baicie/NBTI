@@ -1,5 +1,5 @@
-import * as React from 'react'
 import { cn } from '@nbti/shared'
+import * as React from 'react'
 
 export interface ProgressProps extends React.HTMLAttributes<HTMLDivElement> {
   value?: number

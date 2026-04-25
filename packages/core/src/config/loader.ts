@@ -12,6 +12,7 @@ import type {
   ThemeData,
   TypesData,
 } from '../types'
+import { ConfigCache } from './cache'
 import {
   validateManifest,
   validateQuestions,
@@ -19,7 +20,6 @@ import {
   validateTheme,
   validateTypes,
 } from './validator'
-import { ConfigCache } from './cache'
 
 /**
  * 加载器选项
@@ -64,7 +64,8 @@ export class ConfigLoader {
    * 检查缓存
    */
   private getFromCache(): LoadedConfig | null {
-    if (!this.useCache) return null
+    if (!this.useCache)
+      return null
     return ConfigCache.get(this.getCacheKey())
   }
 
@@ -118,7 +119,8 @@ export class ConfigLoader {
       }
       const data = (await response.json()) as T
       return { success: true, data }
-    } catch (error) {
+    }
+    catch (error) {
       return {
         success: false,
         error: error instanceof Error ? error : new Error(String(error)),
@@ -138,7 +140,8 @@ export class ConfigLoader {
     try {
       const validated = validateManifest(result.data)
       return { success: true, data: validated }
-    } catch (error) {
+    }
+    catch (error) {
       return {
         success: false,
         error:
@@ -167,7 +170,8 @@ export class ConfigLoader {
     try {
       const validated = validateQuestions(result.data)
       return { success: true, data: validated }
-    } catch (error) {
+    }
+    catch (error) {
       return {
         success: false,
         error:
@@ -196,7 +200,8 @@ export class ConfigLoader {
     try {
       const validated = validateTypes(result.data)
       return { success: true, data: validated }
-    } catch (error) {
+    }
+    catch (error) {
       return {
         success: false,
         error:
@@ -234,7 +239,8 @@ export class ConfigLoader {
     try {
       const validated = validateTemplates(result.data)
       return { success: true, data: validated }
-    } catch (error) {
+    }
+    catch (error) {
       return {
         success: false,
         error:
@@ -274,7 +280,8 @@ export class ConfigLoader {
     try {
       const validated = validateTheme(result.data)
       return { success: true, data: validated }
-    } catch (error) {
+    }
+    catch (error) {
       return {
         success: false,
         error:

@@ -1,7 +1,8 @@
 'use client'
 
-import { type ReactNode, useMemo } from 'react'
+import type { ReactNode } from 'react'
 import type { SuiteTheme } from '@/lib/types/suite'
+import { useMemo } from 'react'
 
 interface ThemeProviderProps {
   theme: SuiteTheme

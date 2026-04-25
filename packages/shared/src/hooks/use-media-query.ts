@@ -25,14 +25,16 @@ export function useMediaQuery(query: string): boolean {
 
     try {
       mediaQuery.addEventListener('change', handler)
-    } catch {
+    }
+    catch {
       mediaQuery.addListener(handler)
     }
 
     return () => {
       try {
         mediaQuery.removeEventListener('change', handler)
-      } catch {
+      }
+      catch {
         mediaQuery.removeListener(handler)
       }
     }

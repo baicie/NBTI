@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
-import { loadSuiteTheme, suiteExists } from '@/lib/suite-loader'
 import { ThemeProvider } from '@/components/theme-provider'
+import { loadSuiteTheme, suiteExists } from '@/lib/suite-loader'
 
 interface SuiteLayoutProps {
   children: React.ReactNode

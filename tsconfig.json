@@ -3,12 +3,12 @@
   "compilerOptions": {
     "ignoreDeprecations": "6.0",
     "tsBuildInfoFile": "./node_modules/.cache/tsbuildinfo/check.tsbuildinfo",
-    "types": ["vitest/globals", "node", "react", "react-dom"],
     "paths": {
       "@/*": ["./apps/web/*"],
       "@nbti/*": ["./packages/*/src"],
       "*": ["./*"]
-    }
+    },
+    "types": ["vitest/globals", "node", "react", "react-dom"]
   },
   "include": [
     "packages/*/src",

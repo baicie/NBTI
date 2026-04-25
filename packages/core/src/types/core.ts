@@ -5,9 +5,9 @@
 import type { I18nDict } from './i18n'
 import type { Manifest } from './manifest'
 import type { QuestionsData } from './question'
+import type { TypesData } from './result'
 import type { TemplatesData } from './template'
 import type { ThemeData } from './theme'
-import type { TypesData } from './result'
 
 /**
  * 本地化字符串类型

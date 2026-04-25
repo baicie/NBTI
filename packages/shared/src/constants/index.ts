@@ -43,8 +43,8 @@ export const CALCULATE_METHODS = {
   RATIO: 'ratio',
   ABSOLUTE: 'absolute',
 } as const
-export type CalculateMethod =
-  (typeof CALCULATE_METHODS)[keyof typeof CALCULATE_METHODS]
+export type CalculateMethod
+  = (typeof CALCULATE_METHODS)[keyof typeof CALCULATE_METHODS]
 
 /**
  * 元素类型
@@ -69,8 +69,8 @@ export const BACKGROUND_TYPES = {
   GRADIENT: 'gradient',
   IMAGE: 'image',
 } as const
-export type BackgroundType =
-  (typeof BACKGROUND_TYPES)[keyof typeof BACKGROUND_TYPES]
+export type BackgroundType
+  = (typeof BACKGROUND_TYPES)[keyof typeof BACKGROUND_TYPES]
 
 /**
  * 动画类型
@@ -81,8 +81,8 @@ export const ANIMATION_TYPES = {
   SCALE: 'scale',
   NONE: 'none',
 } as const
-export type AnimationType =
-  (typeof ANIMATION_TYPES)[keyof typeof ANIMATION_TYPES]
+export type AnimationType
+  = (typeof ANIMATION_TYPES)[keyof typeof ANIMATION_TYPES]
 
 /**
  * 预设位置

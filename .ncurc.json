@@ -1,5 +1,10 @@
 {
   "upgrade": true,
   "deep": true,
-  "reject": ["ora"]
+  "reject": [
+    "ora",
+    "@antfu/eslint-config",
+    "@eslint-react/eslint-plugin",
+    "eslint"
+  ]
 }

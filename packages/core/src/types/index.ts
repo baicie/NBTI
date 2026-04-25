@@ -1,6 +1,9 @@
 // Core types
 export * from './core'
 
+// i18n
+export * from './i18n'
+
 // Manifest
 export * from './manifest'
 
@@ -15,6 +18,3 @@ export * from './template'
 
 // Theme
 export * from './theme'
-
-// i18n
-export * from './i18n'

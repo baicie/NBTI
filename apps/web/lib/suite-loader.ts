@@ -9,25 +9,25 @@
 import type { SuiteConfig, SuiteIndex, SuiteTheme } from './types/suite'
 import type { TemplatesConfig } from './types/template'
 
+import discManifest from '../configs/suites/disc/manifest.json'
+import discQuestions from '../configs/suites/disc/questions.json'
+import discTheme from '../configs/suites/disc/theme.json'
+import discTypes from '../configs/suites/disc/types.json'
+
 // 静态导入所有已知套件的配置（Next.js bundler 可正确分析）
 // templates.json 为可选配置，仅 pr01 套件提供
 import mbtiManifest from '../configs/suites/mbti/manifest.json'
-import mbtiTheme from '../configs/suites/mbti/theme.json'
 import mbtiQuestions from '../configs/suites/mbti/questions.json'
+import mbtiTheme from '../configs/suites/mbti/theme.json'
 import mbtiTypes from '../configs/suites/mbti/types.json'
 
-import discManifest from '../configs/suites/disc/manifest.json'
-import discTheme from '../configs/suites/disc/theme.json'
-import discQuestions from '../configs/suites/disc/questions.json'
-import discTypes from '../configs/suites/disc/types.json'
-
 import pr01Manifest from '../configs/suites/pr01/manifest.json'
-import pr01Theme from '../configs/suites/pr01/theme.json'
 import pr01Questions from '../configs/suites/pr01/questions.json'
-import pr01Types from '../configs/suites/pr01/types.json'
 import pr01Templates from '../configs/suites/pr01/templates.json'
+import pr01Theme from '../configs/suites/pr01/theme.json'
+import pr01Types from '../configs/suites/pr01/types.json'
 
-type SuiteData = {
+interface SuiteData {
   manifest: Record<string, unknown>
   theme: SuiteTheme
   questions: Record<string, unknown>
@@ -65,7 +65,8 @@ export async function getSuiteIndex(): Promise<SuiteIndex> {
   try {
     const indexModule = await import('../configs/suites/index.json')
     return indexModule.default as SuiteIndex
-  } catch {
+  }
+  catch {
     return { suites: [], updatedAt: '' }
   }
 }
@@ -182,7 +183,8 @@ export function getLoadedSuiteIds(): string[] {
 export function clearSuiteCache(suiteId?: string): void {
   if (suiteId) {
     suiteDataCache.delete(suiteId)
-  } else {
+  }
+  else {
     // 重新从静态注册表恢复（开发热更新时恢复初始状态）
     for (const [id, config] of Object.entries(SUITE_CONFIGS)) {
       suiteDataCache.set(id, config)

@@ -47,7 +47,8 @@ export class I18n {
   setLocale(locale: string): void {
     if (this.dictionaries.has(locale)) {
       this.currentLocale = locale
-    } else {
+    }
+    else {
       console.warn(`Locale "${locale}" not registered, using fallback`)
       this.currentLocale = this.fallbackLocale
     }

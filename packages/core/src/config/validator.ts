@@ -3,7 +3,6 @@
  * 使用 Zod v4 进行运行时类型校验
  */
 
-import { z } from 'zod'
 import type {
   Manifest,
   QuestionsData,
@@ -11,10 +10,11 @@ import type {
   ThemeData,
   TypesData,
 } from '../types'
+import { z } from 'zod'
 
 // 本地化字符串 Schema
-export const LocalizedStringSchema: z.ZodType<Record<string, string>> =
-  z.record(z.string(), z.string())
+export const LocalizedStringSchema: z.ZodType<Record<string, string>>
+  = z.record(z.string(), z.string())
 
 // Manifest Schema
 export const ManifestConfigSchema = z.object({

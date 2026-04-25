@@ -1,8 +1,8 @@
 'use client'
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { useTest } from '@/providers/test-provider'
+import type { PersonalityType } from '@nbti/core'
+import type { TypeMatchResult } from '@/lib/type-mapper'
+import type { Template, TemplateVariables } from '@/lib/types/template'
 import {
   Check,
   ChevronDown,
@@ -11,10 +11,11 @@ import {
   Share2,
   X,
 } from 'lucide-react'
-import type { PersonalityType } from '@nbti/core'
-import { type TypeMatchResult, getTypeMatchResult } from '@/lib/type-mapper'
-import type { Template, TemplateVariables } from '@/lib/types/template'
+import { useRouter } from 'next/navigation'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { renderTemplate } from '@/lib/template-renderer'
+import { getTypeMatchResult } from '@/lib/type-mapper'
+import { useTest } from '@/providers/test-provider'
 
 interface ResultPageClientProps {
   suiteId: string
@@ -82,7 +83,8 @@ export function ResultPageClient({
   const getLocalizedContent = (
     content: Record<string, string> | string | undefined,
   ): string => {
-    if (!content) return ''
+    if (!content)
+      return ''
     if (typeof content === 'string') {
       return content
     }
@@ -93,7 +95,8 @@ export function ResultPageClient({
 
   // 使用 type-mapper 计算类型匹配结果
   const typeMatchResult = useMemo<TypeMatchResult | null>(() => {
-    if (!result || !types.length) return null
+    if (!result || !types.length)
+      return null
 
     // 构建维度定义
     const dimDefinitions = dimensions.map(dim => ({
@@ -123,7 +126,7 @@ export function ResultPageClient({
       )
     }
 
-    return result.dimensions.map(dim => {
+    return result.dimensions.map((dim) => {
       const dimDef = dimensions.find(d => d.id === dim.dimensionId)
       return {
         id: dim.dimensionId,
@@ -162,7 +165,8 @@ export function ResultPageClient({
         return Math.round(scores[0].score)
       }
     }
-    if (!result?.dimensions || result.dimensions.length === 0) return 0
+    if (!result?.dimensions || result.dimensions.length === 0)
+      return 0
     const totalDiff = result.dimensions.reduce((sum, dim) => {
       const diff = Math.abs(dim.percentage - 50)
       return sum + diff
@@ -172,12 +176,14 @@ export function ResultPageClient({
   }, [result, typeMatchResult])
 
   const handleDownload = useCallback(async () => {
-    if (!typeResult || !templates?.templates.length) return
+    if (!typeResult || !templates?.templates.length)
+      return
     setIsGenerating(true)
     setDownloadSuccess(false)
     try {
       await generateShareCard()
-    } finally {
+    }
+    finally {
       setIsGenerating(false)
     }
   }, [
@@ -198,22 +204,24 @@ export function ResultPageClient({
           text: `我的 ${suiteName} 类型是 ${typeResult?.id || '???'}（${getLocalizedContent(typeResult?.name || { zh: '未知' })})`,
         })
         .catch(() => {})
-    } else {
+    }
+    else {
       setShowShareModal(true)
     }
   }
 
   const generateShareCard = async () => {
-    if (!typeResult || !templates?.templates.length) return
+    if (!typeResult || !templates?.templates.length)
+      return
 
     const defaultTemplateId = templates.defaultTemplate || 'gradient'
-    const template =
-      templates.templates.find(t => t.id === selectedTemplateId) ||
-      templates.templates.find(t => t.id === defaultTemplateId) ||
-      templates.templates[0]
+    const template
+      = templates.templates.find(t => t.id === selectedTemplateId)
+        || templates.templates.find(t => t.id === defaultTemplateId)
+        || templates.templates[0]
 
-    const shareUrl =
-      typeof window !== 'undefined'
+    const shareUrl
+      = typeof window !== 'undefined'
         ? `${window.location.origin}/${suiteId}/result`
         : `https://example.com/${suiteId}/result`
 
@@ -229,7 +237,8 @@ export function ResultPageClient({
           light: '#ffffff',
         },
       })
-    } catch {
+    }
+    catch {
       // Continue without QR code
     }
 
@@ -291,8 +300,9 @@ export function ResultPageClient({
         },
       )
 
-      canvas.toBlob(blob => {
-        if (!blob) return
+      canvas.toBlob((blob) => {
+        if (!blob)
+          return
         const url = URL.createObjectURL(blob)
         const link = document.createElement('a')
         link.href = url
@@ -300,9 +310,10 @@ export function ResultPageClient({
         link.click()
         URL.revokeObjectURL(url)
         setDownloadSuccess(true)
-        setTimeout(() => setDownloadSuccess(false), 3000)
+        setTimeout(setDownloadSuccess, 3000, false)
       }, 'image/png')
-    } finally {
+    }
+    finally {
       document.body.removeChild(container)
     }
   }
@@ -317,10 +328,11 @@ export function ResultPageClient({
       return
 
     const template = templates.templates.find(t => t.id === selectedTemplateId)
-    if (!template) return
+    if (!template)
+      return
 
-    const shareUrl =
-      typeof window !== 'undefined'
+    const shareUrl
+      = typeof window !== 'undefined'
         ? `${window.location.origin}/${suiteId}/result`
         : `https://example.com/${suiteId}/result`
 
@@ -366,7 +378,8 @@ export function ResultPageClient({
           },
         })
         setQrImageUrl(qrDataUrl)
-      } catch {
+      }
+      catch {
         setQrImageUrl('')
       }
     })()
@@ -390,9 +403,9 @@ export function ResultPageClient({
   useEffect(() => {
     if (templates?.templates.length && !selectedTemplateId) {
       const defaultId = templates.defaultTemplate || 'gradient'
-      const targetId =
-        templates.templates.find(t => t.id === defaultId)?.id ||
-        templates.templates[0]?.id
+      const targetId
+        = templates.templates.find(t => t.id === defaultId)?.id
+          || templates.templates[0]?.id
       if (targetId) {
         setSelectedTemplateId(targetId)
       }
@@ -409,8 +422,8 @@ export function ResultPageClient({
   const showDimensions = manifest.settings?.showDimensions !== false
 
   // 背景图样式
-  const backgroundStyle =
-    manifest.background?.enabled && manifest.background?.image
+  const backgroundStyle
+    = manifest.background?.enabled && manifest.background?.image
       ? {
           backgroundImage: `url(${manifest.background.image})`,
           backgroundPosition: manifest.background?.position || 'center',
@@ -516,7 +529,10 @@ export function ResultPageClient({
                 style={{ background: 'var(--suite-primary)' }}
               />
             </span>
-            <span>测试完成 · {suiteName}</span>
+            <span>
+              测试完成 ·
+              {suiteName}
+            </span>
           </div>
         </div>
 
@@ -537,42 +553,44 @@ export function ResultPageClient({
           >
             <div className="grid md:grid-cols-2 gap-6 items-center">
               {/* Poster */}
-              {typeResult?.posterImage ? (
-                <div className="relative">
-                  <div
-                    className="absolute -top-4 -right-4 w-24 h-24 rounded-full opacity-20"
-                    style={{
-                      background: `radial-gradient(circle, var(--suite-primary) 0%, transparent 70%)`,
-                    }}
-                  />
-                  <img
-                    src={getLocalizedContent(typeResult.posterImage)}
-                    alt={typeResult.id}
-                    className="w-full h-48 md:h-56 object-contain rounded-2xl relative z-10"
-                  />
-                </div>
-              ) : (
-                <div
-                  className="w-48 h-48 md:w-56 md:h-56 mx-auto rounded-2xl flex items-center justify-center relative overflow-hidden"
-                  style={{
-                    background: `linear-gradient(135deg, ${typeResult?.color || 'var(--suite-primary)'} 0%, var(--suite-secondary) 100%)`,
-                  }}
-                >
-                  <div
-                    className="absolute inset-0 opacity-30"
-                    style={{
-                      background:
+              {typeResult?.posterImage
+                ? (
+                    <div className="relative">
+                      <div
+                        className="absolute -top-4 -right-4 w-24 h-24 rounded-full opacity-20"
+                        style={{
+                          background: `radial-gradient(circle, var(--suite-primary) 0%, transparent 70%)`,
+                        }}
+                      />
+                      <img
+                        src={getLocalizedContent(typeResult.posterImage)}
+                        alt={typeResult.id}
+                        className="w-full h-48 md:h-56 object-contain rounded-2xl relative z-10"
+                      />
+                    </div>
+                  )
+                : (
+                    <div
+                      className="w-48 h-48 md:w-56 md:h-56 mx-auto rounded-2xl flex items-center justify-center relative overflow-hidden"
+                      style={{
+                        background: `linear-gradient(135deg, ${typeResult?.color || 'var(--suite-primary)'} 0%, var(--suite-secondary) 100%)`,
+                      }}
+                    >
+                      <div
+                        className="absolute inset-0 opacity-30"
+                        style={{
+                          background:
                         'radial-gradient(circle at 30% 30%, rgba(255,255,255,0.5) 0%, transparent 50%)',
-                    }}
-                  />
-                  <span
-                    className="text-6xl md:text-7xl font-bold relative z-10"
-                    style={{ color: '#ffffff' }}
-                  >
-                    {typeResult?.id || '???'}
-                  </span>
-                </div>
-              )}
+                        }}
+                      />
+                      <span
+                        className="text-6xl md:text-7xl font-bold relative z-10"
+                        style={{ color: '#ffffff' }}
+                      >
+                        {typeResult?.id || '???'}
+                      </span>
+                    </div>
+                  )}
 
               {/* Type Info */}
               <div className="text-center md:text-left">
@@ -618,7 +636,8 @@ export function ResultPageClient({
                       className="text-lg font-bold"
                       style={{ color: 'var(--suite-primary)' }}
                     >
-                      {matchScore}%
+                      {matchScore}
+                      %
                     </div>
                     <div
                       className="text-[10px] uppercase tracking-wider"
@@ -825,7 +844,8 @@ export function ResultPageClient({
                             className="font-bold"
                             style={{ color: 'var(--suite-primary)' }}
                           >
-                            {dim.percentage}%
+                            {dim.percentage}
+                            %
                           </span>
                         </div>
                         <div
@@ -921,7 +941,8 @@ export function ResultPageClient({
                             className="text-sm font-bold"
                             style={{ color: 'var(--suite-primary)' }}
                           >
-                            {trait.level}%
+                            {trait.level}
+                            %
                           </span>
                         </div>
                       ))}
@@ -932,91 +953,92 @@ export function ResultPageClient({
             )}
 
             {/* Top Matches Section (for pr01 with many types) */}
-            {typeMatchResult?.matchScores &&
-              typeMatchResult.matchScores.length > 1 && (
-                <div
-                  className="rounded-2xl overflow-hidden transition-all duration-300"
-                  style={{
-                    background: 'var(--suite-card)',
-                    border: '1px solid var(--suite-border)',
-                  }}
+            {typeMatchResult?.matchScores
+              && typeMatchResult.matchScores.length > 1 && (
+              <div
+                className="rounded-2xl overflow-hidden transition-all duration-300"
+                style={{
+                  background: 'var(--suite-card)',
+                  border: '1px solid var(--suite-border)',
+                }}
+              >
+                <button
+                  onClick={() => toggleSection('topMatches')}
+                  className="w-full p-4 flex items-center justify-between"
                 >
-                  <button
-                    onClick={() => toggleSection('topMatches')}
-                    className="w-full p-4 flex items-center justify-between"
-                  >
-                    <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3">
+                    <div
+                      className="w-10 h-10 rounded-xl flex items-center justify-center"
+                      style={{ background: 'var(--suite-muted)' }}
+                    >
+                      <svg
+                        className="w-5 h-5"
+                        style={{ color: 'var(--suite-primary)' }}
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={1.5}
+                          d="M4 6h16M4 12h16m-7 6h7"
+                        />
+                      </svg>
+                    </div>
+                    <span
+                      className="font-semibold"
+                      style={{ color: 'var(--suite-foreground)' }}
+                    >
+                      其他可能
+                    </span>
+                  </div>
+                  <ChevronDown
+                    className={`w-5 h-5 transition-transform duration-300 ${
+                      expandedSection === 'topMatches' ? 'rotate-180' : ''
+                    }`}
+                    style={{ color: 'var(--suite-muted-foreground)' }}
+                  />
+                </button>
+                <div
+                  className={`overflow-hidden transition-all duration-300 ${
+                    expandedSection === 'topMatches' ? 'max-h-96' : 'max-h-0'
+                  }`}
+                >
+                  <div className="px-4 pb-4 space-y-2">
+                    {typeMatchResult.matchScores.slice(1).map(match => (
                       <div
-                        className="w-10 h-10 rounded-xl flex items-center justify-center"
+                        key={match.typeId}
+                        className="flex items-center justify-between rounded-xl p-3"
                         style={{ background: 'var(--suite-muted)' }}
                       >
-                        <svg
-                          className="w-5 h-5"
-                          style={{ color: 'var(--suite-primary)' }}
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={1.5}
-                            d="M4 6h16M4 12h16m-7 6h7"
-                          />
-                        </svg>
-                      </div>
-                      <span
-                        className="font-semibold"
-                        style={{ color: 'var(--suite-foreground)' }}
-                      >
-                        其他可能
-                      </span>
-                    </div>
-                    <ChevronDown
-                      className={`w-5 h-5 transition-transform duration-300 ${
-                        expandedSection === 'topMatches' ? 'rotate-180' : ''
-                      }`}
-                      style={{ color: 'var(--suite-muted-foreground)' }}
-                    />
-                  </button>
-                  <div
-                    className={`overflow-hidden transition-all duration-300 ${
-                      expandedSection === 'topMatches' ? 'max-h-96' : 'max-h-0'
-                    }`}
-                  >
-                    <div className="px-4 pb-4 space-y-2">
-                      {typeMatchResult.matchScores.slice(1).map(match => (
-                        <div
-                          key={match.typeId}
-                          className="flex items-center justify-between rounded-xl p-3"
-                          style={{ background: 'var(--suite-muted)' }}
-                        >
-                          <div className="flex items-center gap-3">
-                            <span
-                              className="font-bold"
-                              style={{ color: 'var(--suite-foreground)' }}
-                            >
-                              {match.typeId}
-                            </span>
-                            <span
-                              className="text-sm"
-                              style={{ color: 'var(--suite-muted-foreground)' }}
-                            >
-                              {match.typeName}
-                            </span>
-                          </div>
+                        <div className="flex items-center gap-3">
                           <span
-                            className="text-sm font-bold"
-                            style={{ color: 'var(--suite-primary)' }}
+                            className="font-bold"
+                            style={{ color: 'var(--suite-foreground)' }}
                           >
-                            {Math.round(match.score)}%
+                            {match.typeId}
+                          </span>
+                          <span
+                            className="text-sm"
+                            style={{ color: 'var(--suite-muted-foreground)' }}
+                          >
+                            {match.typeName}
                           </span>
                         </div>
-                      ))}
-                    </div>
+                        <span
+                          className="text-sm font-bold"
+                          style={{ color: 'var(--suite-primary)' }}
+                        >
+                          {Math.round(match.score)}
+                          %
+                        </span>
+                      </div>
+                    ))}
                   </div>
                 </div>
-              )}
+              </div>
+            )}
           </div>
 
           {/* Footer Note */}
@@ -1086,8 +1108,9 @@ export function ResultPageClient({
             backgroundColor: 'rgba(0,0,0,0.6)',
             backdropFilter: 'blur(4px)',
           }}
-          onClick={e => {
-            if (e.target === e.currentTarget) setShowShareModal(false)
+          onClick={(e) => {
+            if (e.target === e.currentTarget)
+              setShowShareModal(false)
           }}
         >
           <div
@@ -1222,54 +1245,56 @@ export function ResultPageClient({
       )}
 
       {/* Global Styles */}
-      <style jsx global>{`
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(10px);
+      <style jsx global>
+        {`
+          @keyframes fadeIn {
+            from {
+              opacity: 0;
+              transform: translateY(10px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
           }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
 
-        @keyframes slideIn {
-          from {
-            opacity: 0;
-            transform: translateX(-10px);
+          @keyframes slideIn {
+            from {
+              opacity: 0;
+              transform: translateX(-10px);
+            }
+            to {
+              opacity: 1;
+              transform: translateX(0);
+            }
           }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
 
-        @keyframes scaleIn {
-          from {
-            opacity: 0;
-            transform: scale(0.9);
+          @keyframes scaleIn {
+            from {
+              opacity: 0;
+              transform: scale(0.9);
+            }
+            to {
+              opacity: 1;
+              transform: scale(1);
+            }
           }
-          to {
-            opacity: 1;
-            transform: scale(1);
-          }
-        }
 
-        @keyframes pulse {
-          0%,
-          100% {
-            opacity: 1;
+          @keyframes pulse {
+            0%,
+            100% {
+              opacity: 1;
+            }
+            50% {
+              opacity: 0.5;
+            }
           }
-          50% {
-            opacity: 0.5;
-          }
-        }
 
-        .animate-ping {
-          animation: pulse 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
-        }
-      `}</style>
+          .animate-ping {
+            animation: pulse 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+          }
+        `}
+      </style>
     </div>
   )
 }

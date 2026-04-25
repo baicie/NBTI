@@ -1,12 +1,5 @@
 'use client'
 
-import {
-  type ReactNode,
-  createContext,
-  useCallback,
-  useContext,
-  useState,
-} from 'react'
 import type {
   Answer,
   LoadedConfig,
@@ -14,7 +7,9 @@ import type {
   TestSession,
   UserSettings,
 } from '@nbti/core'
+import type { ReactNode } from 'react'
 import { calculateScores } from '@nbti/core'
+import { createContext, useCallback, useContext, useState } from 'react'
 import { uuidV4 } from '@/lib/uuid'
 
 const STORAGE_KEY_PREFIX = 'nbti_test_'
@@ -78,16 +73,17 @@ function getStorageKey(suiteId: string): string {
 }
 
 // 使用 globalThis 检测浏览器环境
-const isBrowser =
-  typeof globalThis !== 'undefined' &&
-  typeof globalThis.localStorage !== 'undefined'
+const isBrowser
+  = typeof globalThis !== 'undefined'
+    && typeof globalThis.localStorage !== 'undefined'
 
 function saveProgress(
   suiteId: string,
   session: TestSession,
   answers: Map<string, string>,
 ): void {
-  if (!isBrowser) return
+  if (!isBrowser)
+    return
 
   try {
     const stored: StoredProgress = {
@@ -99,17 +95,20 @@ function saveProgress(
       getStorageKey(suiteId),
       JSON.stringify(stored),
     )
-  } catch {
+  }
+  catch {
     // 忽略存储错误
   }
 }
 
 function loadProgress(suiteId: string): StoredProgress | null {
-  if (!isBrowser) return null
+  if (!isBrowser)
+    return null
 
   try {
     const stored = globalThis.localStorage.getItem(getStorageKey(suiteId))
-    if (!stored) return null
+    if (!stored)
+      return null
 
     const parsed = JSON.parse(stored) as StoredProgress
 
@@ -121,13 +120,15 @@ function loadProgress(suiteId: string): StoredProgress | null {
     }
 
     return parsed
-  } catch {
+  }
+  catch {
     return null
   }
 }
 
 function clearProgress(suiteId: string): void {
-  if (!isBrowser) return
+  if (!isBrowser)
+    return
   globalThis.localStorage.removeItem(getStorageKey(suiteId))
 }
 
@@ -160,7 +161,8 @@ export function TestProvider({ children }: { children: ReactNode }) {
 
   const startSession = useCallback(
     (suiteId: string) => {
-      if (!config) return
+      if (!config)
+        return
 
       // 先尝试恢复之前的进度
       const stored = loadProgress(suiteId)
@@ -211,7 +213,7 @@ export function TestProvider({ children }: { children: ReactNode }) {
 
   const answerQuestion = useCallback(
     (questionId: string, optionId: string) => {
-      setAnswers(prev => {
+      setAnswers((prev) => {
         const next = new Map(prev)
         next.set(questionId, optionId)
 
@@ -227,8 +229,9 @@ export function TestProvider({ children }: { children: ReactNode }) {
   )
 
   const nextQuestion = useCallback(() => {
-    setSession(prev => {
-      if (!prev) return prev
+    setSession((prev) => {
+      if (!prev)
+        return prev
       const totalQuestions = prev.totalQuestions
       const nextIndex = Math.min(prev.currentIndex + 1, totalQuestions - 1)
       const newSession = { ...prev, currentIndex: nextIndex }
@@ -243,8 +246,9 @@ export function TestProvider({ children }: { children: ReactNode }) {
   }, [currentSuiteId, answers])
 
   const prevQuestion = useCallback(() => {
-    setSession(prev => {
-      if (!prev) return prev
+    setSession((prev) => {
+      if (!prev)
+        return prev
       const nextIndex = Math.max(prev.currentIndex - 1, 0)
       const newSession = { ...prev, currentIndex: nextIndex }
 

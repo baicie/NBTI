@@ -1,10 +1,10 @@
+import type { Answer } from '../../src/types'
 import { describe, expect, it } from 'vitest'
 import {
   buildDimensionScores,
   calculateDimensionScores,
   generateTypeCode,
 } from '../../src/scoring/dimensions'
-import type { Answer } from '../../src/types'
 
 describe('calculateDimensionScores', () => {
   const questions = [

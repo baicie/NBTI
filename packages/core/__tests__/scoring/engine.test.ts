@@ -1,8 +1,8 @@
-import { describe, expect, it } from 'vitest'
-import { ScoringEngine, calculateScores } from '../../src/scoring/engine'
 import type { Answer, ManifestScoring } from '../../src/types'
+import { describe, expect, it } from 'vitest'
+import { calculateScores, ScoringEngine } from '../../src/scoring/engine'
 
-describe('ScoringEngine', () => {
+describe('scoringEngine', () => {
   const scoring: ManifestScoring = {
     type: 'dimension',
     dimensions: ['EI', 'NS', 'TF', 'JP'],

@@ -3,15 +3,15 @@
   "compilerOptions": {
     "tsBuildInfoFile": "../../node_modules/.cache/tsbuildinfo/web.tsbuildinfo",
     "target": "ES2017",
-    "lib": ["ES2016", "DOM", "DOM.Iterable"],
     "jsx": "preserve",
+    "lib": ["ES2016", "DOM", "DOM.Iterable"],
     "baseUrl": ".",
-    "resolveJsonModule": true,
     "paths": {
       "@/*": ["./*"],
       "@nbti/core": ["../../packages/core/src"],
       "@nbti/shared": ["../../packages/shared/src"]
-    }
+    },
+    "resolveJsonModule": true
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]

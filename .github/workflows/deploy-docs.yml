@@ -7,7 +7,7 @@ on:
       - master
     paths:
       - 'docs/**'
-      - '.github/workflows/deploy-docs.yml'
+      - .github/workflows/deploy-docs.yml
   workflow_dispatch:
 
 permissions:
@@ -34,8 +34,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v5
         with:
-          node-version-file: '.node-version'
-          cache: 'pnpm'
+          node-version-file: .node-version
+          cache: pnpm
 
       - name: Install dependencies
         run: cd docs && pnpm install

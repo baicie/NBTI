@@ -1,7 +1,7 @@
-import { loadFullSuite } from '@/lib/suite-loader'
-import { ResultPageClient } from './result-page-client'
 import type { PersonalityType } from '@nbti/core'
 import type { TemplatesConfig } from '@/lib/types/template'
+import { loadFullSuite } from '@/lib/suite-loader'
+import { ResultPageClient } from './result-page-client'
 
 interface ResultPageProps {
   params: Promise<{ suite: string }>
@@ -15,7 +15,7 @@ interface QuestionsData {
     rightLabel: Record<string, string>
   }>
   questions: Array<{ id: string }>
-  meta: { totalQuestions: number; timeEstimate: number }
+  meta: { totalQuestions: number, timeEstimate: number }
 }
 
 /**
