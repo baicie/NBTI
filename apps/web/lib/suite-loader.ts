@@ -9,18 +9,6 @@
 import type { SuiteConfig, SuiteIndex, SuiteTheme } from './types/suite'
 import type { TemplatesConfig } from './types/template'
 
-import discManifest from '../configs/suites/disc/manifest.json'
-import discQuestions from '../configs/suites/disc/questions.json'
-import discTheme from '../configs/suites/disc/theme.json'
-import discTypes from '../configs/suites/disc/types.json'
-
-// 静态导入所有已知套件的配置（Next.js bundler 可正确分析）
-// templates.json 为可选配置，仅 pr01 套件提供
-import mbtiManifest from '../configs/suites/mbti/manifest.json'
-import mbtiQuestions from '../configs/suites/mbti/questions.json'
-import mbtiTheme from '../configs/suites/mbti/theme.json'
-import mbtiTypes from '../configs/suites/mbti/types.json'
-
 import pr01Manifest from '../configs/suites/pr01/manifest.json'
 import pr01Questions from '../configs/suites/pr01/questions.json'
 import pr01Templates from '../configs/suites/pr01/templates.json'
@@ -37,18 +25,6 @@ interface SuiteData {
 
 // 已加载配置的静态注册表（用于运行时按 ID 查找）
 const SUITE_CONFIGS: Record<string, SuiteData> = {
-  mbti: {
-    manifest: mbtiManifest,
-    theme: mbtiTheme as SuiteTheme,
-    questions: mbtiQuestions,
-    types: mbtiTypes,
-  },
-  disc: {
-    manifest: discManifest,
-    theme: discTheme as SuiteTheme,
-    questions: discQuestions,
-    types: discTypes,
-  },
   pr01: {
     manifest: pr01Manifest,
     theme: pr01Theme as SuiteTheme,

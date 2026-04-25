@@ -1,28 +1,6 @@
 {
   "suites": [
     {
-      "id": "mbti",
-      "name": { "zh": "MBTI 性格测试", "en": "MBTI Personality" },
-      "description": {
-        "zh": "国际通用的性格评估工具，帮助你了解自己的性格特点",
-        "en": "A comprehensive personality assessment tool"
-      },
-      "thumbnail": "/thumbnails/mbti.png",
-      "enabled": true,
-      "order": 1
-    },
-    {
-      "id": "disc",
-      "name": { "zh": "DISC 性格测试", "en": "DISC Personality" },
-      "description": {
-        "zh": "行为风格评估工具，揭示你的行为倾向和沟通风格",
-        "en": "Behavioral style assessment revealing your communication style"
-      },
-      "thumbnail": "/thumbnails/disc.png",
-      "enabled": true,
-      "order": 2
-    },
-    {
       "id": "pr01",
       "name": { "zh": "打工人人格测试", "en": "Work Persona Test" },
       "description": {
@@ -31,7 +9,7 @@
       },
       "thumbnail": "/thumbnails/pr01.png",
       "enabled": true,
-      "order": 3
+      "order": 1
     }
   ],
   "updatedAt": "2026-04-24"
