@@ -21,9 +21,9 @@ export function uuidV4(): string {
   }
 
   // Set version to 0100 (version 4)
-  bytes[6] = (bytes[6] & 0x0f) | 0x40
+  bytes[6] = (bytes[6] & 0x0F) | 0x40
   // Set variant to 10xx
-  bytes[8] = (bytes[8] & 0x3f) | 0x80
+  bytes[8] = (bytes[8] & 0x3F) | 0x80
 
   const hex = Array.from(bytes)
     .map(b => b.toString(16).padStart(2, '0'))
