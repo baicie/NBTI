@@ -1,6 +1,7 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "tsBuildInfoFile": "../../node_modules/.cache/tsbuildinfo/shared.tsbuildinfo",
     "outDir": "./dist",
     "rootDir": "./src"
   },

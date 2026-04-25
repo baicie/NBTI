@@ -118,14 +118,14 @@ GET /schemas/templates.schema.json   →  分享图模板 Schema
 
 ## Schema 文件映射
 
-| Schema 文件 | AI 端点 | 用途 |
-|------------|---------|------|
-| index.json | `/schemas/index.json` | AI 快速了解框架 |
-| manifest.schema.json | `/schemas/manifest.schema.json` | 套餐元信息 |
-| questions.schema.json | `/schemas/questions.schema.json` | 题目和选项 |
-| types.schema.json | `/schemas/types.schema.json` | 人格类型定义 |
-| themes.schema.json | `/schemas/themes.schema.json` | 视觉样式 |
-| templates.schema.json | `/schemas/templates.schema.json` | 分享图模板 |
+| Schema 文件           | AI 端点                          | 用途            |
+| --------------------- | -------------------------------- | --------------- |
+| index.json            | `/schemas/index.json`            | AI 快速了解框架 |
+| manifest.schema.json  | `/schemas/manifest.schema.json`  | 套餐元信息      |
+| questions.schema.json | `/schemas/questions.schema.json` | 题目和选项      |
+| types.schema.json     | `/schemas/types.schema.json`     | 人格类型定义    |
+| themes.schema.json    | `/schemas/themes.schema.json`    | 视觉样式        |
+| templates.schema.json | `/schemas/templates.schema.json` | 分享图模板      |
 
 ---
 
@@ -151,16 +151,18 @@ AI 可以根据 Schema 快速检查配置：
 ```json
 // questions.json 的关键校验点：
 {
-  "meta": { /* 必填 */ },
+  "meta": {
+    /* 必填 */
+  },
   "questions": [
     {
-      "id": "q001",           // 必须以 q 开头
-      "dimension": "EI",      // 必须在 dimensions 中定义
-      "content": { "zh": "..." },  // 必须是 LocalizedString
+      "id": "q001", // 必须以 q 开头
+      "dimension": "EI", // 必须在 dimensions 中定义
+      "content": { "zh": "..." }, // 必须是 LocalizedString
       "options": [
         {
-          "id": "opt_xxx",   // 必须以 opt_ 开头
-          "weight": { "E": 3, "I": 0 }  // 键必须是大写字母
+          "id": "opt_xxx", // 必须以 opt_ 开头
+          "weight": { "E": 3, "I": 0 } // 键必须是大写字母
         }
       ]
     }

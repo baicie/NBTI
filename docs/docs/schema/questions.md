@@ -37,7 +37,10 @@ suites/{suite-id}/questions.json
     {
       "id": "social",
       "name": { "zh": "社交场景", "en": "Social Scenarios" },
-      "description": { "zh": "关于社交行为的题目", "en": "Questions about social behavior" },
+      "description": {
+        "zh": "关于社交行为的题目",
+        "en": "Questions about social behavior"
+      },
       "questionIds": ["q001", "q002"]
     }
   ],
@@ -95,62 +98,62 @@ suites/{suite-id}/questions.json
 
 题库元信息。
 
-| 字段 | 类型 | 必填 | 说明 |
-|------|------|------|------|
-| `totalQuestions` | integer | 是 | 题目总数，范围 1-500 |
-| `timeEstimate` | integer | 否 | 预估完成时间（秒） |
-| `tags` | string[] | 否 | 题库标签 |
-| `description` | LocalizedString | 否 | 题库描述 |
+| 字段             | 类型            | 必填 | 说明                 |
+| ---------------- | --------------- | ---- | -------------------- |
+| `totalQuestions` | integer         | 是   | 题目总数，范围 1-500 |
+| `timeEstimate`   | integer         | 否   | 预估完成时间（秒）   |
+| `tags`           | string[]        | 否   | 题库标签             |
+| `description`    | LocalizedString | 否   | 题库描述             |
 
 ### dimensions
 
 维度定义列表，定义测评的核心测量维度。
 
-| 字段 | 类型 | 必填 | 说明 |
-|------|------|------|------|
-| `id` | string | 是 | 维度 ID，格式：`^[A-Z]{2}$` |
-| `name` | LocalizedString | 是 | 维度名称 |
-| `description` | LocalizedString | 否 | 维度描述 |
-| `leftLabel` | LocalizedString | 否 | 左侧标签（第一个字母的含义） |
-| `rightLabel` | LocalizedString | 否 | 右侧标签（第二个字母的含义） |
+| 字段          | 类型            | 必填 | 说明                         |
+| ------------- | --------------- | ---- | ---------------------------- |
+| `id`          | string          | 是   | 维度 ID，格式：`^[A-Z]{2}$`  |
+| `name`        | LocalizedString | 是   | 维度名称                     |
+| `description` | LocalizedString | 否   | 维度描述                     |
+| `leftLabel`   | LocalizedString | 否   | 左侧标签（第一个字母的含义） |
+| `rightLabel`  | LocalizedString | 否   | 右侧标签（第二个字母的含义） |
 
 ### categories
 
 题目分类（可选），用于对题目进行分组。
 
-| 字段 | 类型 | 必填 | 说明 |
-|------|------|------|------|
-| `id` | string | 是 | 分类 ID，格式：`^[a-z0-9-]+$` |
-| `name` | LocalizedString | 是 | 分类名称 |
-| `description` | LocalizedString | 否 | 分类描述 |
-| `questionIds` | string[] | 否 | 该分类下的题目 ID 列表 |
+| 字段          | 类型            | 必填 | 说明                          |
+| ------------- | --------------- | ---- | ----------------------------- |
+| `id`          | string          | 是   | 分类 ID，格式：`^[a-z0-9-]+$` |
+| `name`        | LocalizedString | 是   | 分类名称                      |
+| `description` | LocalizedString | 否   | 分类描述                      |
+| `questionIds` | string[]        | 否   | 该分类下的题目 ID 列表        |
 
 ### questions
 
 题目列表，核心内容。
 
-| 字段 | 类型 | 必填 | 说明 |
-|------|------|------|------|
-| `id` | string | 是 | 题目唯一标识符，格式：`^q\d{3,}$` |
-| `dimension` | string | 是 | 所属维度 ID，必须在 dimensions 中定义 |
-| `category` | string | 否 | 题目分类 ID |
-| `content` | LocalizedString | 是 | 题目内容 |
-| `image` | string \| null | 否 | 题目配图 URL |
-| `isReverse` | boolean | 否 | 是否反向计分，默认 `false` |
-| `required` | boolean | 否 | 是否必答题，默认 `true` |
-| `options` | Option[] | 是 | 选项列表 |
+| 字段        | 类型            | 必填 | 说明                                  |
+| ----------- | --------------- | ---- | ------------------------------------- |
+| `id`        | string          | 是   | 题目唯一标识符，格式：`^q\d{3,}$`     |
+| `dimension` | string          | 是   | 所属维度 ID，必须在 dimensions 中定义 |
+| `category`  | string          | 否   | 题目分类 ID                           |
+| `content`   | LocalizedString | 是   | 题目内容                              |
+| `image`     | string \| null  | 否   | 题目配图 URL                          |
+| `isReverse` | boolean         | 否   | 是否反向计分，默认 `false`            |
+| `required`  | boolean         | 否   | 是否必答题，默认 `true`               |
+| `options`   | Option[]        | 是   | 选项列表                              |
 
 ### options
 
 选项列表。
 
-| 字段 | 类型 | 必填 | 说明 |
-|------|------|------|------|
-| `id` | string | 是 | 选项唯一标识符，格式：`^opt_[a-z0-9]+$` |
-| `content` | LocalizedString | 是 | 选项内容 |
-| `image` | string \| null | 否 | 选项配图 URL |
-| `weight` | object | 是 | 权重，键为维度字母（如 `E`、`I`），值为 0-10 |
-| `tooltip` | LocalizedString | 否 | 选项悬停提示 |
+| 字段      | 类型            | 必填 | 说明                                         |
+| --------- | --------------- | ---- | -------------------------------------------- |
+| `id`      | string          | 是   | 选项唯一标识符，格式：`^opt_[a-z0-9]+$`      |
+| `content` | LocalizedString | 是   | 选项内容                                     |
+| `image`   | string \| null  | 否   | 选项配图 URL                                 |
+| `weight`  | object          | 是   | 权重，键为维度字母（如 `E`、`I`），值为 0-10 |
+| `tooltip` | LocalizedString | 否   | 选项悬停提示                                 |
 
 ### weight 权重
 

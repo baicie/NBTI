@@ -2,9 +2,9 @@
 layout: home
 
 hero:
-  name: "NBTI 框架"
-  text: "测评平台开发文档"
-  tagline: "配置驱动的多试题套件平台，让 AI 也能轻松读懂你的试题配置"
+  name: 'NBTI 框架'
+  text: '测评平台开发文档'
+  tagline: '配置驱动的多试题套件平台，让 AI 也能轻松读懂你的试题配置'
   image:
     src: /logo.svg
     alt: NBTI

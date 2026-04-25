@@ -5,15 +5,9 @@ const nextConfig = {
 
   // 确保 standalone 输出时打包所有套件 JSON 配置文件
   outputFileTracingIncludes: {
-    '/_next/static/chunks/**/*': [
-      '../configs/suites/**/*.json',
-    ],
-    '/types/**/*': [
-      './public/types/**/*',
-    ],
-    '/favicon.ico': [
-      './public/favicon.ico',
-    ],
+    '/_next/static/chunks/**/*': ['../configs/suites/**/*.json'],
+    '/types/**/*': ['./public/types/**/*'],
+    '/favicon.ico': ['./public/favicon.ico'],
   },
 }
 

@@ -108,7 +108,10 @@ apps/web/configs/suites/my-test/
     {
       "id": "q001",
       "dimension": "EI",
-      "content": { "zh": "在社交聚会中，你通常会？", "en": "At a party, you usually?" },
+      "content": {
+        "zh": "在社交聚会中，你通常会？",
+        "en": "At a party, you usually?"
+      },
       "options": [
         {
           "id": "opt_a",
@@ -117,12 +120,18 @@ apps/web/configs/suites/my-test/
         },
         {
           "id": "opt_b",
-          "content": { "zh": "和几个熟悉的人聊天", "en": "Chat with a few familiar people" },
+          "content": {
+            "zh": "和几个熟悉的人聊天",
+            "en": "Chat with a few familiar people"
+          },
           "weight": { "E": 1, "I": 1 }
         },
         {
           "id": "opt_c",
-          "content": { "zh": "独自找个安静的角落", "en": "Find a quiet corner alone" },
+          "content": {
+            "zh": "独自找个安静的角落",
+            "en": "Find a quiet corner alone"
+          },
           "weight": { "E": 0, "I": 3 }
         }
       ]

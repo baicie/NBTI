@@ -1,6 +1,7 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "tsBuildInfoFile": "../../node_modules/.cache/tsbuildinfo/web.tsbuildinfo",
     "target": "ES2017",
     "lib": ["ES2016", "DOM", "DOM.Iterable"],
     "jsx": "preserve",

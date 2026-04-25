@@ -94,9 +94,9 @@ POST {your-webhook-url}
 
 ## 错误码
 
-| 错误码 | 说明 |
-|--------|------|
-| `SUITE_NOT_FOUND` | 套餐不存在 |
-| `INVALID_ANSWERS` | 答案格式错误 |
-| `TEST_NOT_FOUND` | 测试记录不存在 |
-| `RESULT_NOT_FOUND` | 结果不存在 |
+| 错误码             | 说明           |
+| ------------------ | -------------- |
+| `SUITE_NOT_FOUND`  | 套餐不存在     |
+| `INVALID_ANSWERS`  | 答案格式错误   |
+| `TEST_NOT_FOUND`   | 测试记录不存在 |
+| `RESULT_NOT_FOUND` | 结果不存在     |

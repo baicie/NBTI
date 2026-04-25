@@ -2,23 +2,20 @@
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "ignoreDeprecations": "6.0",
-    "baseUrl": ".",
+    "tsBuildInfoFile": "./node_modules/.cache/tsbuildinfo/check.tsbuildinfo",
     "types": ["vitest/globals", "node", "react", "react-dom"],
     "paths": {
-      "@/*": ["apps/web/*"],
-      "@nbti/*": ["packages/*/src"]
+      "@/*": ["./apps/web/*"],
+      "@nbti/*": ["./packages/*/src"],
+      "*": ["./*"]
     }
   },
   "include": [
     "packages/*/src",
     "packages/*/__tests__",
+    "packages/*/__test__",
     "scripts/**/*",
     "apps/**/*"
   ],
-  "exclude": [
-    "**/dist",
-    "**/temp",
-    "**/node_modules",
-    "**/tsconfig.tsbuildinfo"
-  ]
+  "exclude": ["**/dist", "**/temp", "**/node_modules"]
 }

@@ -7,15 +7,15 @@
     "dev": "pnpm --filter @nbti/web dev",
     "dev:all": "pnpm --filter @nbti/web dev",
     "build": "pnpm --filter @nbti/web build",
-    "clean": "rimraf --glob packages/*/dist temp .eslintcache",
+    "clean": "rimraf --glob packages/*/dist temp .eslintcache node_modules/.cache/prettier node_modules/.cache/eslint node_modules/.cache/tsbuildinfo",
     "check": "tsc --incremental --noEmit",
-    "lint": "eslint --cache .",
-    "format": "prettier --write --cache .",
-    "format-check": "prettier --check --cache .",
-    "test": "vitest",
-    "test-unit": "vitest --project unit*",
-    "test-e2e": "vitest --project e2e --passWithNoTests",
-    "test-coverage": "vitest run --project unit* --coverage",
+    "lint": "eslint --cache --cache-location node_modules/.cache/eslint",
+    "format": "prettier --write --cache --cache-location node_modules/.cache/prettier .",
+    "format-check": "prettier --check --cache --cache-location node_modules/.cache/prettier .",
+    "test": "vitest --config scripts/vitest.config.ts",
+    "test-unit": "vitest --project unit* --config scripts/vitest.config.ts",
+    "test-e2e": "vitest --project e2e --passWithNoTests --config scripts/vitest.config.ts",
+    "test-coverage": "vitest run --project unit* --coverage --config scripts/vitest.config.ts",
     "install:all": "pnpm install",
     "preinstall": "npx only-allow pnpm",
     "postinstall": "simple-git-hooks"
@@ -26,11 +26,11 @@
   },
   "lint-staged": {
     "*.{js,json}": [
-      "prettier --write"
+      "prettier --write --cache --cache-location node_modules/.cache/prettier"
     ],
     "*.ts?(x)": [
-      "eslint --fix",
-      "prettier --parser=typescript --write"
+      "eslint --fix --cache --cache-location node_modules/.cache/eslint",
+      "prettier --parser=typescript --write --cache --cache-location node_modules/.cache/prettier"
     ]
   },
   "engines": {
