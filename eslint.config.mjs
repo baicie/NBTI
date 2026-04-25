@@ -10,6 +10,12 @@ export default antfu(
   },
 
   {
+    rules: {
+      'unicorn/number-literal-case': 'off',
+    },
+  },
+
+  {
     files: ['**/*.js', '**/*.cjs', '**/*.mjs'],
     rules: {
       'no-unused-vars': ['error', { vars: 'all', args: 'none' }],
@@ -17,7 +23,6 @@ export default antfu(
   },
 
   {
-    files: ['**/tsconfig*.json'],
     rules: {
       'jsonc/sort-keys': 'off',
     },
