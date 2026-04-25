@@ -55,12 +55,21 @@ export interface SuiteStyle {
 }
 
 /**
+ * 音频控制配置
+ */
+export interface SuiteAudioConfig {
+  showMusicButton?: boolean
+  showEffectsButton?: boolean
+}
+
+/**
  * 结果页主题配置
  */
 export interface SuiteResultStyle {
   dimensionChart: 'bar' | 'radar'
   showTraits: boolean
   shareCardStyle: 'gradient' | 'solid' | 'glass'
+  showShare?: boolean
 }
 
 /**
@@ -73,6 +82,7 @@ export interface SuiteTheme {
   gradient?: SuiteGradient
   style?: SuiteStyle
   result?: SuiteResultStyle
+  audio?: SuiteAudioConfig
 }
 
 /**

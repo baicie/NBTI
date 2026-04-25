@@ -46,6 +46,8 @@ export interface Quote {
 /**
  * 人格类型
  */
+export type Rarity = 'normal' | 'hidden'
+
 export interface PersonalityType {
   id: string
   name: LocalizedString
@@ -55,6 +57,7 @@ export interface PersonalityType {
   description?: LocalizedString
   icon?: string
   color?: string
+  rarity?: Rarity
   traits?: Trait[]
   strengths?: LocalizedString[]
   weaknesses?: LocalizedString[]

@@ -9,11 +9,10 @@
 import type { SuiteConfig, SuiteIndex, SuiteTheme } from './types/suite'
 import type { TemplatesConfig } from './types/template'
 
-import pr01Manifest from '../configs/suites/pr01/manifest.json'
-import pr01Questions from '../configs/suites/pr01/questions.json'
-import pr01Templates from '../configs/suites/pr01/templates.json'
-import pr01Theme from '../configs/suites/pr01/theme.json'
-import pr01Types from '../configs/suites/pr01/types.json'
+import pr01Manifest from '../configs/suites/abstract-personality-draw/manifest.json'
+import pr01Questions from '../configs/suites/abstract-personality-draw/questions.json'
+import pr01Theme from '../configs/suites/abstract-personality-draw/theme.json'
+import pr01Types from '../configs/suites/abstract-personality-draw/types.json'
 
 interface SuiteData {
   manifest: Record<string, unknown>
@@ -25,12 +24,11 @@ interface SuiteData {
 
 // 已加载配置的静态注册表（用于运行时按 ID 查找）
 const SUITE_CONFIGS: Record<string, SuiteData> = {
-  pr01: {
+  'abstract-personality-draw': {
     manifest: pr01Manifest,
     theme: pr01Theme as SuiteTheme,
     questions: pr01Questions,
     types: pr01Types,
-    templates: pr01Templates as TemplatesConfig,
   },
 }
 

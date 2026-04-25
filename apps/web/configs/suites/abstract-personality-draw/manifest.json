@@ -1,0 +1,69 @@
+{
+  "$schema": "https://nbti.app/schemas/manifest.schema.json",
+  "id": "abstract-personality-draw",
+  "name": {
+    "zh": "互联网抽象人格抽卡测试",
+    "en": "Internet Absurd Personality Draw"
+  },
+  "version": "1.0.0",
+  "description": {
+    "zh": "16种常规人格 + 5种低概率隐藏款。不是严肃心理学，是专门检测你互联网精神状态的抽象人格抽卡系统。",
+    "en": "16 regular personality types plus 5 low-probability hidden editions. Not serious psychology, just a funny draw system for your internet personality."
+  },
+  "author": "ChatGPT x NBTI",
+  "tags": ["personality", "fun", "meme", "抽象人格", "抽卡", "隐藏款"],
+  "config": {
+    "questions": "questions.json",
+    "types": "types.json"
+  },
+  "settings": {
+    "layout": "single",
+    "allowBack": true,
+    "showTimer": false,
+    "shuffleQuestions": false,
+    "shuffleOptions": false,
+    "requiredAnswer": true,
+    "maxDuration": null
+  },
+  "scoring": {
+    "type": "type",
+    "dimensions": ["PT", "HD"],
+    "hiddenTrigger": {
+      "triggerQuestions": ["q013", "q014", "q015", "q016", "q017"],
+      "minScore": 8,
+      "priority": ["GLITCH", "LUCK", "UNLUCK", "JUDGE", "SPY"]
+    }
+  },
+  "resultRules": {
+    "normalQuestions": [
+      "q001",
+      "q002",
+      "q003",
+      "q004",
+      "q005",
+      "q006",
+      "q007",
+      "q008",
+      "q009",
+      "q010",
+      "q011",
+      "q012"
+    ],
+    "hiddenQuestions": ["q013", "q014", "q015", "q016", "q017"],
+    "hiddenTrigger": {
+      "minScore": 8,
+      "priority": ["GLITCH", "LUCK", "UNLUCK", "JUDGE", "SPY"]
+    },
+    "tieBreak": {
+      "normal": "highestScoreThenLatestAnswer",
+      "hidden": "usePriority"
+    }
+  },
+  "audio": {
+    "backgroundMusic": {
+      "src": "generated:playful",
+      "volume": 0.3,
+      "loop": true
+    }
+  }
+}

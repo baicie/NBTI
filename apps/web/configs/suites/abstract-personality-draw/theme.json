@@ -1,0 +1,83 @@
+{
+  "id": "abstract-personality-draw",
+  "name": {
+    "zh": "互联网抽象人格抽卡主题",
+    "en": "Internet Absurd Persona Draw Theme"
+  },
+  "colors": {
+    "primary": "#d97706",
+    "primaryForeground": "#ffffff",
+    "secondary": "#15803d",
+    "secondaryForeground": "#ffffff",
+    "background": "#fefce8",
+    "foreground": "#1c1917",
+    "muted": "#fef3c7",
+    "mutedForeground": "#78716c",
+    "accent": "#dc2626",
+    "accentForeground": "#ffffff",
+    "destructive": "#dc2626",
+    "destructiveForeground": "#ffffff",
+    "border": "#d97706",
+    "input": "#fed7aa",
+    "ring": "#d97706",
+    "card": "#fffbeb",
+    "cardForeground": "#1c1917",
+    "popover": "#fffbeb",
+    "popoverForeground": "#1c1917"
+  },
+  "gradient": {
+    "enabled": true,
+    "from": "#d97706",
+    "via": "#ea580c",
+    "to": "#15803d"
+  },
+  "style": {
+    "borderRadius": {
+      "none": 0,
+      "sm": 0.125,
+      "md": 0.25,
+      "lg": 0.375,
+      "xl": 0.5,
+      "2xl": 0.75,
+      "full": 9999
+    },
+    "font": {
+      "heading": "ZCOOL XiaoWei, YouShe Black Letter, 'Noto Serif SC', Georgia, serif",
+      "body": "ZCOOL QingKe HuangYou, 'Noto Sans SC', 'Microsoft YaHei', system-ui, sans-serif"
+    }
+  },
+  "result": {
+    "dimensionChart": "bar",
+    "showTraits": true,
+    "shareCardStyle": "gradient",
+    "showShare": false
+  },
+  "audio": {
+    "showMusicButton": false,
+    "showEffectsButton": false
+  },
+  "copywriting": {
+    "startButton": {
+      "zh": "开始抽取人格",
+      "en": "Start Drawing"
+    },
+    "submitButton": {
+      "zh": "查看我的人格结果",
+      "en": "Reveal My Result"
+    },
+    "loadingTexts": {
+      "zh": [
+        "正在读取你的互联网精神状态……",
+        "正在计算你的抽象浓度……",
+        "正在判断你属于普通款还是低概率隐藏款……",
+        "正在尝试修复你造成的系统漏洞……"
+      ],
+      "en": [
+        "Reading your internet mental state...",
+        "Calculating your absurdity level...",
+        "Checking whether you are normal or hidden rare...",
+        "Trying to patch the glitch you just caused..."
+      ]
+    }
+  }
+}

@@ -4,6 +4,7 @@
  */
 
 import type { Answer, ManifestScoring } from '../types'
+import type { Question } from '../types/question'
 import type { ScoringOptions, ScoringResult } from './types'
 import {
   buildDimensionScores,
@@ -17,12 +18,9 @@ import {
  */
 export class ScoringEngine {
   private scoring: ManifestScoring
-  private questions: { id: string; dimension: string; isReverse?: boolean }[]
+  private questions: Question[]
 
-  constructor(
-    scoring: ManifestScoring,
-    questions: { id: string; dimension: string; isReverse?: boolean }[] = [],
-  ) {
+  constructor(scoring: ManifestScoring, questions: Question[] = []) {
     this.scoring = scoring
     this.questions = questions
   }
@@ -54,6 +52,12 @@ export class ScoringEngine {
         )
       case 'weighted-sum':
         return this.calculateWeightedSumScoring(
+          answers,
+          scoringDimensions,
+          options?.normalizeOutput ?? normalizeOutput,
+        )
+      case 'type':
+        return this.calculateTypeScoring(
           answers,
           scoringDimensions,
           options?.normalizeOutput ?? normalizeOutput,
@@ -237,6 +241,183 @@ export class ScoringEngine {
       normalizedScores: normalize ? scores : {},
     }
   }
+
+  /**
+   * 人格类型计分（抽卡型测试）
+   * - 直接按 typeId 累加权重
+   * - 维度 PT = 常规人格题总分 / maxPT
+   * - 维度 HD = 隐藏款题总分 / maxHD
+   */
+  private calculateTypeScoring(
+    answers: Answer[],
+    dimensions: string[],
+    normalize: boolean,
+  ): ScoringResult {
+    const { hiddenTrigger, dimensionMapping } = this.scoring
+
+    // 构建题目分类映射（normal / hidden）
+    const normalQuestionIds = new Set<string>()
+    const hiddenQuestionIds = new Set<string>()
+    this.questions.forEach(q => {
+      if (q.dimension === 'HD') {
+        hiddenQuestionIds.add(q.id)
+      } else {
+        normalQuestionIds.add(q.id)
+      }
+    })
+
+    // 收集所有 typeId 用于初始化
+    const allTypeIds = new Set<string>()
+    this.questions.forEach(q => {
+      q.options.forEach(o => {
+        if (o.weight) {
+          Object.keys(o.weight).forEach(k => allTypeIds.add(k))
+        }
+      })
+    })
+
+    // 按 typeId 累加权重
+    const typeScores: Record<string, number> = {}
+    allTypeIds.forEach(id => {
+      typeScores[id] = 0
+    })
+
+    answers.forEach(answer => {
+      if (answer.weight) {
+        Object.entries(answer.weight).forEach(([typeId, value]) => {
+          if (typeScores[typeId] !== undefined) {
+            typeScores[typeId] += value
+          }
+        })
+      }
+    })
+
+    // 计算 PT 和 HD 的原始总分及最大值
+    let normalTotal = 0
+    let hiddenTotal = 0
+    let normalMax = 0
+    let hiddenMax = 0
+
+    answers.forEach(answer => {
+      const inHidden = hiddenQuestionIds.has(answer.questionId)
+      if (answer.weight) {
+        Object.values(answer.weight).forEach(v => {
+          if (inHidden) {
+            hiddenTotal += v
+          } else {
+            normalTotal += v
+          }
+        })
+      }
+    })
+
+    // 最大值：按题目数量 × 权重范围估算
+    normalMax = normalQuestionIds.size * 3 // 假设权重上限3
+    hiddenMax = hiddenQuestionIds.size * 3
+
+    // 计算隐藏款触发（按 typeId 累积隐藏题权重）
+    let triggeredHiddenType: string | null = null
+    if (hiddenTrigger) {
+      const triggerQ = new Set(hiddenTrigger.triggerQuestions ?? [])
+      const hiddenTypeScores: Record<string, number> = {}
+
+      // 收集所有隐藏款 typeId
+      this.questions.forEach(q => {
+        if (q.dimension === 'HD') {
+          q.options.forEach(o => {
+            if (o.weight) {
+              Object.keys(o.weight).forEach(k => {
+                hiddenTypeScores[k] = 0
+              })
+            }
+          })
+        }
+      })
+
+      // 累积隐藏题答案
+      answers.forEach(a => {
+        if (triggerQ.has(a.questionId) && a.weight) {
+          Object.entries(a.weight).forEach(([typeId, value]) => {
+            if (typeId in hiddenTypeScores) {
+              hiddenTypeScores[typeId] += value
+            }
+          })
+        }
+      })
+
+      // 最高累积分 ≥ 阈值 则触发
+      const minScore = hiddenTrigger.minScore ?? 4
+      let best = -1
+      Object.entries(hiddenTypeScores).forEach(([typeId, score]) => {
+        if (score >= minScore && score > best) {
+          best = score
+          triggeredHiddenType = typeId
+        }
+      })
+    }
+
+    // 确定最高分类型（排除已触发的隐藏款，用常规类型竞争）
+    let bestTypeId: string | null = null
+    let bestScore = -1
+    Object.entries(typeScores).forEach(([typeId, score]) => {
+      if (score > bestScore) {
+        bestScore = score
+        bestTypeId = typeId
+      }
+    })
+
+    // 隐藏款仅在得分高于常规最高分时优先（避免低分隐藏款覆盖高分常规款）
+    let finalTypeId = bestTypeId ?? 'FISH'
+    if (triggeredHiddenType && hiddenTrigger) {
+      const hiddenScore = typeScores[triggeredHiddenType] ?? 0
+      if (hiddenScore > bestScore) {
+        finalTypeId = triggeredHiddenType
+      }
+    }
+
+    // 构建维度分数
+    const dimensionScores = dimensions.map(dim => {
+      const mapping = dimensionMapping?.[dim]
+      const total = mapping === 'hidden' ? hiddenTotal : normalTotal
+      const max = mapping === 'hidden' ? hiddenMax : normalMax
+      const percentage = max > 0 ? Math.round((total / max) * 100) : 0
+
+      // 取维度定义中的 label
+      const dimDef = this.questions.find(q => {
+        if (mapping === 'hidden') return q.dimension === 'HD'
+        return q.dimension === dim
+      })
+      const dimLabel = dimDef?.dimension ?? dim
+      const [leftLetter, rightLetter] =
+        dimLabel.length >= 2 ? [dimLabel[0], dimLabel[1]] : [dimLabel, dimLabel]
+
+      return {
+        dimensionId: dim,
+        leftLetter,
+        rightLetter,
+        leftScore: total,
+        rightScore: max - total,
+        dominant: percentage >= 50 ? rightLetter : leftLetter,
+        percentage: Math.min(100, Math.max(0, percentage)),
+      }
+    })
+
+    // 归一化：typeId -> 百分比（最高分类型为100%）
+    const normalizedScores: Record<string, number> = {}
+    if (normalize) {
+      const maxTypeScore = Math.max(...Object.values(typeScores), 1)
+      Object.entries(typeScores).forEach(([typeId, score]) => {
+        normalizedScores[typeId] = Math.round((score / maxTypeScore) * 100)
+      })
+    }
+
+    return {
+      typeCode: finalTypeId,
+      dimensions: dimensionScores,
+      rawScores: typeScores,
+      normalizedScores,
+    }
+  }
 }
 
 /**
@@ -245,7 +426,7 @@ export class ScoringEngine {
 export function calculateScores(
   answers: Answer[],
   scoring: ManifestScoring,
-  questions: { id: string; dimension: string; isReverse?: boolean }[] = [],
+  questions: Question[] = [],
   options?: ScoringOptions,
 ): ScoringResult {
   const engine = new ScoringEngine(scoring, questions)

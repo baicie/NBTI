@@ -35,10 +35,26 @@ export const ManifestSettingsSchema = z.object({
 })
 
 export const ManifestScoringSchema = z.object({
-  type: z.enum(['dimension', 'percentage', 'weighted-sum']),
+  type: z.enum(['dimension', 'percentage', 'weighted-sum', 'type']),
   dimensions: z.array(z.string()),
   calculateMethod: z.enum(['difference', 'ratio', 'absolute']).optional(),
   normalizeOutput: z.boolean().optional(),
+})
+
+export const ManifestAudioSchema = z.object({
+  backgroundMusic: z
+    .object({
+      src: z.string(),
+      volume: z.number(),
+      loop: z.boolean().optional(),
+    })
+    .optional(),
+  effects: z
+    .object({
+      select: z.string().optional(),
+      complete: z.string().optional(),
+    })
+    .optional(),
 })
 
 export const ManifestSchema = z.object({
@@ -52,6 +68,7 @@ export const ManifestSchema = z.object({
   config: ManifestConfigSchema,
   settings: ManifestSettingsSchema.optional(),
   scoring: ManifestScoringSchema,
+  audio: ManifestAudioSchema.optional(),
 })
 
 // Questions Schema

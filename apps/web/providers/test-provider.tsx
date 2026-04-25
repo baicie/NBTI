@@ -17,6 +17,7 @@ const STORAGE_KEY_PREFIX = 'nbti_test_'
 interface StoredProgress {
   session: TestSession
   answers: Record<string, string>
+  result: import('@nbti/core').ScoringResult | null
   timestamp: number
 }
 
@@ -81,6 +82,7 @@ function saveProgress(
   suiteId: string,
   session: TestSession,
   answers: Map<string, string>,
+  result?: import('@nbti/core').ScoringResult | null,
 ): void {
   if (!isBrowser) return
 
@@ -88,6 +90,7 @@ function saveProgress(
     const stored: StoredProgress = {
       session,
       answers: Object.fromEntries(answers),
+      result: result ?? null,
       timestamp: Date.now(),
     }
     globalThis.localStorage.setItem(
@@ -206,7 +209,7 @@ export function TestProvider({ children }: { children: ReactNode }) {
         setSession(stored.session)
         setAnswers(new Map(Object.entries(stored.answers)))
         setCurrentSuiteId(suiteId)
-        setResult(null)
+        setResult(stored.result)
         // 同步更新 refs（Bug 1 fix）
         sessionRef.current = stored.session
         currentSuiteIdRef.current = suiteId
@@ -294,10 +297,10 @@ export function TestProvider({ children }: { children: ReactNode }) {
 
     setResult(scoringResult)
 
-    // 清除保存的进度（使用 ref 避免 stale closure）
+    // 保存结果到 localStorage（用于页面跳转后恢复）
     const suiteId = currentSuiteIdRef.current
     if (suiteId) {
-      clearProgress(suiteId)
+      saveProgress(suiteId, sessionRef.current, answers, scoringResult)
     }
 
     return scoringResult

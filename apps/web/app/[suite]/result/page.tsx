@@ -1,4 +1,4 @@
-import type { PersonalityType } from '@nbti/core'
+import type { PersonalityType, Question } from '@nbti/core'
 import type { TemplatesConfig } from '@/lib/types/template'
 import { loadFullSuite } from '@/lib/suite-loader'
 import { ResultPageClient } from './result-page-client'
@@ -14,7 +14,7 @@ interface QuestionsData {
     leftLabel: Record<string, string>
     rightLabel: Record<string, string>
   }>
-  questions: Array<{ id: string }>
+  questions: Question[]
   meta: { totalQuestions: number; timeEstimate: number }
 }
 
@@ -25,7 +25,8 @@ export default async function ResultPage({ params }: ResultPageProps) {
   const { suite: suiteId } = await params
 
   // 加载套件数据
-  const { manifest, types, questions, templates } = await loadFullSuite(suiteId)
+  const { manifest, types, questions, templates, theme } =
+    await loadFullSuite(suiteId)
 
   // 类型断言
   const typedManifest = manifest as {
@@ -62,9 +63,18 @@ export default async function ResultPage({ params }: ResultPageProps) {
     <ResultPageClient
       suiteId={suiteId}
       types={typedTypes.types || []}
+      questions={typedQuestions.questions || []}
       dimensions={dimensions}
       manifest={typedManifest}
       templates={templates as TemplatesConfig | undefined}
+      theme={
+        theme as
+          | {
+              audio?: { showMusicButton?: boolean; showEffectsButton?: boolean }
+              result?: { showShare?: boolean }
+            }
+          | undefined
+      }
     />
   )
 }

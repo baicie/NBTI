@@ -1,6 +1,6 @@
 'use client'
 
-import type { PersonalityType } from '@nbti/core'
+import type { PersonalityType, Question } from '@nbti/core'
 import type { TypeMatchResult } from '@/lib/type-mapper'
 import {
   Check,
@@ -12,12 +12,15 @@ import {
 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { AudioToggleButton } from '@/components/audio/audio-toggle-button'
 import { getTypeMatchResult } from '@/lib/type-mapper'
+import { useAudio } from '@/providers/audio-provider'
 import { useTest } from '@/providers/test-provider'
 
 interface ResultPageClientProps {
   suiteId: string
   types: PersonalityType[]
+  questions: Question[]
   dimensions: Array<{
     id: string
     name: Record<string, string>
@@ -36,6 +39,13 @@ interface ResultPageClientProps {
       position?: string
       size?: string
     }
+    audio?: {
+      backgroundMusic?: {
+        src: string
+        volume: number
+        loop?: boolean
+      }
+    }
   }
   templates?: {
     defaultTemplate?: string
@@ -43,6 +53,15 @@ interface ResultPageClientProps {
       id: string
       name: Record<string, string>
     }>
+  }
+  theme?: {
+    audio?: {
+      showMusicButton?: boolean
+      showEffectsButton?: boolean
+    }
+    result?: {
+      showShare?: boolean
+    }
   }
   locale?: string
 }
@@ -59,12 +78,15 @@ interface DimensionResult {
 export function ResultPageClient({
   suiteId,
   types,
+  questions,
   dimensions,
   manifest,
+  theme,
   locale = 'zh',
 }: ResultPageClientProps) {
   const router = useRouter()
-  const { result, resetTest } = useTest()
+  const { result, resetTest, answers } = useTest()
+  const { playBackgroundMusic, stopBackgroundMusic } = useAudio()
   const [expandedSection, setExpandedSection] = useState<string | null>(null)
   const [animateIn, setAnimateIn] = useState(false)
   const [showShareModal, setShowShareModal] = useState(false)
@@ -73,6 +95,21 @@ export function ResultPageClient({
   useEffect(() => {
     setAnimateIn(true)
   }, [])
+
+  // 背景音乐控制
+  useEffect(() => {
+    if (manifest.audio?.backgroundMusic?.src) {
+      playBackgroundMusic(manifest.audio.backgroundMusic)
+    }
+
+    return () => {
+      stopBackgroundMusic()
+    }
+  }, [
+    manifest.audio?.backgroundMusic,
+    playBackgroundMusic,
+    stopBackgroundMusic,
+  ])
 
   const getLocalizedContent = (
     content: Record<string, string> | string | undefined,
@@ -86,9 +123,42 @@ export function ResultPageClient({
 
   const suiteName = getLocalizedContent(manifest.name)
 
+  // 直接从 answers 和 questions 计算人格分数
+  const rawTypeScores = useMemo<Record<string, number>>(() => {
+    const scores: Record<string, number> = {}
+
+    // 初始化所有类型的分数为0
+    types.forEach(type => {
+      scores[type.id] = 0
+    })
+
+    // 遍历所有答案，累加到对应人格
+    answers.forEach((optionId, questionId) => {
+      const question = questions.find(q => q.id === questionId)
+      if (!question) return
+
+      const option = question.options.find(o => o.id === optionId)
+      if (!option || !option.weight) return
+
+      // weight 格式如 { "FISH": 1 } 或 { "GLITCH": 2 }
+      Object.entries(option.weight).forEach(([typeId, weight]) => {
+        if (scores[typeId] !== undefined) {
+          scores[typeId] += weight
+        }
+      })
+    })
+
+    return scores
+  }, [answers, questions, types])
+
+  // 将已回答题目ID转换为Set
+  const answeredQuestionIds = useMemo(() => {
+    return new Set(answers.keys())
+  }, [answers])
+
   // 使用 type-mapper 计算类型匹配结果
   const typeMatchResult = useMemo<TypeMatchResult | null>(() => {
-    if (!result || !types.length) return null
+    if (!types.length) return null
 
     // 构建维度定义
     const dimDefinitions = dimensions.map(dim => ({
@@ -98,9 +168,27 @@ export function ResultPageClient({
       rightLabel: dim.rightLabel,
     }))
 
-    // 使用原始分数计算
-    return getTypeMatchResult(result.rawScores, types, dimDefinitions)
-  }, [result, types, dimensions])
+    // 使用计算的人格分数（传入 engine 结果，mapper 据此判断是否触发隐藏款）
+    const bestRegularTypeId = result?.typeCode
+    const bestRegularScore = result?.rawScores
+      ? Math.max(
+          ...Object.entries(result.rawScores)
+            .filter(([id]) =>
+              types.find(t => t.id === id && t.rarity !== 'hidden'),
+            )
+            .map(([, s]) => s as number),
+          0,
+        )
+      : 0
+    return getTypeMatchResult(
+      rawTypeScores,
+      types,
+      dimDefinitions,
+      answeredQuestionIds,
+      bestRegularTypeId,
+      bestRegularScore,
+    )
+  }, [rawTypeScores, types, dimensions, answeredQuestionIds, result])
 
   // 维度结果
   const dimensionResults: DimensionResult[] = useMemo(() => {
@@ -148,13 +236,28 @@ export function ResultPageClient({
       }
     : null
 
-  // 计算匹配度
+  // 计算匹配度（百分比形式）
   const matchScore = useMemo(() => {
-    if (typeMatchResult) {
-      // 使用类型映射的匹配度
-      const scores = typeMatchResult.matchScores
-      if (scores.length > 0) {
-        return Math.round(scores[0].score)
+    if (typeMatchResult && typeMatchResult.matchedType) {
+      // 计算该类型的最大可能分数
+      const matchedTypeId = typeMatchResult.matchedType.id
+      const matchedTypeScore = rawTypeScores[matchedTypeId] ?? 0
+
+      // 计算最大可能的分数（所有问题的最大权重之和）
+      let maxPossibleScore = 0
+      questions.forEach(q => {
+        const maxWeight = Math.max(
+          ...q.options.map(o => {
+            const weight = o.weight?.[matchedTypeId]
+            return typeof weight === 'number' ? weight : 0
+          }),
+        )
+        maxPossibleScore += maxWeight
+      })
+
+      // 返回百分比
+      if (maxPossibleScore > 0) {
+        return Math.round((matchedTypeScore / maxPossibleScore) * 100)
       }
     }
     if (!result?.dimensions || result.dimensions.length === 0) return 0
@@ -164,7 +267,47 @@ export function ResultPageClient({
     }, 0)
     const avgDiff = totalDiff / result.dimensions.length
     return Math.round(100 - avgDiff * 2)
-  }, [result, typeMatchResult])
+  }, [result, typeMatchResult, rawTypeScores, questions])
+
+  // DEBUG: 打印结果数据到控制台
+  useEffect(() => {
+    // 构建详细答案列表（包含题目内容）
+    const answeredDetails = Array.from(answers.entries()).map(
+      ([questionId, optionId]) => {
+        const question = questions.find(q => q.id === questionId)
+        const selectedOption = question?.options.find(o => o.id === optionId)
+        return {
+          questionId,
+          questionText: question?.text,
+          selectedOptionId: optionId,
+          selectedOptionText: selectedOption?.text,
+          weight: selectedOption?.weight,
+        }
+      },
+    )
+
+    const debugData = {
+      suiteId,
+      // 来自 TestProvider 上下文的状态
+      answers: Object.fromEntries(answers),
+      result, // ScoringResult from context (persisted via localStorage)
+      totalAnswered: answers.size,
+      totalQuestions: questions.length,
+      // 基于 answers 计算的派生数据
+      answeredDetails,
+      rawTypeScores,
+      dimensionResults: typeMatchResult?.dimensionResults,
+      matchedType: typeMatchResult?.matchedType
+        ? {
+            id: typeMatchResult.matchedType.id,
+            name: typeMatchResult.matchedType.name,
+          }
+        : null,
+      matchScores: typeMatchResult?.matchScores,
+    }
+
+    console.warn('[NBTI Result Debug]', debugData)
+  }, [result, answers, questions, suiteId, rawTypeScores, typeMatchResult])
 
   const handleDownload = useCallback(() => {
     if (!typeResult) return
@@ -289,6 +432,12 @@ export function ResultPageClient({
       className="min-h-screen py-8 md:py-12"
       style={{ ...backgroundStyle, background: 'var(--suite-background)' }}
     >
+      {/* Audio Toggle Button */}
+      <AudioToggleButton
+        showMusic={theme?.audio?.showMusicButton ?? true}
+        showEffects={theme?.audio?.showEffectsButton ?? true}
+      />
+
       <div className="max-w-3xl mx-auto px-4">
         {/* Header Badge */}
         <div
@@ -810,7 +959,7 @@ export function ResultPageClient({
                             className="text-sm font-bold"
                             style={{ color: 'var(--suite-primary)' }}
                           >
-                            {Math.round(match.score)}%
+                            {match.percentage}%
                           </span>
                         </div>
                       ))}
@@ -848,18 +997,20 @@ export function ResultPageClient({
               <RefreshCw className="w-4 h-4 inline mr-2" />
               重新测试
             </button>
-            <button
-              onClick={handleShare}
-              className="flex-1 min-w-[120px] py-3 rounded-xl font-semibold transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
-              style={{
-                background: 'var(--suite-card)',
-                color: 'var(--suite-foreground)',
-                border: '1px solid var(--suite-border)',
-              }}
-            >
-              <Share2 className="w-4 h-4 inline mr-2" />
-              分享结果
-            </button>
+            {theme?.result?.showShare !== false && (
+              <button
+                onClick={handleShare}
+                className="flex-1 min-w-[120px] py-3 rounded-xl font-semibold transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+                style={{
+                  background: 'var(--suite-card)',
+                  color: 'var(--suite-foreground)',
+                  border: '1px solid var(--suite-border)',
+                }}
+              >
+                <Share2 className="w-4 h-4 inline mr-2" />
+                分享结果
+              </button>
+            )}
             <button
               onClick={() => setShowShareModal(true)}
               className="flex-1 min-w-[120px] py-3 rounded-xl font-bold transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"

@@ -1,0 +1,1898 @@
+{
+  "$schema": "https://nbti.app/schemas/types.schema.json",
+  "meta": {
+    "version": "1.0.0",
+    "lastUpdated": "2026-04-25T00:00:00Z"
+  },
+  "types": [
+    {
+      "id": "FISH",
+      "name": {
+        "zh": "摸鱼圣体"
+      },
+      "subtitle": {
+        "zh": "人坐工位，魂游四海"
+      },
+      "description": {
+        "zh": "你不是单纯偷懒，你是很懂得给精神留逃生通道。面对压力、流程、表格、会议，你总能在身体在线的情况下，让灵魂先出去透口气。你对“假装在忙”这件事，已经形成了近乎艺术的理解。"
+      },
+      "icon": "fish",
+      "color": "#5BAA6F",
+      "posterImage": {
+        "zh": "/types/abstract-personality-draw/fish.png"
+      },
+      "rarity": "normal",
+      "traits": [
+        {
+          "id": "spiritual-roaming",
+          "name": {
+            "zh": "灵魂远游"
+          },
+          "icon": "waves",
+          "level": 94,
+          "description": {
+            "zh": "人还在现场，心已经跑到精神海岛。"
+          }
+        },
+        {
+          "id": "office-camouflage",
+          "name": {
+            "zh": "职场伪装"
+          },
+          "icon": "monitor",
+          "level": 88,
+          "description": {
+            "zh": "鼠标在动，窗口很多，实际核心业务是放空。"
+          }
+        },
+        {
+          "id": "energy-saving",
+          "name": {
+            "zh": "精神节能"
+          },
+          "icon": "battery-low",
+          "level": 91,
+          "description": {
+            "zh": "能少消耗一点，就绝不多燃烧一分。"
+          }
+        }
+      ],
+      "strengths": [
+        {
+          "zh": "擅长在高压环境中保持精神弹性"
+        },
+        {
+          "zh": "能把无聊日常变成灵魂出逃路线"
+        },
+        {
+          "zh": "看似松弛，实际很会保存体力"
+        }
+      ],
+      "weaknesses": [
+        {
+          "zh": "容易把“马上开始”拖成“精神准备中”"
+        },
+        {
+          "zh": "看起来一直在线，其实经常内部断联"
+        }
+      ],
+      "compatibleTypes": ["CHILL", "OFFL", "MELON"],
+      "incompatibleTypes": ["PLAN", "TALK"],
+      "relationships": {
+        "zh": "你在关系里通常不制造压力，主打一个轻轻陪伴、慢慢漂流。别人催你，你会点头；别人不催你，你会继续漂。"
+      },
+      "workStyle": {
+        "zh": "适合有弹性、有空间、有喘息感的工作节奏。最怕无尽会议、即时响应和“你现在马上”。"
+      },
+      "communicationStyle": {
+        "zh": "常用话术包括“我在看了”“马上弄”“快好了”。其中“快好了”的时间单位非常玄学。"
+      },
+      "quotes": [
+        {
+          "text": "你不是在偷懒，你是在给灵魂放风。",
+          "author": "摸鱼圣体"
+        }
+      ]
+    },
+    {
+      "id": "UNDO",
+      "name": {
+        "zh": "撤回大师"
+      },
+      "subtitle": {
+        "zh": "先发制人，再删为敬"
+      },
+      "description": {
+        "zh": "你是冲动表达和极速后悔的结合体。你的手往往比脑子快一步，消息先出去，灵魂后追上。但你并不慌，因为你相信：只要撤回够快，命运就追不上你。"
+      },
+      "icon": "undo-2",
+      "color": "#4F8F7B",
+      "posterImage": {
+        "zh": "/types/abstract-personality-draw/undo.png"
+      },
+      "rarity": "normal",
+      "traits": [
+        {
+          "id": "instant-regret",
+          "name": {
+            "zh": "秒级后悔"
+          },
+          "icon": "timer-reset",
+          "level": 96,
+          "description": {
+            "zh": "发送三秒后，人生进入复盘模式。"
+          }
+        },
+        {
+          "id": "message-surgeon",
+          "name": {
+            "zh": "聊天外科手术"
+          },
+          "icon": "scissors",
+          "level": 89,
+          "description": {
+            "zh": "精准切除刚才那句不该说的话。"
+          }
+        },
+        {
+          "id": "dignity-repair",
+          "name": {
+            "zh": "体面修补"
+          },
+          "icon": "bandage",
+          "level": 83,
+          "description": {
+            "zh": "撤回以后还能假装什么都没发生。"
+          }
+        }
+      ],
+      "strengths": [
+        {
+          "zh": "反应快，纠错快，求生欲强"
+        },
+        {
+          "zh": "很懂语言风险控制"
+        },
+        {
+          "zh": "能在尴尬发生前尝试拯救现场"
+        }
+      ],
+      "weaknesses": [
+        {
+          "zh": "有时撤回比解释更让人好奇"
+        },
+        {
+          "zh": "容易在聊天框里上演心理惊悚片"
+        }
+      ],
+      "compatibleTypes": ["GHOST", "HARD", "MAYBE"],
+      "incompatibleTypes": ["TALK", "VIBE"],
+      "relationships": {
+        "zh": "你在关系里很怕说错话，但又忍不住想表达。你不是冷淡，你只是每句话都可能经历生死审判。"
+      },
+      "workStyle": {
+        "zh": "适合有修改空间的工作，不适合发出去就无法撤回的场面。"
+      },
+      "communicationStyle": {
+        "zh": "发送、撤回、沉默、补一句、再撤回。你的聊天记录像一场小型魔术表演。"
+      },
+      "quotes": [
+        {
+          "text": "话可以先说，体面稍后补救。",
+          "author": "撤回大师"
+        }
+      ]
+    },
+    {
+      "id": "LATE",
+      "name": {
+        "zh": "拖延战神"
+      },
+      "subtitle": {
+        "zh": "不逼到最后，绝不启动天赋"
+      },
+      "description": {
+        "zh": "你不是不会做，你只是必须等时间把你逼到墙角，才能激活真正的自己。越是死线逼近，你越容易进入一种诡异的高效状态。平时像待机，最后一刻像开了外挂。"
+      },
+      "icon": "alarm-clock",
+      "color": "#B88746",
+      "posterImage": {
+        "zh": "/types/abstract-personality-draw/late.png"
+      },
+      "rarity": "normal",
+      "traits": [
+        {
+          "id": "deadline-awakening",
+          "name": {
+            "zh": "死线觉醒"
+          },
+          "icon": "zap",
+          "level": 97,
+          "description": {
+            "zh": "不到最后一刻，天赋绝不轻易上线。"
+          }
+        },
+        {
+          "id": "false-calm",
+          "name": {
+            "zh": "虚假淡定"
+          },
+          "icon": "smile",
+          "level": 87,
+          "description": {
+            "zh": "嘴上来得及，心里也许真的来得及。"
+          }
+        },
+        {
+          "id": "last-minute-burst",
+          "name": {
+            "zh": "临门爆发"
+          },
+          "icon": "rocket",
+          "level": 92,
+          "description": {
+            "zh": "越接近崩盘，越像突然装了涡轮。"
+          }
+        }
+      ],
+      "strengths": [
+        {
+          "zh": "抗压时有奇怪爆发力"
+        },
+        {
+          "zh": "能在极限时间里完成不可思议的事"
+        },
+        {
+          "zh": "心理素质看似离谱但经常有效"
+        }
+      ],
+      "weaknesses": [
+        {
+          "zh": "容易把人生过成倒计时挑战"
+        },
+        {
+          "zh": "长期让自己处于惊险刺激边缘"
+        }
+      ],
+      "compatibleTypes": ["NITE", "CRAZY", "FISH"],
+      "incompatibleTypes": ["PLAN"],
+      "relationships": {
+        "zh": "你常让身边人替你着急，但你自己总觉得还能再等等。"
+      },
+      "workStyle": {
+        "zh": "没有截止日期就没有启动按钮，有了截止日期就像被雷劈醒。"
+      },
+      "communicationStyle": {
+        "zh": "你最常说“来得及”，而且最可怕的是，有时真的来得及。"
+      },
+      "quotes": [
+        {
+          "text": "我的天赋不是效率，是在崩盘边缘精准点火。",
+          "author": "拖延战神"
+        }
+      ]
+    },
+    {
+      "id": "GHOST",
+      "name": {
+        "zh": "社交闪现"
+      },
+      "subtitle": {
+        "zh": "随机上线，礼貌失踪"
+      },
+      "description": {
+        "zh": "你的社交不是稳定在线，而是阶段性显灵。你可以突然出现，热情回应，制造一种“你一直都在”的错觉；也可以下一秒礼貌蒸发，让所有人再次失去你的坐标。"
+      },
+      "icon": "ghost",
+      "color": "#7A8FA6",
+      "posterImage": {
+        "zh": "/types/abstract-personality-draw/ghost.png"
+      },
+      "rarity": "normal",
+      "traits": [
+        {
+          "id": "social-blink",
+          "name": {
+            "zh": "社交闪现"
+          },
+          "icon": "sparkles",
+          "level": 95,
+          "description": {
+            "zh": "上线像彩蛋，下线像谜题。"
+          }
+        },
+        {
+          "id": "polite-vanish",
+          "name": {
+            "zh": "礼貌蒸发"
+          },
+          "icon": "log-out",
+          "level": 90,
+          "description": {
+            "zh": "不是不回，是退场姿势比较轻。"
+          }
+        },
+        {
+          "id": "low-battery",
+          "name": {
+            "zh": "社交电量"
+          },
+          "icon": "battery-low",
+          "level": 86,
+          "description": {
+            "zh": "热情是真的，电量也是真的有限。"
+          }
+        }
+      ],
+      "strengths": [
+        {
+          "zh": "懂得保护自己的社交能量"
+        },
+        {
+          "zh": "出现时常常很有存在感"
+        },
+        {
+          "zh": "不强行合群，也不彻底断联"
+        }
+      ],
+      "weaknesses": [
+        {
+          "zh": "别人经常不知道你到底在不在"
+        },
+        {
+          "zh": "回复消息的时间规律像天文现象"
+        }
+      ],
+      "compatibleTypes": ["OFFL", "UNDO", "CHILL"],
+      "incompatibleTypes": ["TALK", "VIBE"],
+      "relationships": {
+        "zh": "你不是不珍惜关系，只是没办法长期高频在线。懂你的人会知道，你只是需要不定期消失回血。"
+      },
+      "workStyle": {
+        "zh": "适合异步沟通和弹性节奏，不适合随时在线、秒回、持续开麦。"
+      },
+      "communicationStyle": {
+        "zh": "你会突然认真回复一大段，然后再次进入神秘离线状态。"
+      },
+      "quotes": [
+        {
+          "text": "我不是失联，我只是进入了低功耗模式。",
+          "author": "社交闪现"
+        }
+      ]
+    },
+    {
+      "id": "DRAMA",
+      "name": {
+        "zh": "脑补天尊"
+      },
+      "subtitle": {
+        "zh": "别人一句话，你一整季"
+      },
+      "description": {
+        "zh": "你的问题不是敏感，是想象力太有生产力。别人随口一句普通话，到你这里自动升级成悬疑、情感、职场、伦理多线并行剧。你不一定说出来，但你心里早已播完一整部连续剧。"
+      },
+      "icon": "theater",
+      "color": "#8D6E63",
+      "posterImage": {
+        "zh": "/types/abstract-personality-draw/drama.png"
+      },
+      "rarity": "normal",
+      "traits": [
+        {
+          "id": "plot-generator",
+          "name": {
+            "zh": "剧情生成"
+          },
+          "icon": "film",
+          "level": 96,
+          "description": {
+            "zh": "一句话就能生成三条支线和两个反转。"
+          }
+        },
+        {
+          "id": "subtext-radar",
+          "name": {
+            "zh": "潜台词雷达"
+          },
+          "icon": "radar",
+          "level": 91,
+          "description": {
+            "zh": "你总觉得事情没这么简单。"
+          }
+        },
+        {
+          "id": "inner-theater",
+          "name": {
+            "zh": "内心剧场"
+          },
+          "icon": "clapperboard",
+          "level": 93,
+          "description": {
+            "zh": "现实只给素材，你负责拍成长剧。"
+          }
+        }
+      ],
+      "strengths": [
+        {
+          "zh": "共情强，洞察细节多"
+        },
+        {
+          "zh": "想象力极强，很会补全信息"
+        },
+        {
+          "zh": "适合创作、分析和预判复杂关系"
+        }
+      ],
+      "weaknesses": [
+        {
+          "zh": "容易把普通事件脑补成连续剧"
+        },
+        {
+          "zh": "经常被自己想出来的剧情伤到"
+        }
+      ],
+      "compatibleTypes": ["MELON", "HARD", "CRAZY"],
+      "incompatibleTypes": ["CHILL", "OFFL"],
+      "relationships": {
+        "zh": "你很在意关系里的微妙变化，也很容易从一句话里读出一部长篇小说。"
+      },
+      "workStyle": {
+        "zh": "适合需要想象、推演、文案、创意的工作，但要小心把简单需求想成谍战。"
+      },
+      "communicationStyle": {
+        "zh": "你常问“他是不是还有别的意思”，然后自己先回答了自己。"
+      },
+      "quotes": [
+        {
+          "text": "生活给我一句话，我还它一整季。",
+          "author": "脑补天尊"
+        }
+      ]
+    },
+    {
+      "id": "CHILL",
+      "name": {
+        "zh": "摆烂哲人"
+      },
+      "subtitle": {
+        "zh": "不是不努力，是选择性看开"
+      },
+      "description": {
+        "zh": "你很早就领悟了：很多事急也没用，不如先缓一缓。你身上有一种松弛到近乎超脱的气质。别人觉得你摆，你自己知道，这叫精神节能。"
+      },
+      "icon": "cloud",
+      "color": "#789262",
+      "posterImage": {
+        "zh": "/types/abstract-personality-draw/chill.png"
+      },
+      "rarity": "normal",
+      "traits": [
+        {
+          "id": "selective-release",
+          "name": {
+            "zh": "选择性看开"
+          },
+          "icon": "leaf",
+          "level": 95,
+          "description": {
+            "zh": "不是不在乎，是不想被它折磨。"
+          }
+        },
+        {
+          "id": "emotional-low-power",
+          "name": {
+            "zh": "情绪低功耗"
+          },
+          "icon": "battery",
+          "level": 89,
+          "description": {
+            "zh": "能不内耗，就不内耗。"
+          }
+        },
+        {
+          "id": "soft-resistance",
+          "name": {
+            "zh": "柔性抵抗"
+          },
+          "icon": "shield",
+          "level": 84,
+          "description": {
+            "zh": "你用“算了”抵挡世界的疯狂。"
+          }
+        }
+      ],
+      "strengths": [
+        {
+          "zh": "松弛感强，不容易被小事击穿"
+        },
+        {
+          "zh": "很会给自己留余地"
+        },
+        {
+          "zh": "在高压场景里反而能稳定军心"
+        }
+      ],
+      "weaknesses": [
+        {
+          "zh": "容易被误会成没有上进心"
+        },
+        {
+          "zh": "有时会过早放弃争取"
+        }
+      ],
+      "compatibleTypes": ["FISH", "OFFL", "MAYBE"],
+      "incompatibleTypes": ["PLAN", "VIBE"],
+      "relationships": {
+        "zh": "你不太爱争输赢，更看重舒服、轻松和别太累。"
+      },
+      "workStyle": {
+        "zh": "适合稳定、节奏明确、不天天爆炸的环境。你可以努力，但讨厌无意义折腾。"
+      },
+      "communicationStyle": {
+        "zh": "你常用“算了”“都行”“没必要”来维持精神和平。"
+      },
+      "quotes": [
+        {
+          "text": "我不是躺平，我只是和世界达成了临时停火。",
+          "author": "摆烂哲人"
+        }
+      ]
+    },
+    {
+      "id": "VIBE",
+      "name": {
+        "zh": "气氛巨兽"
+      },
+      "subtitle": {
+        "zh": "事情未必能成，氛围必须拉满"
+      },
+      "description": {
+        "zh": "你的人生功能之一，就是把现场从普通推进到热闹。你未必是最能解决问题的人，但你一定是最能让场面不尴尬的人。只要有你在，空气就会自动开始起伏。"
+      },
+      "icon": "party-popper",
+      "color": "#F2A65A",
+      "posterImage": {
+        "zh": "/types/abstract-personality-draw/vibe.png"
+      },
+      "rarity": "normal",
+      "traits": [
+        {
+          "id": "vibe-control",
+          "name": {
+            "zh": "气氛掌控"
+          },
+          "icon": "music",
+          "level": 98,
+          "description": {
+            "zh": "冷场是你的召唤信号。"
+          }
+        },
+        {
+          "id": "social-ignition",
+          "name": {
+            "zh": "社交点火"
+          },
+          "icon": "flame",
+          "level": 93,
+          "description": {
+            "zh": "一句话就能把现场拧热。"
+          }
+        },
+        {
+          "id": "festival-core",
+          "name": {
+            "zh": "节日内核"
+          },
+          "icon": "sparkles",
+          "level": 88,
+          "description": {
+            "zh": "你出现的地方，多少带点庆典感。"
+          }
+        }
+      ],
+      "strengths": [
+        {
+          "zh": "擅长打破沉默和尴尬"
+        },
+        {
+          "zh": "能让普通场景变得有趣"
+        },
+        {
+          "zh": "很适合带动团队和社交局"
+        }
+      ],
+      "weaknesses": [
+        {
+          "zh": "容易过度用力，把小场面整成大晚会"
+        },
+        {
+          "zh": "不热闹会让你不太适应"
+        }
+      ],
+      "compatibleTypes": ["TALK", "SPY", "CRAZY"],
+      "incompatibleTypes": ["OFFL", "GHOST"],
+      "relationships": {
+        "zh": "你在关系里很会提供情绪价值，朋友和你在一起很少冷场。"
+      },
+      "workStyle": {
+        "zh": "适合需要表达、组织、活动、社交和带动人的场景。"
+      },
+      "communicationStyle": {
+        "zh": "你说话自带音效，出现自带灯光。"
+      },
+      "quotes": [
+        {
+          "text": "结果可以未知，气氛必须先赢。",
+          "author": "气氛巨兽"
+        }
+      ]
+    },
+    {
+      "id": "HARD",
+      "name": {
+        "zh": "嘴硬王者"
+      },
+      "subtitle": {
+        "zh": "表面无所谓，心里演唱会"
+      },
+      "description": {
+        "zh": "你最擅长的事情之一，就是把在意伪装成不在意。你嘴上说“随便”“都行”“没事”，心里却已经开完一场带返场的情绪演唱会。你不轻易示弱，但情绪浓度其实很高。"
+      },
+      "icon": "crown",
+      "color": "#A35D5D",
+      "posterImage": {
+        "zh": "/types/abstract-personality-draw/hard.png"
+      },
+      "rarity": "normal",
+      "traits": [
+        {
+          "id": "hard-mouth-soft-heart",
+          "name": {
+            "zh": "嘴硬心软"
+          },
+          "icon": "heart",
+          "level": 96,
+          "description": {
+            "zh": "嘴比心硬，心比嘴诚实。"
+          }
+        },
+        {
+          "id": "emotional-camouflage",
+          "name": {
+            "zh": "情绪伪装"
+          },
+          "icon": "mask",
+          "level": 90,
+          "description": {
+            "zh": "你把在意包装成了没事。"
+          }
+        },
+        {
+          "id": "inner-concert",
+          "name": {
+            "zh": "内心巡演"
+          },
+          "icon": "mic",
+          "level": 88,
+          "description": {
+            "zh": "表面冷静，心里灯牌都亮了。"
+          }
+        }
+      ],
+      "strengths": [
+        {
+          "zh": "外表镇定，不轻易崩"
+        },
+        {
+          "zh": "很重感情，只是不爱明说"
+        },
+        {
+          "zh": "擅长用态度保护柔软"
+        }
+      ],
+      "weaknesses": [
+        {
+          "zh": "容易让别人误会你真的不在乎"
+        },
+        {
+          "zh": "憋久了容易突然情绪爆发"
+        }
+      ],
+      "compatibleTypes": ["DRAMA", "UNDO", "MELON"],
+      "incompatibleTypes": ["TALK", "VIBE"],
+      "relationships": {
+        "zh": "你在关系里常常嘴上退一步，心里前进八百米。"
+      },
+      "workStyle": {
+        "zh": "适合需要稳住场面的工作，但别把所有压力都咽下去。"
+      },
+      "communicationStyle": {
+        "zh": "你最常说没事，而这通常意味着非常有事。"
+      },
+      "quotes": [
+        {
+          "text": "我不是冷，我只是把柔软锁在态度后面。",
+          "author": "嘴硬王者"
+        }
+      ]
+    },
+    {
+      "id": "NITE",
+      "name": {
+        "zh": "熬夜修仙"
+      },
+      "subtitle": {
+        "zh": "白天没精神，晚上像开了挂"
+      },
+      "description": {
+        "zh": "你和夜晚之间有一种近乎命定的合作关系。白天你像待机，晚上你才进入正式运行。别人是熬夜，你是夜间人格完全上线。"
+      },
+      "icon": "moon",
+      "color": "#536DFE",
+      "posterImage": {
+        "zh": "/types/abstract-personality-draw/nite.png"
+      },
+      "rarity": "normal",
+      "traits": [
+        {
+          "id": "night-awakening",
+          "name": {
+            "zh": "夜间觉醒"
+          },
+          "icon": "moon-star",
+          "level": 98,
+          "description": {
+            "zh": "越晚越像本人。"
+          }
+        },
+        {
+          "id": "midnight-focus",
+          "name": {
+            "zh": "午夜专注"
+          },
+          "icon": "laptop",
+          "level": 89,
+          "description": {
+            "zh": "凌晨的你，像加载了隐藏补丁。"
+          }
+        },
+        {
+          "id": "daytime-low-power",
+          "name": {
+            "zh": "白天省电"
+          },
+          "icon": "sun-dim",
+          "level": 84,
+          "description": {
+            "zh": "白天不是醒着，是勉强运行。"
+          }
+        }
+      ],
+      "strengths": [
+        {
+          "zh": "深夜效率和灵感都很强"
+        },
+        {
+          "zh": "适合独处型创作和深度思考"
+        },
+        {
+          "zh": "夜间专注能力惊人"
+        }
+      ],
+      "weaknesses": [
+        {
+          "zh": "白天容易像被抽走灵魂"
+        },
+        {
+          "zh": "作息容易变成玄学实验"
+        }
+      ],
+      "compatibleTypes": ["LATE", "CRAZY", "OFFL"],
+      "incompatibleTypes": ["PLAN"],
+      "relationships": {
+        "zh": "你可能白天回消息像失联，晚上突然开始深度输出。"
+      },
+      "workStyle": {
+        "zh": "适合弹性时间和夜间创作，不适合每天清晨元气满满地打卡。"
+      },
+      "communicationStyle": {
+        "zh": "你的高质量发言常常出现在别人准备睡觉之后。"
+      },
+      "quotes": [
+        {
+          "text": "我不是作息差，我只是和月亮签了长期合作。",
+          "author": "熬夜修仙"
+        }
+      ]
+    },
+    {
+      "id": "PLAN",
+      "name": {
+        "zh": "计划暴君"
+      },
+      "subtitle": {
+        "zh": "方案做满分，执行看缘分"
+      },
+      "description": {
+        "zh": "你对“做计划”有天然热情。表格、流程、步骤、预案、备选项，这些东西能给你巨大安全感。你不是没有行动力，只是有时会把行动欲全部消耗在准备阶段。"
+      },
+      "icon": "clipboard-check",
+      "color": "#4E7C59",
+      "posterImage": {
+        "zh": "/types/abstract-personality-draw/plan.png"
+      },
+      "rarity": "normal",
+      "traits": [
+        {
+          "id": "flowchart-mind",
+          "name": {
+            "zh": "流程图脑"
+          },
+          "icon": "workflow",
+          "level": 96,
+          "description": {
+            "zh": "世界在你眼里都可以拆成步骤。"
+          }
+        },
+        {
+          "id": "preparation-addiction",
+          "name": {
+            "zh": "准备成瘾"
+          },
+          "icon": "clipboard-list",
+          "level": 92,
+          "description": {
+            "zh": "正式开始前，还能再优化一下。"
+          }
+        },
+        {
+          "id": "execution-optional",
+          "name": {
+            "zh": "执行随缘"
+          },
+          "icon": "shuffle",
+          "level": 78,
+          "description": {
+            "zh": "计划很硬，行动很玄。"
+          }
+        }
+      ],
+      "strengths": [
+        {
+          "zh": "结构感强，很会安排事情"
+        },
+        {
+          "zh": "预案意识优秀"
+        },
+        {
+          "zh": "能把混乱任务拆清楚"
+        }
+      ],
+      "weaknesses": [
+        {
+          "zh": "容易沉迷计划而延迟行动"
+        },
+        {
+          "zh": "面对突发变化容易想重做整套方案"
+        }
+      ],
+      "compatibleTypes": ["MAYBE", "JUDGE", "LATE"],
+      "incompatibleTypes": ["FISH", "CHILL"],
+      "relationships": {
+        "zh": "你会认真安排约会、旅行和未来，但也可能因为计划太细让别人想躺下。"
+      },
+      "workStyle": {
+        "zh": "适合项目管理、规划、统筹、复盘和所有需要把混乱变清楚的事情。"
+      },
+      "communicationStyle": {
+        "zh": "你喜欢“先确认一下流程”，并且这个流程往往能确认出另一个流程。"
+      },
+      "quotes": [
+        {
+          "text": "我不是在拖延，我是在高规格对待尚未开始的未来。",
+          "author": "计划暴君"
+        }
+      ]
+    },
+    {
+      "id": "MELON",
+      "name": {
+        "zh": "吃瓜首席"
+      },
+      "subtitle": {
+        "zh": "不站队，只站前排"
+      },
+      "description": {
+        "zh": "你对八卦和戏剧现场有一种高度文明的围观热情。你不一定参与，但绝对关注；你不一定点评，但一定知道来龙去脉。你是那种能把“围观”做得既专业又优雅的人。"
+      },
+      "icon": "popcorn",
+      "color": "#6ABF69",
+      "posterImage": {
+        "zh": "/types/abstract-personality-draw/melon.png"
+      },
+      "rarity": "normal",
+      "traits": [
+        {
+          "id": "front-row-radar",
+          "name": {
+            "zh": "前排雷达"
+          },
+          "icon": "binoculars",
+          "level": 97,
+          "description": {
+            "zh": "哪里有动静，哪里就有你的最佳机位。"
+          }
+        },
+        {
+          "id": "neutral-watching",
+          "name": {
+            "zh": "中立围观"
+          },
+          "icon": "eye",
+          "level": 90,
+          "description": {
+            "zh": "不站队，只负责掌握剧情。"
+          }
+        },
+        {
+          "id": "plot-collection",
+          "name": {
+            "zh": "瓜田采集"
+          },
+          "icon": "slice",
+          "level": 92,
+          "description": {
+            "zh": "你总能把碎片拼成完整时间线。"
+          }
+        }
+      ],
+      "strengths": [
+        {
+          "zh": "信息嗅觉敏锐"
+        },
+        {
+          "zh": "能快速掌握复杂关系"
+        },
+        {
+          "zh": "很懂保持安全距离"
+        }
+      ],
+      "weaknesses": [
+        {
+          "zh": "容易过度沉浸别人的连续剧"
+        },
+        {
+          "zh": "有时嘴上不参与，心里已经追更"
+        }
+      ],
+      "compatibleTypes": ["DRAMA", "JUDGE", "TALK"],
+      "incompatibleTypes": ["OFFL"],
+      "relationships": {
+        "zh": "朋友遇到故事会找你，因为你不会轻易站队，但一定会认真听完。"
+      },
+      "workStyle": {
+        "zh": "适合信息整理、观察分析和舆情感知，前提是别把所有事都当瓜。"
+      },
+      "communicationStyle": {
+        "zh": "你最常用的问题是：然后呢？还有呢？细说。"
+      },
+      "quotes": [
+        {
+          "text": "我不制造风波，但我不会错过风波。",
+          "author": "吃瓜首席"
+        }
+      ]
+    },
+    {
+      "id": "CRAZY",
+      "name": {
+        "zh": "发疯文学家"
+      },
+      "subtitle": {
+        "zh": "情绪一上头，灵感就自由"
+      },
+      "description": {
+        "zh": "你身上有一种混乱但高产的创造力。理智时你不一定最能写，一旦情绪起来，你的表达、措辞、比喻和攻击力都会同步升级。你不是疯，你是灵感带电。"
+      },
+      "icon": "pen-line",
+      "color": "#C75C5C",
+      "posterImage": {
+        "zh": "/types/abstract-personality-draw/crazy.png"
+      },
+      "rarity": "normal",
+      "traits": [
+        {
+          "id": "chaotic-writing",
+          "name": {
+            "zh": "混乱创作"
+          },
+          "icon": "pen-tool",
+          "level": 97,
+          "description": {
+            "zh": "你把情绪变成段落，把崩溃写出押韵。"
+          }
+        },
+        {
+          "id": "emotional-fuel",
+          "name": {
+            "zh": "情绪燃料"
+          },
+          "icon": "flame",
+          "level": 94,
+          "description": {
+            "zh": "越上头，越有句子。"
+          }
+        },
+        {
+          "id": "dramatic-output",
+          "name": {
+            "zh": "爆发输出"
+          },
+          "icon": "megaphone",
+          "level": 89,
+          "description": {
+            "zh": "一旦开写，像开闸放洪。"
+          }
+        }
+      ],
+      "strengths": [
+        {
+          "zh": "表达力强，情绪感染力强"
+        },
+        {
+          "zh": "很容易产出金句"
+        },
+        {
+          "zh": "适合创意、文案、吐槽和深夜长文"
+        }
+      ],
+      "weaknesses": [
+        {
+          "zh": "灵感来得猛，情绪也来得猛"
+        },
+        {
+          "zh": "容易把小事写成大型宣言"
+        }
+      ],
+      "compatibleTypes": ["DRAMA", "NITE", "VIBE"],
+      "incompatibleTypes": ["CHILL", "PLAN"],
+      "relationships": {
+        "zh": "你在关系里很有表达欲，情绪高峰期尤其容易写出让人沉默又惊艳的小作文。"
+      },
+      "workStyle": {
+        "zh": "适合自由创作和需要爆发灵感的工作，不适合长期被压制表达。"
+      },
+      "communicationStyle": {
+        "zh": "平时还算正常，一旦上头，输入法都追不上你。"
+      },
+      "quotes": [
+        {
+          "text": "我不是失控，我只是把情绪炼成了表达。",
+          "author": "发疯文学家"
+        }
+      ]
+    },
+    {
+      "id": "OFFL",
+      "name": {
+        "zh": "断网隐士"
+      },
+      "subtitle": {
+        "zh": "消息可以不回，世界依然运转"
+      },
+      "description": {
+        "zh": "你对“离线”有天然的向往。不是讨厌人，而是太明白持续在线会消耗自己。你需要通过断联、放空、关通知，重新把精神捡回来。"
+      },
+      "icon": "wifi-off",
+      "color": "#607D68",
+      "posterImage": {
+        "zh": "/types/abstract-personality-draw/offl.png"
+      },
+      "rarity": "normal",
+      "traits": [
+        {
+          "id": "digital-retreat",
+          "name": {
+            "zh": "数字隐居"
+          },
+          "icon": "wifi-off",
+          "level": 96,
+          "description": {
+            "zh": "关掉通知，世界立刻安静一半。"
+          }
+        },
+        {
+          "id": "quiet-recharge",
+          "name": {
+            "zh": "安静回血"
+          },
+          "icon": "cup-soda",
+          "level": 91,
+          "description": {
+            "zh": "你需要独处把自己重新拼回来。"
+          }
+        },
+        {
+          "id": "boundary-master",
+          "name": {
+            "zh": "边界意识"
+          },
+          "icon": "circle-off",
+          "level": 88,
+          "description": {
+            "zh": "你知道自己不能被世界24小时调用。"
+          }
+        }
+      ],
+      "strengths": [
+        {
+          "zh": "边界感强，不容易被信息吞没"
+        },
+        {
+          "zh": "能主动为自己恢复能量"
+        },
+        {
+          "zh": "不盲目迎合社交节奏"
+        }
+      ],
+      "weaknesses": [
+        {
+          "zh": "别人可能以为你失踪了"
+        },
+        {
+          "zh": "消息堆久了会更不想回"
+        }
+      ],
+      "compatibleTypes": ["GHOST", "CHILL", "NITE"],
+      "incompatibleTypes": ["TALK", "VIBE"],
+      "relationships": {
+        "zh": "你懂得珍惜关系，但更懂得保存自己。真正亲近的人会知道，你只是需要离线呼吸。"
+      },
+      "workStyle": {
+        "zh": "适合低打扰、深度专注、异步协作的环境。"
+      },
+      "communicationStyle": {
+        "zh": "你不是不回，你是在等待一个灵魂有电的时刻。"
+      },
+      "quotes": [
+        {
+          "text": "消息可以不回，世界依然运转。",
+          "author": "断网隐士"
+        }
+      ]
+    },
+    {
+      "id": "MAYBE",
+      "name": {
+        "zh": "选择困难症"
+      },
+      "subtitle": {
+        "zh": "每个都不错，所以一个也定不下"
+      },
+      "description": {
+        "zh": "你不是不会选，是你太容易看到每个选项的合理性。别人一秒能定的事，你能认真卡住半小时。你不是犹豫，你是在和无数个“也可以”长期共处。"
+      },
+      "icon": "split",
+      "color": "#6F8FAF",
+      "posterImage": {
+        "zh": "/types/abstract-personality-draw/maybe.png"
+      },
+      "rarity": "normal",
+      "traits": [
+        {
+          "id": "option-overload",
+          "name": {
+            "zh": "选项过载"
+          },
+          "icon": "list",
+          "level": 96,
+          "description": {
+            "zh": "选项越多，你越像进入迷宫。"
+          }
+        },
+        {
+          "id": "fair-comparison",
+          "name": {
+            "zh": "公平比较"
+          },
+          "icon": "scale",
+          "level": 91,
+          "description": {
+            "zh": "你认真对待每一个可能性。"
+          }
+        },
+        {
+          "id": "decision-delay",
+          "name": {
+            "zh": "决策延迟"
+          },
+          "icon": "clock",
+          "level": 89,
+          "description": {
+            "zh": "不是不选，是还可以再等等。"
+          }
+        }
+      ],
+      "strengths": [
+        {
+          "zh": "考虑全面，不容易冲动决定"
+        },
+        {
+          "zh": "能看到不同选项的价值"
+        },
+        {
+          "zh": "适合做对比、评估和方案筛选"
+        }
+      ],
+      "weaknesses": [
+        {
+          "zh": "容易在小事上消耗大量心力"
+        },
+        {
+          "zh": "错过时机后会开始后悔没选另一个"
+        }
+      ],
+      "compatibleTypes": ["PLAN", "CHILL", "JUDGE"],
+      "incompatibleTypes": ["LATE", "VIBE"],
+      "relationships": {
+        "zh": "约会点餐、旅行路线、周末安排都可能成为你的灵魂试炼。"
+      },
+      "workStyle": {
+        "zh": "适合需要比较和权衡的工作，但最好有人帮你按下最终确认键。"
+      },
+      "communicationStyle": {
+        "zh": "你常说“都可以”，但这个都可以背后藏着一整套未完成的权衡。"
+      },
+      "quotes": [
+        {
+          "text": "我不是优柔寡断，我只是太尊重每一种可能。",
+          "author": "选择困难症"
+        }
+      ]
+    },
+    {
+      "id": "OOPS",
+      "name": {
+        "zh": "反向锦鲤"
+      },
+      "subtitle": {
+        "zh": "总能精准避开正确答案"
+      },
+      "description": {
+        "zh": "你的人生不是没有好运，只是好运好像总会礼貌地从你旁边绕过去。你常常不是最惨的那个，但总能在关键时刻选中最微妙的错误路线。"
+      },
+      "icon": "fish-off",
+      "color": "#D98259",
+      "posterImage": {
+        "zh": "/types/abstract-personality-draw/oops.png"
+      },
+      "rarity": "normal",
+      "traits": [
+        {
+          "id": "near-miss",
+          "name": {
+            "zh": "差点命中"
+          },
+          "icon": "target",
+          "level": 95,
+          "description": {
+            "zh": "你总是离正确答案只差一点点。"
+          }
+        },
+        {
+          "id": "reverse-luck",
+          "name": {
+            "zh": "反向运势"
+          },
+          "icon": "rotate-ccw",
+          "level": 92,
+          "description": {
+            "zh": "别人靠运气上岸，你靠运气绕路。"
+          }
+        },
+        {
+          "id": "oops-magnet",
+          "name": {
+            "zh": "意外磁场"
+          },
+          "icon": "magnet",
+          "level": 86,
+          "description": {
+            "zh": "普通事件到你手上容易长出意外。"
+          }
+        }
+      ],
+      "strengths": [
+        {
+          "zh": "抗挫能力被生活训练得很强"
+        },
+        {
+          "zh": "很会把倒霉讲成段子"
+        },
+        {
+          "zh": "经历丰富，故事很多"
+        }
+      ],
+      "weaknesses": [
+        {
+          "zh": "容易对自己的运气产生不必要的悲观"
+        },
+        {
+          "zh": "关键时刻经常精准错开最优解"
+        }
+      ],
+      "compatibleTypes": ["UNLUCK", "CHILL", "FISH"],
+      "incompatibleTypes": ["LUCK"],
+      "relationships": {
+        "zh": "你常常成为朋友局里的离谱案例来源，大家心疼你，也爱听你讲。"
+      },
+      "workStyle": {
+        "zh": "适合留有容错空间的工作，因为你深知任何事情都可能忽然歪一下。"
+      },
+      "communicationStyle": {
+        "zh": "你的高频句式是：怎么又这样？"
+      },
+      "quotes": [
+        {
+          "text": "我不是没运气，我只是和好运总差半步。",
+          "author": "反向锦鲤"
+        }
+      ]
+    },
+    {
+      "id": "TALK",
+      "name": {
+        "zh": "人间弹幕机"
+      },
+      "subtitle": {
+        "zh": "嘴一张开，世界进入实时评论"
+      },
+      "description": {
+        "zh": "你的语言系统不是用来存话的，是用来即时播报的。你天生适合点评、吐槽、接梗、总结和补刀。有你在，沉默会被打破，场面会被解说，细节会被放大。"
+      },
+      "icon": "message-circle-more",
+      "color": "#42A5A1",
+      "posterImage": {
+        "zh": "/types/abstract-personality-draw/talk.png"
+      },
+      "rarity": "normal",
+      "traits": [
+        {
+          "id": "live-commentary",
+          "name": {
+            "zh": "实时解说"
+          },
+          "icon": "radio",
+          "level": 98,
+          "description": {
+            "zh": "世界发生，你负责播报。"
+          }
+        },
+        {
+          "id": "fast-reaction",
+          "name": {
+            "zh": "接梗迅速"
+          },
+          "icon": "bolt",
+          "level": 92,
+          "description": {
+            "zh": "梗刚落地，你已经接住。"
+          }
+        },
+        {
+          "id": "comment-rain",
+          "name": {
+            "zh": "弹幕体质"
+          },
+          "icon": "messages-square",
+          "level": 94,
+          "description": {
+            "zh": "你不说话，世界少一层字幕。"
+          }
+        }
+      ],
+      "strengths": [
+        {
+          "zh": "表达力强，反应快"
+        },
+        {
+          "zh": "很会活跃对话"
+        },
+        {
+          "zh": "能把平凡事件讲得有画面感"
+        }
+      ],
+      "weaknesses": [
+        {
+          "zh": "容易话比脑子快"
+        },
+        {
+          "zh": "安静场合可能会让你很难受"
+        }
+      ],
+      "compatibleTypes": ["VIBE", "MELON", "CRAZY"],
+      "incompatibleTypes": ["OFFL", "GHOST"],
+      "relationships": {
+        "zh": "朋友和你在一起很难无聊，因为你会自动给生活加字幕。"
+      },
+      "workStyle": {
+        "zh": "适合表达、主持、运营、内容、直播和任何需要嘴皮子发光的地方。"
+      },
+      "communicationStyle": {
+        "zh": "你说话像开了弹幕层，密度高但很有节目效果。"
+      },
+      "quotes": [
+        {
+          "text": "我不是话多，我是拒绝让世界白白发生。",
+          "author": "人间弹幕机"
+        }
+      ]
+    },
+    {
+      "id": "JUDGE",
+      "name": {
+        "zh": "窥屏判官"
+      },
+      "subtitle": {
+        "zh": "你不说话，但眼神已经写完八百字测评"
+      },
+      "description": {
+        "zh": "你是安静型高阶观察者。别人还在发言，你已经完成逻辑梳理、情绪判断、行为评级和翻车预估。你不一定参与，但你一定看得明白。你像现场最沉默的那个人，也像全场最清醒的阅卷老师。"
+      },
+      "icon": "scan-eye",
+      "color": "#4A6C59",
+      "posterImage": {
+        "zh": "/types/abstract-personality-draw/judge.png"
+      },
+      "rarity": "hidden",
+      "dropRate": 3,
+      "hiddenLabel": {
+        "zh": "低概率隐藏款"
+      },
+      "traits": [
+        {
+          "id": "silent-review",
+          "name": {
+            "zh": "静默阅卷"
+          },
+          "icon": "clipboard-check",
+          "level": 98,
+          "description": {
+            "zh": "一句话不说，但已经批完一整页。"
+          }
+        },
+        {
+          "id": "detail-detective",
+          "name": {
+            "zh": "细节侦查"
+          },
+          "icon": "search",
+          "level": 94,
+          "description": {
+            "zh": "别人看热闹，你看证据链。"
+          }
+        },
+        {
+          "id": "emotional-audit",
+          "name": {
+            "zh": "情绪审计"
+          },
+          "icon": "scale",
+          "level": 90,
+          "description": {
+            "zh": "谁在嘴硬，谁在破防，你都知道。"
+          }
+        }
+      ],
+      "strengths": [
+        {
+          "zh": "观察力强，判断冷静"
+        },
+        {
+          "zh": "很会看穿场面里的暗流"
+        },
+        {
+          "zh": "适合复盘、分析和识别风险"
+        }
+      ],
+      "weaknesses": [
+        {
+          "zh": "容易在心里给所有人打分"
+        },
+        {
+          "zh": "有时看太透，反而懒得说"
+        }
+      ],
+      "compatibleTypes": ["MELON", "MAYBE", "PLAN"],
+      "incompatibleTypes": ["VIBE", "TALK"],
+      "relationships": {
+        "zh": "你在关系里不一定最会表达，但往往最早看出问题。你的沉默不是空白，是观察报告。"
+      },
+      "workStyle": {
+        "zh": "适合分析、风控、审核、研究和任何需要冷眼看穿局面的工作。"
+      },
+      "communicationStyle": {
+        "zh": "你常常只说一句“嗯”，但那个嗯里可能包含一整套判决书。"
+      },
+      "quotes": [
+        {
+          "text": "我不是在围观，我是在做无声但完整的高级审判。",
+          "author": "窥屏判官"
+        }
+      ]
+    },
+    {
+      "id": "SPY",
+      "name": {
+        "zh": "气氛卧底"
+      },
+      "subtitle": {
+        "zh": "看似正常融入，实则偷偷带偏全场"
+      },
+      "description": {
+        "zh": "你是一种伪装得很好的搞事天才。你通常不会一上来就抢戏，但你总能在最恰当的时机，说出最歪的那一句，让原本正常的局，突然拐进喜剧频道。你不是显眼包，你是隐蔽型场面改写者。"
+      },
+      "icon": "spy",
+      "color": "#394A5A",
+      "posterImage": {
+        "zh": "/types/abstract-personality-draw/spy.png"
+      },
+      "rarity": "hidden",
+      "dropRate": 3,
+      "hiddenLabel": {
+        "zh": "低概率隐藏款"
+      },
+      "traits": [
+        {
+          "id": "undercover-chaos",
+          "name": {
+            "zh": "潜伏搞事"
+          },
+          "icon": "badge-alert",
+          "level": 96,
+          "description": {
+            "zh": "你看起来很正常，直到场面开始不正常。"
+          }
+        },
+        {
+          "id": "vibe-diversion",
+          "name": {
+            "zh": "气氛带偏"
+          },
+          "icon": "route",
+          "level": 94,
+          "description": {
+            "zh": "一句话就能把现场拐弯。"
+          }
+        },
+        {
+          "id": "low-key-trigger",
+          "name": {
+            "zh": "低调引爆"
+          },
+          "icon": "party-popper",
+          "level": 90,
+          "description": {
+            "zh": "你不是最吵的，但常常是最关键的。"
+          }
+        }
+      ],
+      "strengths": [
+        {
+          "zh": "很会制造惊喜和反差"
+        },
+        {
+          "zh": "能让普通场合变得好玩"
+        },
+        {
+          "zh": "懂得在恰当时机轻轻点火"
+        }
+      ],
+      "weaknesses": [
+        {
+          "zh": "容易把本来正经的事带歪"
+        },
+        {
+          "zh": "别人事后才发现原来是你干的"
+        }
+      ],
+      "compatibleTypes": ["VIBE", "TALK", "CRAZY"],
+      "incompatibleTypes": ["PLAN", "JUDGE"],
+      "relationships": {
+        "zh": "你在社交里像隐藏机关，平时看不出来，一触发就全场跑偏。"
+      },
+      "workStyle": {
+        "zh": "适合创意、活动、社群、内容和需要反差效果的场景。"
+      },
+      "communicationStyle": {
+        "zh": "你说话不一定多，但总能在正确时机扔出错误方向的烟花。"
+      },
+      "quotes": [
+        {
+          "text": "我不是来参加活动的，我是来悄悄修改活动走向的。",
+          "author": "气氛卧底"
+        }
+      ]
+    },
+    {
+      "id": "LUCK",
+      "name": {
+        "zh": "欧皇圣体"
+      },
+      "subtitle": {
+        "zh": "概率对你失效，好运对你生效"
+      },
+      "description": {
+        "zh": "你属于那种会让旁边人开始怀疑抽卡机制的人。别人看概率，你看命运偏爱；别人研究保底，你直接越过统计学。你不是每次都赢，但你赢的时候会让人觉得系统在偏心。"
+      },
+      "icon": "clover",
+      "color": "#E0A832",
+      "posterImage": {
+        "zh": "/types/abstract-personality-draw/luck.png"
+      },
+      "rarity": "hidden",
+      "dropRate": 1,
+      "hiddenLabel": {
+        "zh": "低概率隐藏款"
+      },
+      "traits": [
+        {
+          "id": "probability-breaker",
+          "name": {
+            "zh": "概率失效"
+          },
+          "icon": "sparkles",
+          "level": 99,
+          "description": {
+            "zh": "低概率在你这里像日常事件。"
+          }
+        },
+        {
+          "id": "golden-touch",
+          "name": {
+            "zh": "金光之手"
+          },
+          "icon": "gift",
+          "level": 96,
+          "description": {
+            "zh": "你随手一碰，结果开始发亮。"
+          }
+        },
+        {
+          "id": "envy-generator",
+          "name": {
+            "zh": "他人破防"
+          },
+          "icon": "flame",
+          "level": 93,
+          "description": {
+            "zh": "你一出货，旁边人开始怀疑人生。"
+          }
+        }
+      ],
+      "strengths": [
+        {
+          "zh": "碰运气的场合常有惊喜"
+        },
+        {
+          "zh": "容易抽到别人想要的东西"
+        },
+        {
+          "zh": "自带好运氛围"
+        }
+      ],
+      "weaknesses": [
+        {
+          "zh": "容易被朋友要求代抽"
+        },
+        {
+          "zh": "太顺时会招来友好但酸溜溜的眼神"
+        }
+      ],
+      "compatibleTypes": ["GLITCH", "VIBE", "TALK"],
+      "incompatibleTypes": ["UNLUCK", "OOPS"],
+      "relationships": {
+        "zh": "你在朋友眼里像移动锦鲤，大家嘴上说不信，身体却很诚实地把抽奖按钮递给你。"
+      },
+      "workStyle": {
+        "zh": "适合开盲盒、抢名额、抽卡、随机事件和所有需要一点玄学的场合。"
+      },
+      "communicationStyle": {
+        "zh": "你常说“随便抽一下”，然后旁边人开始沉默。"
+      },
+      "quotes": [
+        {
+          "text": "我不是好运一点点，我是让概率表失去尊严。",
+          "author": "欧皇圣体"
+        }
+      ]
+    },
+    {
+      "id": "GLITCH",
+      "name": {
+        "zh": "系统漏洞"
+      },
+      "subtitle": {
+        "zh": "不是你太强，是概率被你玩坏了"
+      },
+      "description": {
+        "zh": "你已经不属于“运气好”的范畴了，你更像是某种系统级异常。当别人还在讨论几率时，你的存在本身就像一个报错提示。你的结果不像抽出来的，更像卡出来的。"
+      },
+      "icon": "bug",
+      "color": "#7E57C2",
+      "posterImage": {
+        "zh": "/types/abstract-personality-draw/glitch.png"
+      },
+      "rarity": "hidden",
+      "dropRate": 0.3,
+      "hiddenLabel": {
+        "zh": "低概率隐藏款"
+      },
+      "traits": [
+        {
+          "id": "rule-corruption",
+          "name": {
+            "zh": "规则污染"
+          },
+          "icon": "bug",
+          "level": 100,
+          "description": {
+            "zh": "你不是遵守规则，你让规则开始自我怀疑。"
+          }
+        },
+        {
+          "id": "rare-event-loop",
+          "name": {
+            "zh": "稀有循环"
+          },
+          "icon": "repeat",
+          "level": 97,
+          "description": {
+            "zh": "极小概率事件在你身边反复发生。"
+          }
+        },
+        {
+          "id": "backend-panic",
+          "name": {
+            "zh": "后台恐慌"
+          },
+          "icon": "terminal",
+          "level": 95,
+          "description": {
+            "zh": "你一操作，系统像被迫加班。"
+          }
+        }
+      ],
+      "strengths": [
+        {
+          "zh": "常能触发不可思议的结果"
+        },
+        {
+          "zh": "非常适合隐藏彩蛋和离谱事件"
+        },
+        {
+          "zh": "自带故事感和异常感"
+        }
+      ],
+      "weaknesses": [
+        {
+          "zh": "别人很难判断你到底是强还是系统坏了"
+        },
+        {
+          "zh": "有时连你自己都解释不了发生了什么"
+        }
+      ],
+      "compatibleTypes": ["LUCK", "CRAZY", "SPY"],
+      "incompatibleTypes": ["PLAN", "JUDGE"],
+      "relationships": {
+        "zh": "你在关系里像不可预测变量。和你在一起，生活很难按说明书运行。"
+      },
+      "workStyle": {
+        "zh": "适合探索、实验、创意和一切允许离谱结果发生的环境。"
+      },
+      "communicationStyle": {
+        "zh": "你常常一句“我也不知道怎么回事”，然后事情已经离谱起来了。"
+      },
+      "quotes": [
+        {
+          "text": "我不是欧皇，我是让系统连夜修补机制的存在。",
+          "author": "系统漏洞"
+        }
+      ]
+    },
+    {
+      "id": "UNLUCK",
+      "name": {
+        "zh": "非酋本体"
+      },
+      "subtitle": {
+        "zh": "概率从不眷顾你，意外却总能精准降落"
+      },
+      "description": {
+        "zh": "你的人生有一种很稳定的戏剧性：不是大灾大难，但总能在关键时刻精准接住一点小小的倒霉。你和“谢谢参与”之间，建立过长期而深厚的关系。你不一定最惨，但你总能把“差一点”活得很具体。"
+      },
+      "icon": "cloud-rain",
+      "color": "#6D6D6D",
+      "posterImage": {
+        "zh": "/types/abstract-personality-draw/unluck.png"
+      },
+      "rarity": "hidden",
+      "dropRate": 1.5,
+      "hiddenLabel": {
+        "zh": "低概率隐藏款"
+      },
+      "traits": [
+        {
+          "id": "thanks-again",
+          "name": {
+            "zh": "谢谢参与"
+          },
+          "icon": "ticket-x",
+          "level": 99,
+          "description": {
+            "zh": "你和安慰奖之间有稳定羁绊。"
+          }
+        },
+        {
+          "id": "bad-luck-landing",
+          "name": {
+            "zh": "厄运精准降落"
+          },
+          "icon": "cloud-rain",
+          "level": 96,
+          "description": {
+            "zh": "意外总能在人群里找到你。"
+          }
+        },
+        {
+          "id": "almost-there",
+          "name": {
+            "zh": "差一点点"
+          },
+          "icon": "circle-dot-dashed",
+          "level": 93,
+          "description": {
+            "zh": "离中奖最近的时候，往往也是错过最具体的时候。"
+          }
+        }
+      ],
+      "strengths": [
+        {
+          "zh": "很会把倒霉活成段子"
+        },
+        {
+          "zh": "抗打击能力极强"
+        },
+        {
+          "zh": "拥有大量离谱人生素材"
+        }
+      ],
+      "weaknesses": [
+        {
+          "zh": "抽奖前已经开始预感谢谢参与"
+        },
+        {
+          "zh": "越关键越容易精准踩坑"
+        }
+      ],
+      "compatibleTypes": ["OOPS", "CHILL", "FISH"],
+      "incompatibleTypes": ["LUCK"],
+      "relationships": {
+        "zh": "你是朋友眼里那个让人又心疼又想笑的人。你的经历常常证明：倒霉也能很有节目效果。"
+      },
+      "workStyle": {
+        "zh": "适合有备选方案、有容错机制的事情。你不是不行，只是命运有时比较爱和你开玩笑。"
+      },
+      "communicationStyle": {
+        "zh": "你常常以“果然”开头，以“算了再来一次”结尾。"
+      },
+      "quotes": [
+        {
+          "text": "我不是完全没机会，我只是总能优雅地错过正确答案。",
+          "author": "非酋本体"
+        }
+      ]
+    }
+  ]
+}

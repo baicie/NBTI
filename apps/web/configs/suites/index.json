@@ -1,16 +1,40 @@
 {
   "suites": [
     {
-      "id": "pr01",
-      "name": { "zh": "打工人人格测试", "en": "Work Persona Test" },
-      "description": {
-        "zh": "揭示你在职场和生活中的隐藏人格特质",
-        "en": "Discover your hidden personality traits in work and life"
+      "id": "abstract-personality-draw",
+      "name": {
+        "zh": "互联网抽象人格抽卡测试",
+        "en": "Internet Absurd Persona Draw"
       },
-      "thumbnail": "/thumbnails/pr01.png",
+      "description": {
+        "zh": "16种常规人格 + 5种低概率隐藏款。测完你就知道，自己到底是摸鱼圣体、社交闪现、发疯文学家，还是那个把概率系统玩坏的隐藏款。",
+        "en": "16 regular persona types plus 5 low-probability hidden editions. Find out whether you are a professional slacker, social ghost, chaotic writer, or the rare glitch that breaks probability itself."
+      },
+      "thumbnail": "/thumbnails/abstract-personality-draw.png",
       "enabled": true,
-      "order": 1
+      "order": 1,
+      "tags": ["抽象人格", "搞怪测试", "抽卡", "隐藏款", "互联网精神状态"],
+      "stats": {
+        "questionCount": 17,
+        "normalTypeCount": 16,
+        "hiddenTypeCount": 5,
+        "estimatedMinutes": 4
+      },
+      "badges": [
+        {
+          "zh": "低概率隐藏款",
+          "en": "Rare Hidden Edition"
+        },
+        {
+          "zh": "仅供娱乐",
+          "en": "For Fun Only"
+        },
+        {
+          "zh": "抽象浓度检测",
+          "en": "Absurdity Check"
+        }
+      ]
     }
   ],
-  "updatedAt": "2026-04-24"
+  "updatedAt": "2026-04-25"
 }

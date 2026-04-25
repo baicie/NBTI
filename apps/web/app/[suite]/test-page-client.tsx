@@ -1,15 +1,46 @@
 'use client'
 
-import type { Question } from '@nbti/core'
+import type { LoadedConfig, Question } from '@nbti/core'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { AudioToggleButton } from '@/components/audio/audio-toggle-button'
+import { useAudio } from '@/providers/audio-provider'
 import { useTest } from '@/providers/test-provider'
 
 interface TestPageClientProps {
   suiteId: string
-  questions: Question[]
-  manifest: {
+  config: LoadedConfig
+}
+
+type LayoutMode = 'list' | 'single'
+
+export function TestPageClient({ suiteId, config }: TestPageClientProps) {
+  const router = useRouter()
+  const {
+    session,
+    answers,
+    startSession,
+    answerQuestion,
+    resetTest,
+    submitTest,
+    resumeSession,
+    loadConfig,
+  } = useTest()
+  const { playBackgroundMusic, stopBackgroundMusic } = useAudio()
+  const { settings } = useTest()
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [animateKey, setAnimateKey] = useState(0)
+  const questionRefs = useRef<Map<string, HTMLDivElement>>(new Map())
+  const touchStartX = useRef<number>(0)
+  const touchEndX = useRef<number>(0)
+  const isTouchTap = useRef(false) // 标记触摸是否为点击，防止 touchend + click 双重触发跳转
+  // 用于取消和追踪自动跳转的定时器（Bug fix）
+  const autoAdvanceTimerRef = useRef<NodeJS.Timeout | null>(null)
+  const targetQuestionRef = useRef<number>(-1)
+
+  const manifest = config.manifest as {
     name: Record<string, string>
     settings?: {
       layout?: 'list' | 'single'
@@ -25,38 +56,15 @@ interface TestPageClientProps {
       position?: string
       size?: string
     }
+    audio?: {
+      backgroundMusic?: {
+        src: string
+        volume: number
+        loop?: boolean
+      }
+    }
   }
-  locale?: string
-}
-
-type LayoutMode = 'list' | 'single'
-
-export function TestPageClient({
-  suiteId,
-  questions,
-  manifest,
-  locale = 'zh',
-}: TestPageClientProps) {
-  const router = useRouter()
-  const {
-    session,
-    answers,
-    startSession,
-    answerQuestion,
-    resetTest,
-    submitTest,
-    resumeSession,
-  } = useTest()
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [animateKey, setAnimateKey] = useState(0)
-  const questionRefs = useRef<Map<string, HTMLDivElement>>(new Map())
-  const touchStartX = useRef<number>(0)
-  const touchEndX = useRef<number>(0)
-  const isTouchTap = useRef(false) // 标记触摸是否为点击，防止 touchend + click 双重触发跳转
-  // 用于取消和追踪自动跳转的定时器（Bug fix）
-  const autoAdvanceTimerRef = useRef<NodeJS.Timeout | null>(null)
-  const targetQuestionRef = useRef<number>(-1)
+  const questions = (config.questions.questions ?? []) as Question[]
 
   // 布局模式
   const layoutMode: LayoutMode =
@@ -83,17 +91,45 @@ export function TestPageClient({
     if (typeof content === 'string') {
       return content
     }
-    return content[locale] || content.zh || Object.values(content)[0] || ''
+    return (
+      content[settings.locale] || content.zh || Object.values(content)[0] || ''
+    )
   }
 
   useEffect(() => {
+    // 将套件配置加载到 TestProvider（用于 submitTest 计分）
+    loadConfig(config)
+
     if (!session) {
       const resumed = resumeSession(suiteId, totalQuestions)
       if (!resumed) {
         startSession(suiteId)
       }
     }
-  }, [session, suiteId, totalQuestions, resumeSession, startSession])
+  }, [
+    session,
+    suiteId,
+    totalQuestions,
+    resumeSession,
+    startSession,
+    loadConfig,
+    config,
+  ])
+
+  // 背景音乐控制
+  useEffect(() => {
+    if (manifest.audio?.backgroundMusic?.src) {
+      playBackgroundMusic(manifest.audio.backgroundMusic)
+    }
+
+    return () => {
+      stopBackgroundMusic()
+    }
+  }, [
+    manifest.audio?.backgroundMusic,
+    playBackgroundMusic,
+    stopBackgroundMusic,
+  ])
 
   const handleOptionSelect = useCallback(
     (questionId: string, optionId: string) => {
@@ -246,6 +282,18 @@ export function TestPageClient({
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
+        {/* Audio Toggle Button */}
+        <AudioToggleButton
+          showMusic={
+            (config.theme as { audio?: { showMusicButton?: boolean } })?.audio
+              ?.showMusicButton ?? true
+          }
+          showEffects={
+            (config.theme as { audio?: { showEffectsButton?: boolean } })?.audio
+              ?.showEffectsButton ?? true
+          }
+        />
+
         {/* Progress Header */}
         <header
           className="sticky top-0 z-20 backdrop-blur-lg"
@@ -587,6 +635,18 @@ export function TestPageClient({
         background: 'var(--suite-background)',
       }}
     >
+      {/* Audio Toggle Button */}
+      <AudioToggleButton
+        showMusic={
+          (config.theme as { audio?: { showMusicButton?: boolean } })?.audio
+            ?.showMusicButton ?? true
+        }
+        showEffects={
+          (config.theme as { audio?: { showEffectsButton?: boolean } })?.audio
+            ?.showEffectsButton ?? true
+        }
+      />
+
       {/* Sticky Header */}
       <header
         className="sticky top-0 z-20 backdrop-blur-lg"
