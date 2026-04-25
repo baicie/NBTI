@@ -15,7 +15,7 @@ interface QuestionsData {
     rightLabel: Record<string, string>
   }>
   questions: Array<{ id: string }>
-  meta: { totalQuestions: number, timeEstimate: number }
+  meta: { totalQuestions: number; timeEstimate: number }
 }
 
 /**

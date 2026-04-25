@@ -4,6 +4,8 @@ export default antfu(
   {
     react: true,
 
+    stylistic: false,
+
     ignores: ['docs/', 'scripts/vitest.config.ts'],
   },
 

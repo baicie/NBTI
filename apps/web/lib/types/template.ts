@@ -65,8 +65,8 @@ export interface TemplateElement {
     | 'trait-badges'
     | 'dimension-bar'
     | 'divider'
-  position: { x: number | string, y: number | string } | string
-  size?: { width: number, height: number, unit?: 'px' | '%' }
+  position: { x: number | string; y: number | string } | string
+  size?: { width: number; height: number; unit?: 'px' | '%' }
   content?: string | LocalizedString | string[]
   image?: string | null
   shape?: 'circle' | 'rectangle' | 'line' | 'triangle' | 'polygon'
@@ -120,7 +120,7 @@ export interface TemplateVariables {
   subtitle: string
   description: string
   shortDescription: string
-  traits: Array<{ name: string, level: number }>
+  traits: Array<{ name: string; level: number }>
   matchScore: number
   shareUrl: string
   suiteName: string

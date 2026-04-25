@@ -21,10 +21,10 @@ const nonSrcPackages = ['dts-test']
 for (const dir of dirs) {
   const key = `@vue/${dir}`
   if (
-    dir !== 'vue'
-    && !nonSrcPackages.includes(dir)
-    && !(key in entries)
-    && statSync(new URL(`../packages/${dir}`, import.meta.url)).isDirectory()
+    dir !== 'vue' &&
+    !nonSrcPackages.includes(dir) &&
+    !(key in entries) &&
+    statSync(new URL(`../packages/${dir}`, import.meta.url)).isDirectory()
   ) {
     entries[key] = resolveEntryForPkg(dir)
   }

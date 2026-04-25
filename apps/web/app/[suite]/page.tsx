@@ -17,7 +17,7 @@ export default async function TestPage({ params }: TestPageProps) {
 
   // 类型断言
   const typedManifest = manifest as {
-    name: { zh: string, en: string }
+    name: { zh: string; en: string }
     settings?: {
       layout?: 'list' | 'single'
       allowBack?: boolean

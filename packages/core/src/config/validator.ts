@@ -13,8 +13,8 @@ import type {
 import { z } from 'zod'
 
 // 本地化字符串 Schema
-export const LocalizedStringSchema: z.ZodType<Record<string, string>>
-  = z.record(z.string(), z.string())
+export const LocalizedStringSchema: z.ZodType<Record<string, string>> =
+  z.record(z.string(), z.string())
 
 // Manifest Schema
 export const ManifestConfigSchema = z.object({
