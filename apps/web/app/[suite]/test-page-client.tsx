@@ -53,17 +53,31 @@ export function TestPageClient({
   const questionRefs = useRef<Map<string, HTMLDivElement>>(new Map())
   const touchStartX = useRef<number>(0)
   const touchEndX = useRef<number>(0)
-
-  const totalQuestions = questions.length
-  const answeredCount = answers.size
-  const allAnswered = answeredCount === totalQuestions
-  const progress = (answeredCount / totalQuestions) * 100
+  const isTouchTap = useRef(false) // 标记触摸是否为点击，防止 touchend + click 双重触发跳转
+  // 用于取消和追踪自动跳转的定时器（Bug fix）
+  const autoAdvanceTimerRef = useRef<NodeJS.Timeout | null>(null)
+  const targetQuestionRef = useRef<number>(-1)
 
   // 布局模式
   const layoutMode: LayoutMode =
     manifest.settings?.layout === 'single' ? 'single' : 'list'
   const showDimensions = manifest.settings?.showDimensions !== false
   const allowBack = manifest.settings?.allowBack !== false
+
+  const totalQuestions = questions.length
+  const letters = ['A', 'B', 'C', 'D', 'E', 'F']
+  const currentQuestion = questions[currentIndex]
+  const currentAnswer = answers.get(currentQuestion?.id)
+  const isCurrentAnswered = !!currentAnswer
+
+  // Bug 2 fix: 进度基于当前位置而非已回答数量
+  // 这样在最后一题时，进度条会正确显示为100%
+  const answeredCount = currentIndex + (isCurrentAnswered ? 1 : 0)
+  const allAnswered = answeredCount === totalQuestions
+  const progress = (answeredCount / totalQuestions) * 100
+
+  // 列表模式下已回答的题目数量（用于显示）
+  const answeredTotal = answers.size
 
   const getLocalizedContent = (content: Record<string, string>): string => {
     if (typeof content === 'string') {
@@ -81,10 +95,32 @@ export function TestPageClient({
     }
   }, [session, suiteId, totalQuestions, resumeSession, startSession])
 
-  const handleOptionSelect = (questionId: string, optionId: string) => {
-    answerQuestion(questionId, optionId)
-    // 注意：不再自动跳转到下一题，由用户手动点击按钮
-  }
+  const handleOptionSelect = useCallback(
+    (questionId: string, optionId: string) => {
+      answerQuestion(questionId, optionId)
+
+      // 自动跳转到下一题（单题模式）
+      if (layoutMode === 'single' && currentIndex < totalQuestions - 1) {
+        // 取消之前的定时器，防止快速切换选项导致的重复触发
+        if (autoAdvanceTimerRef.current) {
+          clearTimeout(autoAdvanceTimerRef.current)
+        }
+
+        const targetIndex = currentIndex + 1
+        targetQuestionRef.current = targetIndex
+
+        autoAdvanceTimerRef.current = setTimeout(() => {
+          // 只有当目标题号匹配时才跳转（防止旧定时器在题号已改变后仍执行）
+          if (targetQuestionRef.current === targetIndex) {
+            setCurrentIndex(targetIndex)
+            setAnimateKey(k => k + 1)
+            scrollToTop()
+          }
+        }, 300)
+      }
+    },
+    [answerQuestion, layoutMode, currentIndex, totalQuestions],
+  )
 
   const goToNext = useCallback(() => {
     if (currentIndex < totalQuestions - 1) {
@@ -112,13 +148,20 @@ export function TestPageClient({
   // 触摸滑动处理
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX
+    isTouchTap.current = true // 假设是点击，滑动时置为 false
   }
 
   const handleTouchMove = (e: React.TouchEvent) => {
     touchEndX.current = e.touches[0].clientX
+    // 移动超过阈值则不是点击
+    if (Math.abs(touchEndX.current - touchStartX.current) > 10) {
+      isTouchTap.current = false
+    }
   }
 
   const handleTouchEnd = () => {
+    // 如果是点击而非滑动，不做手势导航（点击跳转由 auto-advance 处理）
+    if (isTouchTap.current) return
     const diff = touchStartX.current - touchEndX.current
     const threshold = 50
 
@@ -189,12 +232,7 @@ export function TestPageClient({
     )
   }
 
-  const letters = ['A', 'B', 'C', 'D', 'E', 'F']
-  const currentQuestion = questions[currentIndex]
-  const currentAnswer = answers.get(currentQuestion?.id)
-  const isCurrentAnswered = !!currentAnswer
-
-  // 单题模式渲染
+  // ========== 单题模式渲染 ==========
   if (layoutMode === 'single') {
     return (
       <div
@@ -539,7 +577,7 @@ export function TestPageClient({
     )
   }
 
-  // 列表模式渲染（原有逻辑）
+  // ========== 列表模式渲染 ==========
   return (
     <div
       className="min-h-screen"
@@ -586,7 +624,7 @@ export function TestPageClient({
                 className="text-sm font-medium tabular-nums"
                 style={{ color: 'var(--suite-foreground)' }}
               >
-                {answeredCount}
+                {answeredTotal}
                 <span style={{ opacity: 0.5 }}>/</span>
                 {totalQuestions}
               </span>
@@ -833,7 +871,7 @@ export function TestPageClient({
                 </span>
               )}
             </button>
-          ) : answeredCount > 0 ? (
+          ) : answeredTotal > 0 ? (
             <div className="space-y-2">
               <button
                 onClick={handleSkipAndSubmit}
@@ -847,13 +885,13 @@ export function TestPageClient({
               >
                 {isSubmitting
                   ? '提交中...'
-                  : `跳过剩余 ${totalQuestions - answeredCount} 题，直接查看结果`}
+                  : `跳过剩余 ${totalQuestions - answeredTotal} 题，直接查看结果`}
               </button>
               <p
                 className="text-center text-xs"
                 style={{ color: 'var(--suite-muted-foreground)' }}
               >
-                已回答 {answeredCount}/{totalQuestions} 题
+                已回答 {answeredTotal}/{totalQuestions} 题
               </p>
             </div>
           ) : (
@@ -863,7 +901,7 @@ export function TestPageClient({
             >
               开始选择答案，还剩{' '}
               <span style={{ color: 'var(--suite-primary)', fontWeight: 600 }}>
-                {totalQuestions - answeredCount}
+                {totalQuestions - answeredTotal}
               </span>{' '}
               题
             </p>

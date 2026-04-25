@@ -9,7 +9,7 @@ import type {
 } from '@nbti/core'
 import type { ReactNode } from 'react'
 import { calculateScores } from '@nbti/core'
-import { createContext, useCallback, useContext, useState } from 'react'
+import { createContext, useCallback, useContext, useRef, useState } from 'react'
 import { uuidV4 } from '@/lib/uuid'
 
 const STORAGE_KEY_PREFIX = 'nbti_test_'
@@ -147,6 +147,10 @@ export function TestProvider({ children }: { children: ReactNode }) {
   // 存储当前套件ID用于持久化
   const [currentSuiteId, setCurrentSuiteId] = useState<string | null>(null)
 
+  // 使用 refs 避免 closure 导致的 stale 值问题（Bug 1 fix）
+  const sessionRef = useRef<TestSession | null>(null)
+  const currentSuiteIdRef = useRef<string | null>(null)
+
   const loadConfig = useCallback((newConfig: LoadedConfig) => {
     setConfig(newConfig)
     setConfigStatus('loaded')
@@ -164,6 +168,9 @@ export function TestProvider({ children }: { children: ReactNode }) {
         setAnswers(new Map(Object.entries(stored.answers)))
         setCurrentSuiteId(suiteId)
         setResult(null)
+        // 同步更新 refs（Bug 1 fix）
+        sessionRef.current = stored.session
+        currentSuiteIdRef.current = suiteId
         return
       }
 
@@ -181,6 +188,9 @@ export function TestProvider({ children }: { children: ReactNode }) {
       setAnswers(new Map())
       setCurrentSuiteId(suiteId)
       setResult(null)
+      // 同步更新 refs 以避免 closure staleness（Bug 1 fix）
+      sessionRef.current = newSession
+      currentSuiteIdRef.current = suiteId
 
       // 保存初始进度
       saveProgress(suiteId, newSession, new Map())
@@ -197,6 +207,9 @@ export function TestProvider({ children }: { children: ReactNode }) {
         setAnswers(new Map(Object.entries(stored.answers)))
         setCurrentSuiteId(suiteId)
         setResult(null)
+        // 同步更新 refs（Bug 1 fix）
+        sessionRef.current = stored.session
+        currentSuiteIdRef.current = suiteId
         return true
       }
       return false
@@ -204,22 +217,21 @@ export function TestProvider({ children }: { children: ReactNode }) {
     [],
   )
 
-  const answerQuestion = useCallback(
-    (questionId: string, optionId: string) => {
-      setAnswers(prev => {
-        const next = new Map(prev)
-        next.set(questionId, optionId)
+  const answerQuestion = useCallback((questionId: string, optionId: string) => {
+    setAnswers(prev => {
+      const next = new Map(prev)
+      next.set(questionId, optionId)
 
-        // 持久化
-        if (session && currentSuiteId) {
-          saveProgress(currentSuiteId, session, next)
-        }
+      // 使用 ref 读取最新的值，避免 closure staleness（Bug 1 fix）
+      const suiteId = currentSuiteIdRef.current
+      const activeSession = sessionRef.current
+      if (activeSession && suiteId) {
+        saveProgress(suiteId, activeSession, next)
+      }
 
-        return next
-      })
-    },
-    [session, currentSuiteId],
-  )
+      return next
+    })
+  }, [])
 
   const nextQuestion = useCallback(() => {
     setSession(prev => {
@@ -253,7 +265,7 @@ export function TestProvider({ children }: { children: ReactNode }) {
   }, [currentSuiteId, answers])
 
   const submitTest = useCallback((): ScoringResult => {
-    if (!config || !session) {
+    if (!config || !sessionRef.current) {
       throw new Error('No config or session available')
     }
 
@@ -282,25 +294,29 @@ export function TestProvider({ children }: { children: ReactNode }) {
 
     setResult(scoringResult)
 
-    // 清除保存的进度
-    if (currentSuiteId) {
-      clearProgress(currentSuiteId)
+    // 清除保存的进度（使用 ref 避免 stale closure）
+    const suiteId = currentSuiteIdRef.current
+    if (suiteId) {
+      clearProgress(suiteId)
     }
 
     return scoringResult
-  }, [config, session, answers, currentSuiteId])
+  }, [config, answers])
 
   const resetTest = useCallback(() => {
     setSession(null)
     setAnswers(new Map())
     setResult(null)
-
-    // 清除保存的进度
-    if (currentSuiteId) {
-      clearProgress(currentSuiteId)
+    // 清除保存的进度（使用 ref）
+    const suiteId = currentSuiteIdRef.current
+    if (suiteId) {
+      clearProgress(suiteId)
     }
     setCurrentSuiteId(null)
-  }, [currentSuiteId])
+    // 清除 refs
+    sessionRef.current = null
+    currentSuiteIdRef.current = null
+  }, [])
 
   const updateSettings = useCallback((newSettings: Partial<UserSettings>) => {
     setSettings(prev => ({ ...prev, ...newSettings }))
