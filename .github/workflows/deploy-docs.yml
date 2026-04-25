@@ -38,10 +38,10 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
-        run: pnpm --dir docs install
+        run: cd docs && pnpm install
 
       - name: Build Docs
-        run: pnpm --dir docs docs:build
+        run: cd docs && pnpm docs:build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
