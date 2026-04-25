@@ -62,4 +62,3 @@ eslint.config.js
 netlify.toml
 .node-version
 tsconfig.json
-tsconfig.base.json

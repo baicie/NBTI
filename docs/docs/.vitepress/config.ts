@@ -4,6 +4,7 @@ export default defineConfig({
   title: 'NBTI',
   description: 'NBTI 测评平台开发文档 — 让 AI 也能读懂你的试题配置',
   lang: 'zh-CN',
+  base: '/NBTI/',
   cleanUrls: true,
   lastUpdated: true,
 
@@ -75,10 +76,10 @@ export default defineConfig({
       ],
     },
 
-    socialLinks: [{ icon: 'github', link: 'https://github.com/your-repo' }],
+    socialLinks: [{ icon: 'github', link: 'https://github.com/baicie/NBTI' }],
 
     editLink: {
-      pattern: 'https://github.com/your-repo/edit/main/docs/:path',
+      pattern: 'https://github.com/baicie/NBTI/edit/main/docs/:path',
       text: '在 GitHub 上编辑此页',
     },
 
