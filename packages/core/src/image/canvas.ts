@@ -58,9 +58,9 @@ export function drawBackground(
   ctx: CanvasRenderingContext2D,
   background: {
     type: 'color' | 'gradient' | 'image'
-    value: string | Array<{ color: string, position: number }>
+    value: string | Array<{ color: string; position: number }>
     direction?: string
-    overlay?: { color: string, opacity?: number }
+    overlay?: { color: string; opacity?: number }
   },
   width: number,
   height: number,
@@ -85,7 +85,7 @@ export function drawBackground(
       const y2 = height / 2 + Math.sin(angle) * height
 
       const gradient = ctx.createLinearGradient(x1, y1, x2, y2)
-      colorStops.forEach((stop) => {
+      colorStops.forEach(stop => {
         gradient.addColorStop(stop.position / 100, stop.color)
       })
 
@@ -96,7 +96,7 @@ export function drawBackground(
 
     case 'image': {
       loadImage(background.value as string)
-        .then((img) => {
+        .then(img => {
           // 绘制图片覆盖整个画布
           const imgRatio = img.width / img.height
           const canvasRatio = width / height
@@ -110,8 +110,7 @@ export function drawBackground(
             drawHeight = height
             drawWidth = height * imgRatio
             drawX = -(drawWidth - width) / 2
-          }
-          else {
+          } else {
             drawWidth = width
             drawHeight = width / imgRatio
             drawY = -(drawHeight - height) / 2
@@ -181,8 +180,7 @@ export function drawText(
 
   if (maxWidth) {
     ctx.fillText(text, x, y, maxWidth)
-  }
-  else {
+  } else {
     ctx.fillText(text, x, y)
   }
 
@@ -305,8 +303,7 @@ export function drawRadarChart(
       const y = centerY + Math.sin(angle) * levelRadius
       if (i === 0) {
         ctx.moveTo(x, y)
-      }
-      else {
+      } else {
         ctx.lineTo(x, y)
       }
     }
@@ -336,8 +333,7 @@ export function drawRadarChart(
     const y = centerY + Math.sin(angle) * valueRadius
     if (i === 0) {
       ctx.moveTo(x, y)
-    }
-    else {
+    } else {
       ctx.lineTo(x, y)
     }
   }
@@ -385,11 +381,10 @@ export async function canvasToBlob(
 ): Promise<Blob> {
   return new Promise((resolve, reject) => {
     canvas.toBlob(
-      (blob) => {
+      blob => {
         if (blob) {
           resolve(blob)
-        }
-        else {
+        } else {
           reject(new Error('Failed to create blob'))
         }
       },

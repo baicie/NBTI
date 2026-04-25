@@ -66,46 +66,43 @@ export function calculateMultiDimensionalScores(
   answers: Answer[],
   questions: Question[],
   dimensions: Dimension[],
-): Record<string, { left: number, right: number }> {
+): Record<string, { left: number; right: number }> {
   // 初始化分数
-  const scores: Record<string, { left: number, right: number }> = {}
+  const scores: Record<string, { left: number; right: number }> = {}
 
-  dimensions.forEach((dim) => {
+  dimensions.forEach(dim => {
     scores[dim.id] = { left: 0, right: 0 }
   })
 
   // 获取维度的左右字母
-  const dimensionLetters: Record<string, { left: string, right: string }> = {}
-  dimensions.forEach((dim) => {
+  const dimensionLetters: Record<string, { left: string; right: string }> = {}
+  dimensions.forEach(dim => {
     const left = dim.leftLabel.zh.charAt(0)
     const right = dim.rightLabel.zh.charAt(0)
     dimensionLetters[dim.id] = { left, right }
   })
 
   // 汇总答案
-  answers.forEach((answer) => {
+  answers.forEach(answer => {
     const question = questions.find(q => q.id === answer.questionId)
-    if (!question)
-      return
+    if (!question) return
 
     const option = question.options.find(o => o.id === answer.optionId)
-    if (!option)
-      return
+    if (!option) return
 
     const weight = option.weight
 
     // 遍历所有维度，累加分数
-    dimensions.forEach((dim) => {
+    dimensions.forEach(dim => {
       const letters = dimensionLetters[dim.id]
 
       // 计算该选项对这个维度的贡献
       Object.entries(weight).forEach(([key, value]) => {
         if (key === letters.left || key === letters.left.toUpperCase()) {
           scores[dim.id].left += value
-        }
-        else if (
-          key === letters.right
-          || key === letters.right.toUpperCase()
+        } else if (
+          key === letters.right ||
+          key === letters.right.toUpperCase()
         ) {
           scores[dim.id].right += value
         }
@@ -124,8 +121,7 @@ export function calculateDimensionPercentage(
   rightScore: number,
 ): number {
   const total = leftScore + rightScore
-  if (total === 0)
-    return 50
+  if (total === 0) return 50
   return Math.round((leftScore / total) * 100)
 }
 
@@ -133,12 +129,12 @@ export function calculateDimensionPercentage(
  * 标准化分数到 0-9 范围
  */
 export function normalizeToScale9(
-  rawScores: Record<string, { left: number, right: number }>,
+  rawScores: Record<string, { left: number; right: number }>,
   dimensions: Dimension[],
 ): Record<string, number> {
   const normalized: Record<string, number> = {}
 
-  dimensions.forEach((dim) => {
+  dimensions.forEach(dim => {
     const scores = rawScores[dim.id]
     if (!scores) {
       normalized[dim.id] = 5
@@ -172,7 +168,7 @@ export function getScoringResult(
   )
 
   // 计算维度百分比
-  const dimensionScores: DimensionScore[] = dimensions.map((dim) => {
+  const dimensionScores: DimensionScore[] = dimensions.map(dim => {
     const scores = rawScores[dim.id]
     const percentage = calculateDimensionPercentage(scores.left, scores.right)
 
@@ -197,8 +193,8 @@ export function getScoringResult(
   const typeCode = dimensionScores.map(d => d.dominant).join('')
 
   // 计算最高匹配度（用于显示）
-  const matchPercentage
-    = dimensionScores.reduce((sum, d) => {
+  const matchPercentage =
+    dimensionScores.reduce((sum, d) => {
       const distanceFromCenter = Math.abs(d.percentage - 50)
       return sum + (100 - distanceFromCenter * 2)
     }, 0) / dimensionScores.length

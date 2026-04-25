@@ -201,8 +201,7 @@ function normalizeToPercentile(
   min: number,
   max: number,
 ): number {
-  if (max === min)
-    return 50
+  if (max === min) return 50
   const percent = ((score - min) / (max - min)) * 100
   return Math.max(0, Math.min(100, Math.round(percent)))
 }
@@ -380,7 +379,7 @@ export function getTypeMatchResult(
 
   const dims = dimensionDefinitions || defaultDimensions
 
-  const dimensionResults = dims.map((dim) => {
+  const dimensionResults = dims.map(dim => {
     const scoreMap: Record<string, number> = {
       SA: normalizedScores.SA,
       EE: normalizedScores.EE,
@@ -401,7 +400,7 @@ export function getTypeMatchResult(
   })
 
   // 计算所有类型的匹配度
-  const matchScores = allTypes.map((type) => {
+  const matchScores = allTypes.map(type => {
     const rule = TYPE_MAPPING_RULES.find(r => r.typeId === type.id)
     if (!rule) {
       return { typeId: type.id, typeName: type.name.zh, score: 0 }

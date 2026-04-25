@@ -14,8 +14,7 @@ export function useLocalStorage<T>(
     try {
       const item = window.localStorage.getItem(key)
       return item ? JSON.parse(item) : initialValue
-    }
-    catch {
+    } catch {
       return initialValue
     }
   })
@@ -23,16 +22,15 @@ export function useLocalStorage<T>(
   const setValue = useCallback(
     (value: T | ((prev: T) => T)) => {
       try {
-        const valueToStore
-          = typeof value === 'function'
+        const valueToStore =
+          typeof value === 'function'
             ? (value as (prev: T) => T)(storedValue)
             : value
         setStoredValue(valueToStore)
         if (typeof window !== 'undefined') {
           window.localStorage.setItem(key, JSON.stringify(valueToStore))
         }
-      }
-      catch (error) {
+      } catch (error) {
         console.warn(`Error setting localStorage key "${key}":`, error)
       }
     },

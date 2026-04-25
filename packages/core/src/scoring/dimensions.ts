@@ -30,19 +30,18 @@ export function calculateDimensionScores(
   answers: Answer[],
   questions: QuestionInfo[],
   dimensions: string[],
-): Record<string, { left: number, right: number }> {
+): Record<string, { left: number; right: number }> {
   // 初始化维度分数
-  const scores: Record<string, { left: number, right: number }> = {}
+  const scores: Record<string, { left: number; right: number }> = {}
 
-  dimensions.forEach((dim) => {
+  dimensions.forEach(dim => {
     scores[dim] = { left: 0, right: 0 }
   })
 
   // 汇总答案权重
-  answers.forEach((answer) => {
+  answers.forEach(answer => {
     const question = questions.find(q => q.id === answer.questionId)
-    if (!question)
-      return
+    if (!question) return
 
     const weight = answer.weight
     const isReverse = question.isReverse ?? false
@@ -56,24 +55,20 @@ export function calculateDimensionScores(
       const isLeftKey = key === leftLetter
       const isRightKey = key === rightLetter
 
-      if (!isLeftKey && !isRightKey)
-        return
+      if (!isLeftKey && !isRightKey) return
 
       if (isReverse) {
         // 反向计分：左字母加到右分，右字母加到左分
         if (isLeftKey) {
           scores[dim].right += value
-        }
-        else if (isRightKey) {
+        } else if (isRightKey) {
           scores[dim].left += value
         }
-      }
-      else {
+      } else {
         // 普通计分：正常分配
         if (isLeftKey) {
           scores[dim].left += value
-        }
-        else if (isRightKey) {
+        } else if (isRightKey) {
           scores[dim].right += value
         }
       }
@@ -94,8 +89,7 @@ export function determineDominant(
 ): string {
   if (leftScore > rightScore) {
     return leftLetter
-  }
-  else if (rightScore > leftScore) {
+  } else if (rightScore > leftScore) {
     return rightLetter
   }
   // 平局时返回第一个字母
@@ -141,11 +135,11 @@ export function calculatePercentage(
  * 构建维度分数详情
  */
 export function buildDimensionScores(
-  rawScores: Record<string, { left: number, right: number }>,
+  rawScores: Record<string, { left: number; right: number }>,
   dimensions: string[],
   method: 'difference' | 'ratio' | 'absolute' = 'difference',
 ): DimensionScore[] {
-  return dimensions.map((dim) => {
+  return dimensions.map(dim => {
     const [leftLetter, rightLetter] = dim.split('')
     const { left, right } = rawScores[dim]
     const dominant = determineDominant(left, right, leftLetter, rightLetter)
@@ -176,18 +170,17 @@ export function generateTypeCode(
  * 归一化分数到 0-100 范围
  */
 export function normalizeScores(
-  rawScores: Record<string, { left: number, right: number }>,
+  rawScores: Record<string, { left: number; right: number }>,
   dimensions: string[],
 ): Record<string, number> {
   const normalized: Record<string, number> = {}
 
-  dimensions.forEach((dim) => {
+  dimensions.forEach(dim => {
     const { left, right } = rawScores[dim]
     const total = left + right
     if (total === 0) {
       normalized[dim] = 50
-    }
-    else {
+    } else {
       normalized[dim] = Math.round((left / total) * 100)
     }
   })

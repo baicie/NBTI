@@ -39,8 +39,7 @@ export function parseTranslation(
   text: string,
   params?: Record<string, string | number>,
 ): string {
-  if (!params)
-    return text
+  if (!params) return text
 
   return text.replace(/\{(\w+)\}/g, (match, key) => {
     return params[key] !== undefined ? String(params[key]) : match
@@ -57,13 +56,11 @@ export function mergeDictionaries(
   const result: I18nDict = {}
 
   for (const dict of dicts) {
-    if (!dict)
-      continue
+    if (!dict) continue
     Object.entries(dict).forEach(([key, value]) => {
       if (typeof value === 'string') {
         result[key] = value
-      }
-      else if (typeof value === 'object' && value !== null) {
+      } else if (typeof value === 'object' && value !== null) {
         result[key] = result[key] || {}
         Object.assign(result[key] as I18nDict, value)
       }
@@ -86,8 +83,7 @@ export function getAvailableLocales(dict: I18nDict): string[] {
       if (lastKey && /^[a-z]{2}(-[A-Z]{2})?$/.test(lastKey)) {
         locales.add(lastKey)
       }
-    }
-    else if (typeof obj === 'object' && obj !== null) {
+    } else if (typeof obj === 'object' && obj !== null) {
       Object.entries(obj).forEach(([key, value]) => {
         traverse(value, [...path, key])
       })

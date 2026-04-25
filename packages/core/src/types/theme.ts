@@ -48,14 +48,14 @@ export interface ThemeFont {
  * 圆角配置
  */
 export interface ThemeBorderRadius {
-  'none'?: number
-  'sm'?: number
-  'md'?: number
-  'lg'?: number
-  'xl'?: number
+  none?: number
+  sm?: number
+  md?: number
+  lg?: number
+  xl?: number
   '2xl'?: number
   '3xl'?: number
-  'full'?: number
+  full?: number
 }
 
 /**

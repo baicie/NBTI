@@ -12,7 +12,7 @@ export interface TemplateContext {
     name: Record<string, string>
     subtitle?: Record<string, string>
     description?: Record<string, string>
-    traits: Array<{ id: string, name: Record<string, string> }>
+    traits: Array<{ id: string; name: Record<string, string> }>
     strengths: Record<string, string>[]
     weaknesses: Record<string, string>[]
     careers: Record<string, string>[]
@@ -49,7 +49,7 @@ const VARIABLE_PATTERN = /\{(\w+(?:\.\w+)*)\}/g
  */
 export function parseVariablePath(
   path: string,
-): { type: string, rest: string } | null {
+): { type: string; rest: string } | null {
   const match = path.match(/^(\w+)\.(.+)$/)
   if (match) {
     return { type: match[1], rest: match[2] }
@@ -84,8 +84,7 @@ function getLocalizedValue(
   value: Record<string, unknown> | undefined,
   locale: string,
 ): string {
-  if (!value)
-    return ''
+  if (!value) return ''
 
   // 优先使用当前语言
   if (typeof value[locale] === 'string') {
@@ -133,8 +132,7 @@ function resolveVariable(context: TemplateContext, path: string): string {
     case 'dimension': {
       const [dimId, ...restPath] = rest.split('.')
       const dim = context.dimensions.find(d => d.id === dimId)
-      if (!dim)
-        return path
+      if (!dim) return path
       if (restPath.length === 0) {
         return dim.percentage.toString()
       }
@@ -145,8 +143,7 @@ function resolveVariable(context: TemplateContext, path: string): string {
       const [traitIndex, ...restPath] = rest.split('.')
       const index = Number.parseInt(traitIndex, 10)
       const trait = context.type.traits[index]
-      if (!trait)
-        return path
+      if (!trait) return path
       if (restPath.length === 0) {
         return getLocalizedValue(trait.name, context.locale)
       }

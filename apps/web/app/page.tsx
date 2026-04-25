@@ -45,8 +45,7 @@ export default async function HomePage() {
             <div className="flex items-center justify-center gap-6 md:gap-8 mt-4">
               <div className="text-center">
                 <div className="text-2xl md:text-3xl font-bold text-primary">
-                  {suites.length}
-                  +
+                  {suites.length}+
                 </div>
                 <div className="text-xs text-muted-foreground">专业测试</div>
               </div>
@@ -137,7 +136,7 @@ export default async function HomePage() {
 /**
  * 套件卡片组件
  */
-function SuiteCard({ suite, index }: { suite: SuiteConfig, index: number }) {
+function SuiteCard({ suite, index }: { suite: SuiteConfig; index: number }) {
   const colors = [
     { primary: '#6c8d71', secondary: '#97b59c' },
     { primary: '#7c3aed', secondary: '#a78bfa' },

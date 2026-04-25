@@ -10,8 +10,7 @@ export function getNestedValue<T = unknown>(
   path: string,
   defaultValue?: T,
 ): T | undefined {
-  if (!obj)
-    return defaultValue
+  if (!obj) return defaultValue
 
   const keys = path.split('.')
   let current: unknown = obj
@@ -39,7 +38,7 @@ export function extend<T extends Record<string, unknown>>(
   const result = { ...target }
   for (const source of sources) {
     if (source) {
-      Object.keys(source).forEach((key) => {
+      Object.keys(source).forEach(key => {
         const k = key as keyof T
         if (source[key] !== undefined) {
           result[k] = source[key] as T[keyof T]
@@ -68,7 +67,7 @@ export function pick<T extends Record<string, unknown>, K extends keyof T>(
   keys: K[],
 ): Pick<T, K> {
   const result = {} as Pick<T, K>
-  keys.forEach((key) => {
+  keys.forEach(key => {
     if (key in obj) {
       result[key] = obj[key]
     }
@@ -84,7 +83,7 @@ export function omit<T extends Record<string, unknown>, K extends keyof T>(
   keys: K[],
 ): Omit<T, K> {
   const result = { ...obj }
-  keys.forEach((key) => {
+  keys.forEach(key => {
     delete result[key]
   })
   return result

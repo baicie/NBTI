@@ -6,8 +6,7 @@
  * 从数组中随机选择一个元素
  */
 export function randomPick<T>(array: T[]): T | undefined {
-  if (array.length === 0)
-    return undefined
+  if (array.length === 0) return undefined
   return array[Math.floor(Math.random() * array.length)]
 }
 

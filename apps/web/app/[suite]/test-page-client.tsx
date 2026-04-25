@@ -60,8 +60,8 @@ export function TestPageClient({
   const progress = (answeredCount / totalQuestions) * 100
 
   // 布局模式
-  const layoutMode: LayoutMode
-    = manifest.settings?.layout === 'single' ? 'single' : 'list'
+  const layoutMode: LayoutMode =
+    manifest.settings?.layout === 'single' ? 'single' : 'list'
   const showDimensions = manifest.settings?.showDimensions !== false
   const allowBack = manifest.settings?.allowBack !== false
 
@@ -125,8 +125,7 @@ export function TestPageClient({
     if (diff > threshold && allowBack) {
       // 向左滑动 = 下一题
       goToNext()
-    }
-    else if (diff < -threshold) {
+    } else if (diff < -threshold) {
       // 向右滑动 = 上一题
       goToPrev()
     }
@@ -151,8 +150,8 @@ export function TestPageClient({
   }
 
   // 背景图样式
-  const backgroundStyle
-    = manifest.background?.enabled && manifest.background?.image
+  const backgroundStyle =
+    manifest.background?.enabled && manifest.background?.image
       ? {
           backgroundImage: `url(${manifest.background.image})`,
           backgroundPosition: manifest.background.position || 'center',
@@ -299,15 +298,7 @@ export function TestPageClient({
                   className="text-sm"
                   style={{ color: 'var(--suite-muted-foreground)' }}
                 >
-                  第
-                  {' '}
-                  {currentIndex + 1}
-                  {' '}
-                  题 / 共
-                  {' '}
-                  {totalQuestions}
-                  {' '}
-                  题
+                  第 {currentIndex + 1} 题 / 共 {totalQuestions} 题
                 </p>
               </div>
             </div>
@@ -351,7 +342,8 @@ export function TestPageClient({
                   <button
                     key={option.id}
                     onClick={() =>
-                      handleOptionSelect(currentQuestion.id, option.id)}
+                      handleOptionSelect(currentQuestion.id, option.id)
+                    }
                     className={`
                       w-full p-4 rounded-xl border text-left
                       transition-all duration-200 ease-out
@@ -457,67 +449,58 @@ export function TestPageClient({
                 className="text-sm font-medium"
                 style={{ color: 'var(--suite-muted-foreground)' }}
               >
-                {currentIndex + 1}
-                {' '}
-                /
-                {totalQuestions}
+                {currentIndex + 1} /{totalQuestions}
               </span>
             </div>
 
-            {currentIndex < totalQuestions - 1
-              ? (
-                  <button
-                    onClick={goToNext}
-                    disabled={!isCurrentAnswered}
-                    className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-all disabled:opacity-40"
-                    style={{
-                      background: 'var(--suite-primary)',
-                      color: 'var(--suite-primary-foreground)',
-                    }}
-                  >
-                    <span>下一题</span>
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
-                )
-              : allAnswered
-                ? (
-                    <button
-                      onClick={handleSubmit}
-                      disabled={isSubmitting}
-                      className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-bold transition-all"
-                      style={{
-                        background:
+            {currentIndex < totalQuestions - 1 ? (
+              <button
+                onClick={goToNext}
+                disabled={!isCurrentAnswered}
+                className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-all disabled:opacity-40"
+                style={{
+                  background: 'var(--suite-primary)',
+                  color: 'var(--suite-primary-foreground)',
+                }}
+              >
+                <span>下一题</span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            ) : allAnswered ? (
+              <button
+                onClick={handleSubmit}
+                disabled={isSubmitting}
+                className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-bold transition-all"
+                style={{
+                  background:
                     'linear-gradient(135deg, var(--suite-primary), var(--suite-secondary))',
-                        color: 'var(--suite-primary-foreground)',
-                      }}
-                    >
-                      {isSubmitting ? '提交中...' : '查看结果'}
-                      <ChevronRight className="w-4 h-4" />
-                    </button>
-                  )
-                : isCurrentAnswered
-                  ? (
-                      <button
-                        onClick={handleSkipAndSubmit}
-                        disabled={isSubmitting}
-                        className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-all"
-                        style={{
-                          background: 'var(--suite-muted)',
-                          color: 'var(--suite-muted-foreground)',
-                          border: '1px solid var(--suite-border)',
-                        }}
-                      >
-                        {isSubmitting ? '提交中...' : '跳过并查看结果'}
-                      </button>
-                    )
-                  : (
-                      <span
-                        className="text-sm"
-                        style={{ color: 'var(--suite-muted-foreground)' }}
-                      >
-                        请选择答案
-                      </span>
-                    )}
+                  color: 'var(--suite-primary-foreground)',
+                }}
+              >
+                {isSubmitting ? '提交中...' : '查看结果'}
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            ) : isCurrentAnswered ? (
+              <button
+                onClick={handleSkipAndSubmit}
+                disabled={isSubmitting}
+                className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-all"
+                style={{
+                  background: 'var(--suite-muted)',
+                  color: 'var(--suite-muted-foreground)',
+                  border: '1px solid var(--suite-border)',
+                }}
+              >
+                {isSubmitting ? '提交中...' : '跳过并查看结果'}
+              </button>
+            ) : (
+              <span
+                className="text-sm"
+                style={{ color: 'var(--suite-muted-foreground)' }}
+              >
+                请选择答案
+              </span>
+            )}
           </div>
         </footer>
 
@@ -650,9 +633,8 @@ export function TestPageClient({
             return (
               <div
                 key={question.id}
-                ref={(el) => {
-                  if (el)
-                    questionRefs.current.set(question.id, el)
+                ref={el => {
+                  if (el) questionRefs.current.set(question.id, el)
                 }}
                 className="question-card"
                 style={{
@@ -714,7 +696,8 @@ export function TestPageClient({
                       <button
                         key={option.id}
                         onClick={() =>
-                          handleOptionSelect(question.id, option.id)}
+                          handleOptionSelect(question.id, option.id)
+                        }
                         className={`
                           option-btn w-full p-3.5 rounded-xl border text-left
                           transition-all duration-200 ease-out
@@ -807,98 +790,84 @@ export function TestPageClient({
         }}
       >
         <div className="max-w-2xl mx-auto px-4 space-y-3">
-          {allAnswered
-            ? (
-                <button
-                  onClick={handleSubmit}
-                  disabled={isSubmitting}
-                  className="w-full py-4 rounded-2xl text-base font-semibold transition-all duration-200 active:scale-[0.98] disabled:opacity-50 hover:scale-[1.01]"
-                  style={{
-                    background:
+          {allAnswered ? (
+            <button
+              onClick={handleSubmit}
+              disabled={isSubmitting}
+              className="w-full py-4 rounded-2xl text-base font-semibold transition-all duration-200 active:scale-[0.98] disabled:opacity-50 hover:scale-[1.01]"
+              style={{
+                background:
                   'linear-gradient(135deg, var(--suite-primary), var(--suite-secondary))',
-                    color: 'var(--suite-primary-foreground)',
-                    boxShadow:
+                color: 'var(--suite-primary-foreground)',
+                boxShadow:
                   '0 8px 24px color-mix(in srgb, var(--suite-primary) 30%, transparent)',
-                  }}
-                >
-                  {isSubmitting
-                    ? (
-                        <span className="flex items-center justify-center gap-2">
-                          <svg
-                            className="w-5 h-5 animate-spin"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                          >
-                            <circle
-                              className="opacity-25"
-                              cx="12"
-                              cy="12"
-                              r="10"
-                              stroke="currentColor"
-                              strokeWidth={4}
-                            />
-                            <path
-                              className="opacity-75"
-                              fill="currentColor"
-                              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-                            />
-                          </svg>
-                          提交中...
-                        </span>
-                      )
-                    : (
-                        <span className="flex items-center justify-center gap-2">
-                          查看我的结果
-                          <ChevronRight className="w-5 h-5" />
-                        </span>
-                      )}
-                </button>
-              )
-            : answeredCount > 0
-              ? (
-                  <div className="space-y-2">
-                    <button
-                      onClick={handleSkipAndSubmit}
-                      disabled={isSubmitting}
-                      className="w-full py-3.5 rounded-xl text-sm font-medium transition-all duration-200 active:scale-[0.98] disabled:opacity-50 hover:scale-[1.01]"
-                      style={{
-                        background: 'var(--suite-muted)',
-                        color: 'var(--suite-muted-foreground)',
-                        border: '1px solid var(--suite-border)',
-                      }}
-                    >
-                      {isSubmitting
-                        ? '提交中...'
-                        : `跳过剩余 ${totalQuestions - answeredCount} 题，直接查看结果`}
-                    </button>
-                    <p
-                      className="text-center text-xs"
-                      style={{ color: 'var(--suite-muted-foreground)' }}
-                    >
-                      已回答
-                      {' '}
-                      {answeredCount}
-                      /
-                      {totalQuestions}
-                      {' '}
-                      题
-                    </p>
-                  </div>
-                )
-              : (
-                  <p
-                    className="text-center text-sm"
-                    style={{ color: 'var(--suite-muted-foreground)' }}
+              }}
+            >
+              {isSubmitting ? (
+                <span className="flex items-center justify-center gap-2">
+                  <svg
+                    className="w-5 h-5 animate-spin"
+                    fill="none"
+                    viewBox="0 0 24 24"
                   >
-                    开始选择答案，还剩
-                    {' '}
-                    <span style={{ color: 'var(--suite-primary)', fontWeight: 600 }}>
-                      {totalQuestions - answeredCount}
-                    </span>
-                    {' '}
-                    题
-                  </p>
-                )}
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth={4}
+                    />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                    />
+                  </svg>
+                  提交中...
+                </span>
+              ) : (
+                <span className="flex items-center justify-center gap-2">
+                  查看我的结果
+                  <ChevronRight className="w-5 h-5" />
+                </span>
+              )}
+            </button>
+          ) : answeredCount > 0 ? (
+            <div className="space-y-2">
+              <button
+                onClick={handleSkipAndSubmit}
+                disabled={isSubmitting}
+                className="w-full py-3.5 rounded-xl text-sm font-medium transition-all duration-200 active:scale-[0.98] disabled:opacity-50 hover:scale-[1.01]"
+                style={{
+                  background: 'var(--suite-muted)',
+                  color: 'var(--suite-muted-foreground)',
+                  border: '1px solid var(--suite-border)',
+                }}
+              >
+                {isSubmitting
+                  ? '提交中...'
+                  : `跳过剩余 ${totalQuestions - answeredCount} 题，直接查看结果`}
+              </button>
+              <p
+                className="text-center text-xs"
+                style={{ color: 'var(--suite-muted-foreground)' }}
+              >
+                已回答 {answeredCount}/{totalQuestions} 题
+              </p>
+            </div>
+          ) : (
+            <p
+              className="text-center text-sm"
+              style={{ color: 'var(--suite-muted-foreground)' }}
+            >
+              开始选择答案，还剩{' '}
+              <span style={{ color: 'var(--suite-primary)', fontWeight: 600 }}>
+                {totalQuestions - answeredCount}
+              </span>{' '}
+              题
+            </p>
+          )}
         </div>
       </footer>
 

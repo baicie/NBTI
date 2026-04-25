@@ -40,13 +40,13 @@ export interface SuiteGradient {
  */
 export interface SuiteStyle {
   borderRadius: {
-    'none': number
-    'sm': number
-    'md': number
-    'lg': number
-    'xl': number
+    none: number
+    sm: number
+    md: number
+    lg: number
+    xl: number
     '2xl': number
-    'full': number
+    full: number
   }
   font?: {
     heading?: string

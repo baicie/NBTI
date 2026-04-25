@@ -65,8 +65,7 @@ export async function getSuiteIndex(): Promise<SuiteIndex> {
   try {
     const indexModule = await import('../configs/suites/index.json')
     return indexModule.default as SuiteIndex
-  }
-  catch {
+  } catch {
     return { suites: [], updatedAt: '' }
   }
 }
@@ -183,8 +182,7 @@ export function getLoadedSuiteIds(): string[] {
 export function clearSuiteCache(suiteId?: string): void {
   if (suiteId) {
     suiteDataCache.delete(suiteId)
-  }
-  else {
+  } else {
     // 重新从静态注册表恢复（开发热更新时恢复初始状态）
     for (const [id, config] of Object.entries(SUITE_CONFIGS)) {
       suiteDataCache.set(id, config)

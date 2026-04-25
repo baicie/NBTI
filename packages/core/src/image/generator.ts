@@ -47,10 +47,8 @@ function getLocalizedText(
   value: Record<string, string> | string | undefined,
   locale: string,
 ): string {
-  if (!value)
-    return ''
-  if (typeof value === 'string')
-    return value
+  if (!value) return ''
+  if (typeof value === 'string') return value
   return value[locale] || value.zh || Object.values(value)[0] || ''
 }
 
@@ -71,8 +69,7 @@ function drawTextElement(
   if (typeof pos === 'string') {
     x = width / 2
     y = height / 2
-  }
-  else {
+  } else {
     x = parsePosition(pos.x, width)
     y = parsePosition(pos.y, height)
   }
@@ -109,8 +106,7 @@ function drawShapeElement(
   if (typeof pos === 'string') {
     x = width / 2
     y = height / 2
-  }
-  else {
+  } else {
     x = parsePosition(pos.x, width)
     y = parsePosition(pos.y, height)
   }
@@ -140,8 +136,8 @@ function drawShapeElement(
     }
     case 'rectangle':
     default: {
-      const radius
-        = typeof style.borderRadius === 'number' ? style.borderRadius : 0
+      const radius =
+        typeof style.borderRadius === 'number' ? style.borderRadius : 0
       if (radius > 0) {
         drawRoundedRect(
           ctx,
@@ -155,8 +151,7 @@ function drawShapeElement(
           ctx.fillStyle = style.fillColor
           ctx.fill()
         }
-      }
-      else {
+      } else {
         if (style.fillColor) {
           ctx.fillStyle = style.fillColor
           ctx.fillRect(
@@ -190,8 +185,7 @@ async function drawImageElement(
   if (typeof pos === 'string') {
     x = width / 2
     y = height / 2
-  }
-  else {
+  } else {
     x = parsePosition(pos.x, width)
     y = parsePosition(pos.y, height)
   }
@@ -204,8 +198,8 @@ async function drawImageElement(
       const img = await loadImage(element.image)
       ctx.save()
       ctx.beginPath()
-      const radius
-        = typeof style.borderRadius === 'number' ? style.borderRadius : 0
+      const radius =
+        typeof style.borderRadius === 'number' ? style.borderRadius : 0
       if (radius > 0) {
         drawRoundedRect(
           ctx,
@@ -225,8 +219,7 @@ async function drawImageElement(
         imgHeight,
       )
       ctx.restore()
-    }
-    catch {
+    } catch {
       // 图片加载失败，忽略
     }
   }
@@ -249,8 +242,7 @@ function drawTraitBadges(
   if (typeof pos === 'string') {
     x = width / 2
     y = height / 2
-  }
-  else {
+  } else {
     x = parsePosition(pos.x, width)
     y = parsePosition(pos.y, height)
   }
@@ -263,7 +255,7 @@ function drawTraitBadges(
 
   let currentX = x - (traits.length * 80 + (traits.length - 1) * spacing) / 2
 
-  traits.forEach((trait) => {
+  traits.forEach(trait => {
     const name = getLocalizedText(trait.name, context.locale)
     const badgeWidth = name.length * fontSize * 0.6 + padding * 2
 
@@ -305,8 +297,7 @@ function drawDimensionBars(
   if (typeof pos === 'string') {
     x = width / 2
     y = height / 2
-  }
-  else {
+  } else {
     x = parsePosition(pos.x, width)
     y = parsePosition(pos.y, height)
   }
@@ -374,8 +365,7 @@ export class ImageGenerator {
     const elementPromises: Promise<void>[] = []
 
     for (const element of template.elements) {
-      if (element.visible === false)
-        continue
+      if (element.visible === false) continue
 
       switch (element.type) {
         case 'text':
@@ -400,8 +390,7 @@ export class ImageGenerator {
           if (typeof pos === 'string') {
             x = width / 2
             y = height / 2
-          }
-          else {
+          } else {
             x = parsePosition(pos.x, width)
             y = parsePosition(pos.y, height)
           }
@@ -478,8 +467,7 @@ export class ImageGenerator {
         title: 'My NBTI Result',
         text: 'Check out my NBTI personality type!',
       })
-    }
-    else {
+    } else {
       // 降级为下载
       await this.download(options)
     }

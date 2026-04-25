@@ -23,8 +23,7 @@ export class ConfigCache {
    */
   static get(key: string): LoadedConfig | null {
     const entry = cache.get(key)
-    if (!entry)
-      return null
+    if (!entry) return null
 
     // 检查是否过期
     if (Date.now() - entry.timestamp > entry.ttl) {
@@ -74,7 +73,7 @@ export class ConfigCache {
   /**
    * 生成缓存键
    */
-  static generateKey(source: { type: string, basePath: string }): string {
+  static generateKey(source: { type: string; basePath: string }): string {
     return `${source.type}:${source.basePath}`
   }
 }

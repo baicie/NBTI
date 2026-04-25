@@ -20,16 +20,14 @@ export function ShareCardPreview({
 
   // 渲染模板 HTML
   useEffect(() => {
-    if (!containerRef.current)
-      return
+    if (!containerRef.current) return
 
     const html = renderTemplate(template, variables)
     containerRef.current.innerHTML = html
   }, [template, variables])
 
   const handleDownload = useCallback(async () => {
-    if (!containerRef.current || !onDownload)
-      return
+    if (!containerRef.current || !onDownload) return
 
     setIsGenerating(true)
     try {
@@ -42,9 +40,8 @@ export function ShareCardPreview({
       })
 
       // 转换为 blob 并下载
-      canvas.toBlob((blob) => {
-        if (!blob)
-          return
+      canvas.toBlob(blob => {
+        if (!blob) return
         const url = URL.createObjectURL(blob)
         const link = document.createElement('a')
         link.href = url
@@ -53,11 +50,9 @@ export function ShareCardPreview({
         URL.revokeObjectURL(url)
         onDownload()
       }, 'image/png')
-    }
-    catch (error) {
+    } catch (error) {
       console.error('Failed to generate image:', error)
-    }
-    finally {
+    } finally {
       setIsGenerating(false)
     }
   }, [template, variables, onDownload])
@@ -121,11 +116,10 @@ export async function exportCardAsImage(
       },
     )
 
-    return new Promise<Blob | null>((resolve) => {
+    return new Promise<Blob | null>(resolve => {
       canvas.toBlob(resolve, 'image/png')
     })
-  }
-  finally {
+  } finally {
     document.body.removeChild(container)
   }
 }
