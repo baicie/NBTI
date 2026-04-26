@@ -58,12 +58,5 @@
       "normal": "highestScoreThenLatestAnswer",
       "hidden": "usePriority"
     }
-  },
-  "audio": {
-    "backgroundMusic": {
-      "src": "generated:playful",
-      "volume": 0.3,
-      "loop": true
-    }
   }
 }

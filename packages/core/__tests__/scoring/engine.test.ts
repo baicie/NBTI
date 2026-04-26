@@ -10,15 +10,15 @@ describe('scoringEngine', () => {
     normalizeOutput: true,
   }
 
-  const questions = [
-    { id: 'q001', dimension: 'EI' },
-    { id: 'q002', dimension: 'EI' },
-    { id: 'q003', dimension: 'NS' },
-    { id: 'q004', dimension: 'NS' },
-    { id: 'q005', dimension: 'TF' },
-    { id: 'q006', dimension: 'TF' },
-    { id: 'q007', dimension: 'JP' },
-    { id: 'q008', dimension: 'JP' },
+  const questions: import('../../src/types/question').Question[] = [
+    { id: 'q001', dimension: 'EI', content: { zh: '' }, options: [] },
+    { id: 'q002', dimension: 'EI', content: { zh: '' }, options: [] },
+    { id: 'q003', dimension: 'NS', content: { zh: '' }, options: [] },
+    { id: 'q004', dimension: 'NS', content: { zh: '' }, options: [] },
+    { id: 'q005', dimension: 'TF', content: { zh: '' }, options: [] },
+    { id: 'q006', dimension: 'TF', content: { zh: '' }, options: [] },
+    { id: 'q007', dimension: 'JP', content: { zh: '' }, options: [] },
+    { id: 'q008', dimension: 'JP', content: { zh: '' }, options: [] },
   ]
 
   describe('calculate', () => {
@@ -128,7 +128,9 @@ describe('calculateScores', () => {
       },
     ]
 
-    const questions = [{ id: 'q001', dimension: 'EI' }]
+    const questions = [
+      { id: 'q001', dimension: 'EI', content: { zh: '' }, options: [] },
+    ]
     const result = calculateScores(answers, scoring, questions)
 
     expect(result.typeCode).toBe('E')

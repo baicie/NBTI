@@ -278,9 +278,13 @@ export function ResultPageClient({
         const selectedOption = question?.options.find(o => o.id === optionId)
         return {
           questionId,
-          questionText: question?.text,
+          questionText: question
+            ? getLocalizedContent(question.content)
+            : undefined,
           selectedOptionId: optionId,
-          selectedOptionText: selectedOption?.text,
+          selectedOptionText: selectedOption
+            ? getLocalizedContent(selectedOption.content)
+            : undefined,
           weight: selectedOption?.weight,
         }
       },

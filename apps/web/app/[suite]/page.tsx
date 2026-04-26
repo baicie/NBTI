@@ -1,4 +1,3 @@
-import type { LoadedConfig } from '@nbti/core'
 import { loadFullSuite } from '@/lib/suite-loader'
 import { TestPageClient } from './test-page-client'
 
@@ -15,5 +14,10 @@ export default async function TestPage({ params }: TestPageProps) {
   // 加载套件数据
   const suiteData = await loadFullSuite(suiteId)
 
-  return <TestPageClient suiteId={suiteId} config={suiteData as LoadedConfig} />
+  return (
+    <TestPageClient
+      suiteId={suiteId}
+      config={suiteData as unknown as import('@nbti/core').LoadedConfig}
+    />
+  )
 }
