@@ -315,24 +315,24 @@ export class ScoringEngine {
     normalMax = normalQuestionIds.size * 3 // 假设权重上限3
     hiddenMax = hiddenQuestionIds.size * 3
 
+    // 初始化隐藏款 typeId 集合（用于累积隐藏题得分）
+    const hiddenTypeScores: Record<string, number> = {}
+    this.questions.forEach(q => {
+      if (q.dimension === 'HD') {
+        q.options.forEach(o => {
+          if (o.weight) {
+            Object.keys(o.weight).forEach(k => {
+              hiddenTypeScores[k] = 0
+            })
+          }
+        })
+      }
+    })
+
     // 计算隐藏款触发（按 typeId 累积隐藏题权重）
     let triggeredHiddenType: string | null = null
     if (hiddenTrigger) {
       const triggerQ = new Set(hiddenTrigger.triggerQuestions ?? [])
-      const hiddenTypeScores: Record<string, number> = {}
-
-      // 收集所有隐藏款 typeId
-      this.questions.forEach(q => {
-        if (q.dimension === 'HD') {
-          q.options.forEach(o => {
-            if (o.weight) {
-              Object.keys(o.weight).forEach(k => {
-                hiddenTypeScores[k] = 0
-              })
-            }
-          })
-        }
-      })
 
       // 累积隐藏题答案
       answers.forEach(a => {
@@ -356,21 +356,42 @@ export class ScoringEngine {
       })
     }
 
-    // 确定最高分类型（排除已触发的隐藏款，用常规类型竞争）
-    let bestTypeId: string | null = null
-    let bestScore = -1
-    Object.entries(typeScores).forEach(([typeId, score]) => {
-      if (score > bestScore) {
-        bestScore = score
-        bestTypeId = typeId
+    // 计算常规题和隐藏题各自的 typeId 分数（分开计算，用于公平比较）
+    const normalTypeScores: Record<string, number> = {}
+    allTypeIds.forEach(id => {
+      normalTypeScores[id] = 0
+    })
+
+    answers.forEach(answer => {
+      if (!hiddenQuestionIds.has(answer.questionId) && answer.weight) {
+        Object.entries(answer.weight).forEach(([typeId, value]) => {
+          if (typeId in normalTypeScores) {
+            normalTypeScores[typeId] += value
+          }
+        })
       }
     })
 
-    // 隐藏款仅在得分高于常规最高分时优先（避免低分隐藏款覆盖高分常规款）
-    let finalTypeId = bestTypeId ?? 'FISH'
+    // 确定常规题最高分
+    let bestNormalTypeId: string | null = null
+    let bestNormalScore = -1
+    Object.entries(normalTypeScores).forEach(([typeId, score]) => {
+      if (score > bestNormalScore) {
+        bestNormalScore = score
+        bestNormalTypeId = typeId
+      }
+    })
+
+    // 隐藏款覆盖逻辑：隐藏款只在"隐藏题得分显著高于常规款"时才覆盖
+    // 比较规则：(hiddenType 的隐藏题得分) - (常规款最高分的隐藏题得分) >= gapThreshold(3)
+    // 效果：隐藏款答满独占格时（9-15分）可覆盖；随机情况下两者隐藏题得分相近则不覆盖
+    let finalTypeId = bestNormalTypeId ?? 'FISH'
     if (triggeredHiddenType && hiddenTrigger) {
-      const hiddenScore = typeScores[triggeredHiddenType] ?? 0
-      if (hiddenScore > bestScore) {
+      const triggeredHiddenScore = hiddenTypeScores[triggeredHiddenType] ?? 0
+      const bestNormalHiddenScore =
+        hiddenTypeScores[bestNormalTypeId ?? ''] ?? 0
+      const gapThreshold = 3
+      if (triggeredHiddenScore - bestNormalHiddenScore >= gapThreshold) {
         finalTypeId = triggeredHiddenType
       }
     }
