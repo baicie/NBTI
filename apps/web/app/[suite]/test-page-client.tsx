@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { AudioToggleButton } from '@/components/audio/audio-toggle-button'
 import { useAudio } from '@/providers/audio-provider'
-import { useTest } from '@/providers/test-provider'
+import { getLastAnsweredIndex, useTest } from '@/providers/test-provider'
 
 interface TestPageClientProps {
   suiteId: string
@@ -31,14 +31,13 @@ export function TestPageClient({ suiteId, config }: TestPageClientProps) {
   const { playBackgroundMusic, stopBackgroundMusic } = useAudio()
   const { settings } = useTest()
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [currentIndex, setCurrentIndex] = useState(0)
   const [animateKey, setAnimateKey] = useState(0)
   const sessionRestoredRef = useRef(false)
   const questionRefs = useRef<Map<string, HTMLDivElement>>(new Map())
   const touchStartX = useRef<number>(0)
   const touchEndX = useRef<number>(0)
   const isTouchTap = useRef(false) // 标记触摸是否为点击，防止 touchend + click 双重触发跳转
-  // 用于取消和追踪自动跳转的定时器（Bug fix）
+  // 用于取消和追踪自动跳转的定时器
   const autoAdvanceTimerRef = useRef<NodeJS.Timeout | null>(null)
   const targetQuestionRef = useRef<number>(-1)
 
@@ -75,6 +74,10 @@ export function TestPageClient({ suiteId, config }: TestPageClientProps) {
   const allowBack = manifest.settings?.allowBack !== false
 
   const totalQuestions = questions.length
+  const questionIds = questions.map((q: Question) => q.id)
+  // 同步读取 localStorage，渲染一开始就是上次答题的位置
+  const initialIndex = getLastAnsweredIndex(suiteId, questionIds) ?? 0
+  const [currentIndex, setCurrentIndex] = useState(initialIndex)
   const letters = ['A', 'B', 'C', 'D', 'E', 'F']
   const currentQuestion = questions[currentIndex]
   const currentAnswer = answers.get(currentQuestion?.id)
@@ -105,20 +108,19 @@ export function TestPageClient({ suiteId, config }: TestPageClientProps) {
     if (sessionRestoredRef.current) return
     sessionRestoredRef.current = true
 
-    const questionIds = (config.questions.questions ?? []).map(
-      (q: Question) => q.id,
-    )
-    const { resumed, lastAnsweredIndex } = resumeSession(
-      suiteId,
-      totalQuestions,
-      questionIds,
-    )
+    const { resumed } = resumeSession(suiteId, totalQuestions, questionIds)
     if (!resumed) {
       startSession(suiteId)
-    } else if (lastAnsweredIndex !== undefined) {
-      setCurrentIndex(lastAnsweredIndex)
     }
-  }, [suiteId, totalQuestions, resumeSession, startSession, loadConfig, config])
+  }, [
+    suiteId,
+    totalQuestions,
+    questionIds,
+    resumeSession,
+    startSession,
+    loadConfig,
+    config,
+  ])
 
   // 如果已有结果，跳转到结果页（防止用户通过 URL 直接回到测试页）
   useEffect(() => {

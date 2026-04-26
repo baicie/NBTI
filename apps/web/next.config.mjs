@@ -9,6 +9,18 @@ const nextConfig = {
     '/types/**/*': ['./public/types/**/*'],
     '/favicon.ico': ['./public/favicon.ico'],
   },
+
+  // 优化重库的 tree-shaking，减少编译时的解析开销
+  experimental: {
+    optimizePackageImports: [
+      'framer-motion',
+      'recharts',
+      'lucide-react',
+      '@radix-ui/react-icons',
+      'clsx',
+      'tailwind-merge',
+    ],
+  },
 }
 
 export default nextConfig

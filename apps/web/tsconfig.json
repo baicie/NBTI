@@ -1,12 +1,12 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "tsBuildInfoFile": "../../node_modules/.cache/tsbuildinfo/web.tsbuildinfo",
+    "tsBuildInfoFile": ".next/.tsbuildinfo",
     "target": "ES2017",
     "jsx": "preserve",
     "lib": ["ES2016", "DOM", "DOM.Iterable"],
-    "baseUrl": ".",
     "paths": {
+      "*": ["./*"],
       "@/*": ["./*"],
       "@nbti/core": ["../../packages/core/src"],
       "@nbti/shared": ["../../packages/shared/src"]

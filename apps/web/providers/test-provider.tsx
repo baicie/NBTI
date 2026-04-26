@@ -10,16 +10,9 @@ import type {
 import type { ReactNode } from 'react'
 import { calculateScores } from '@nbti/core'
 import { createContext, useCallback, useContext, useRef, useState } from 'react'
+import { getLastAnsweredIndex } from '@/lib/test-progress'
 import { uuidV4 } from '@/lib/uuid'
-
-const STORAGE_KEY_PREFIX = 'nbti_test_'
-
-interface StoredProgress {
-  session: TestSession
-  answers: Record<string, string>
-  result: import('@nbti/core').ScoringResult | null
-  timestamp: number
-}
+export { getLastAnsweredIndex }
 
 interface TestContextValue {
   config: LoadedConfig | null
@@ -72,15 +65,23 @@ const defaultConfig: LoadedConfig = {
   i18n: {},
 }
 
-// localStorage 操作
-function getStorageKey(suiteId: string): string {
-  return `${STORAGE_KEY_PREFIX}${suiteId}`
+const STORAGE_KEY_PREFIX = 'nbti_test_'
+
+interface StoredProgress {
+  session: TestSession
+  answers: Record<string, string>
+  result: import('@nbti/core').ScoringResult | null
+  timestamp: number
 }
 
 // 使用 globalThis 检测浏览器环境
 const isBrowser =
   typeof globalThis !== 'undefined' &&
   typeof globalThis.localStorage !== 'undefined'
+
+function getStorageKey(suiteId: string): string {
+  return `${STORAGE_KEY_PREFIX}${suiteId}`
+}
 
 function saveProgress(
   suiteId: string,
@@ -103,6 +104,33 @@ function saveProgress(
     )
   } catch {
     // 忽略存储错误
+  }
+}
+
+function clearProgress(suiteId: string): void {
+  if (!isBrowser) return
+  globalThis.localStorage.removeItem(getStorageKey(suiteId))
+}
+
+function loadProgress(suiteId: string): StoredProgress | null {
+  if (!isBrowser) return null
+
+  try {
+    const stored = globalThis.localStorage.getItem(getStorageKey(suiteId))
+    if (!stored) return null
+
+    const parsed = JSON.parse(stored) as StoredProgress
+
+    // 检查是否过期（24小时）
+    const EXPIRY_HOURS = 24
+    if (Date.now() - parsed.timestamp > EXPIRY_HOURS * 60 * 60 * 1000) {
+      globalThis.localStorage.removeItem(getStorageKey(suiteId))
+      return null
+    }
+
+    return parsed
+  } catch {
+    return null
   }
 }
 
@@ -137,33 +165,6 @@ function saveResultOnly(
   } catch {
     // 忽略存储错误
   }
-}
-
-function loadProgress(suiteId: string): StoredProgress | null {
-  if (!isBrowser) return null
-
-  try {
-    const stored = globalThis.localStorage.getItem(getStorageKey(suiteId))
-    if (!stored) return null
-
-    const parsed = JSON.parse(stored) as StoredProgress
-
-    // 检查是否过期（24小时）
-    const EXPIRY_HOURS = 24
-    if (Date.now() - parsed.timestamp > EXPIRY_HOURS * 60 * 60 * 1000) {
-      globalThis.localStorage.removeItem(getStorageKey(suiteId))
-      return null
-    }
-
-    return parsed
-  } catch {
-    return null
-  }
-}
-
-function clearProgress(suiteId: string): void {
-  if (!isBrowser) return
-  globalThis.localStorage.removeItem(getStorageKey(suiteId))
 }
 
 const TestContext = createContext<TestContextValue | null>(null)

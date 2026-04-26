@@ -4,6 +4,7 @@
     "composite": true,
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo/root.tsbuildinfo",
     "target": "ES2016",
+    "ignoreDeprecations": "6.0",
 
     "jsx": "react-jsx",
     "lib": ["ES2016", "DOM", "DOM.Iterable"],
