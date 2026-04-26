@@ -187,8 +187,9 @@ export function ResultPageClient({
       answeredQuestionIds,
       bestRegularTypeId,
       bestRegularScore,
+      questions,
     )
-  }, [rawTypeScores, types, dimensions, answeredQuestionIds, result])
+  }, [rawTypeScores, types, dimensions, answeredQuestionIds, result, questions])
 
   // 维度结果
   const dimensionResults: DimensionResult[] = useMemo(() => {
@@ -243,9 +244,17 @@ export function ResultPageClient({
       const matchedTypeId = typeMatchResult.matchedType.id
       const matchedTypeScore = rawTypeScores[matchedTypeId] ?? 0
 
-      // 计算最大可能的分数（所有问题的最大权重之和）
+      // 计算最大可能的分数（仅统计该类型实际出现过的题目的最大权重之和）
+      // 隐藏款类型只出现在部分题目中，不能用全部题目计算
       let maxPossibleScore = 0
       questions.forEach(q => {
+        // 检查该题目是否有该类型的权重
+        const hasType = q.options.some(o => {
+          const w = o.weight?.[matchedTypeId]
+          return typeof w === 'number' && w > 0
+        })
+        if (!hasType) return
+
         const maxWeight = Math.max(
           ...q.options.map(o => {
             const weight = o.weight?.[matchedTypeId]

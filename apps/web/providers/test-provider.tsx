@@ -38,7 +38,11 @@ interface TestContextValue {
   resetTest: () => void
   updateSettings: (settings: Partial<UserSettings>) => void
   setLocale: (locale: string) => void
-  resumeSession: (suiteId: string, totalQuestions: number) => boolean
+  resumeSession: (
+    suiteId: string,
+    totalQuestions: number,
+    questionIds?: string[],
+  ) => { resumed: boolean; lastAnsweredIndex?: number }
 }
 
 // 默认配置（用于测试模式）
@@ -91,6 +95,39 @@ function saveProgress(
       session,
       answers: Object.fromEntries(answers),
       result: result ?? null,
+      timestamp: Date.now(),
+    }
+    globalThis.localStorage.setItem(
+      getStorageKey(suiteId),
+      JSON.stringify(stored),
+    )
+  } catch {
+    // 忽略存储错误
+  }
+}
+
+/**
+ * 仅保存结果，清除答题进度（用于提交后）
+ * 保留 result 便于结果页恢复，但清除 session 和 answers
+ */
+function saveResultOnly(
+  suiteId: string,
+  result: import('@nbti/core').ScoringResult,
+): void {
+  if (!isBrowser) return
+
+  try {
+    const stored: StoredProgress = {
+      session: {
+        id: '',
+        packageId: suiteId,
+        startTime: 0,
+        currentIndex: 0,
+        totalQuestions: 0,
+        answers: [],
+      },
+      answers: {},
+      result,
       timestamp: Date.now(),
     }
     globalThis.localStorage.setItem(
@@ -203,19 +240,35 @@ export function TestProvider({ children }: { children: ReactNode }) {
 
   // 恢复会话（不自动启动）
   const resumeSession = useCallback(
-    (suiteId: string, totalQuestions: number): boolean => {
+    (
+      suiteId: string,
+      totalQuestions: number,
+      questionIds?: string[],
+    ): { resumed: boolean; lastAnsweredIndex?: number } => {
       const stored = loadProgress(suiteId)
       if (stored && stored.session.totalQuestions === totalQuestions) {
         setSession(stored.session)
         setAnswers(new Map(Object.entries(stored.answers)))
         setCurrentSuiteId(suiteId)
         setResult(stored.result)
-        // 同步更新 refs（Bug 1 fix）
         sessionRef.current = stored.session
         currentSuiteIdRef.current = suiteId
-        return true
+
+        // 计算已答的最后一题索引
+        let lastAnsweredIndex: number | undefined
+        if (questionIds && questionIds.length > 0) {
+          const answeredIds = Object.keys(stored.answers)
+          for (let i = questionIds.length - 1; i >= 0; i--) {
+            if (answeredIds.includes(questionIds[i])) {
+              lastAnsweredIndex = i
+              break
+            }
+          }
+        }
+
+        return { resumed: true, lastAnsweredIndex }
       }
-      return false
+      return { resumed: false }
     },
     [],
   )
@@ -297,10 +350,10 @@ export function TestProvider({ children }: { children: ReactNode }) {
 
     setResult(scoringResult)
 
-    // 保存结果到 localStorage（用于页面跳转后恢复）
+    // 提交后清除答题进度，仅保留结果（便于结果页恢复）
     const suiteId = currentSuiteIdRef.current
     if (suiteId) {
-      saveProgress(suiteId, sessionRef.current, answers, scoringResult)
+      saveResultOnly(suiteId, scoringResult)
     }
 
     return scoringResult

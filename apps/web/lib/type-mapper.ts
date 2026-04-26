@@ -3,7 +3,7 @@
  * 将答案直接映射到人格类型（基于计分系统）
  */
 
-import type { PersonalityType } from '@nbti/core'
+import type { PersonalityType, Question } from '@nbti/core'
 
 /**
  * 隐藏款触发规则
@@ -152,6 +152,39 @@ export interface TypeMatchResult {
   answeredQuestionIds?: Set<string>
 }
 
+/**
+ * 计算类型相对于自身的匹配度百分比
+ * 隐藏款类型只出现在部分题目中，需要按实际出现题目计算
+ */
+function calculateTypeMatchPercentage(
+  rawScores: Record<string, number>,
+  questions: Question[],
+  typeId: string,
+): number {
+  const score = rawScores[typeId] ?? 0
+  if (score === 0) return 0
+
+  // 计算该类型的最大可能分数（仅统计实际有权重的题目）
+  let maxPossibleScore = 0
+  for (const q of questions) {
+    const hasType = q.options.some(o => {
+      const w = o.weight?.[typeId]
+      return typeof w === 'number' && w > 0
+    })
+    if (!hasType) continue
+    const maxWeight = Math.max(
+      ...q.options.map(o => {
+        const w = o.weight?.[typeId]
+        return typeof w === 'number' ? w : 0
+      }),
+    )
+    maxPossibleScore += maxWeight
+  }
+
+  if (maxPossibleScore === 0) return 0
+  return Math.round((score / maxPossibleScore) * 100)
+}
+
 export function getTypeMatchResult(
   rawScores: Record<string, number>,
   allTypes: PersonalityType[],
@@ -165,6 +198,8 @@ export function getTypeMatchResult(
   /** engine 算出的最高分常规类型和分数，用于隐藏款覆盖判断 */
   bestRegularTypeId?: string,
   bestRegularScore?: number,
+  /** 用于计算类型匹配度百分比的题目列表 */
+  questions?: Question[],
 ): TypeMatchResult {
   // 获取匹配的人格类型（传入 engine 结果，避免重复计算）
   const matchedType = mapToType(
@@ -187,13 +222,35 @@ export function getTypeMatchResult(
 
   const dims = dimensionDefinitions || defaultDimensions
 
-  // 计算最大分数用于归一化
-  const maxScore = Math.max(...allTypes.map(t => rawScores[t.id] ?? 0), 1)
+  // 计算 matchedType 自身的最大可能分数，用于维度百分比
+  const matchedTypeMaxScore =
+    matchedType && questions !== undefined
+      ? (() => {
+          let max = 0
+          for (const q of questions) {
+            const hasType = q.options.some(o => {
+              const w = o.weight?.[matchedType.id]
+              return typeof w === 'number' && w > 0
+            })
+            if (!hasType) continue
+            const maxWeight = Math.max(
+              ...q.options.map(o => {
+                const w = o.weight?.[matchedType.id]
+                return typeof w === 'number' ? w : 0
+              }),
+            )
+            max += maxWeight
+          }
+          return max
+        })()
+      : 0
 
   const dimensionResults = dims.map(dim => {
-    const percentage = matchedType
-      ? Math.round(((rawScores[matchedType.id] ?? 0) / maxScore) * 100)
-      : 50
+    const matchedScore = matchedType ? (rawScores[matchedType.id] ?? 0) : 0
+    const percentage =
+      matchedTypeMaxScore > 0
+        ? Math.round((matchedScore / matchedTypeMaxScore) * 100)
+        : 50
     const dominant = matchedType?.name?.zh || '未知'
 
     return {
@@ -206,16 +263,21 @@ export function getTypeMatchResult(
     }
   })
 
-  // 计算所有类型的匹配度（按得分排序，显示相对于最高分的百分比）
+  // 计算所有类型的匹配度（使用相对于自身最大可能分数的百分比）
   const matchScores = allTypes
     .map(type => ({
       typeId: type.id,
       typeName: type.name?.zh || type.id,
       score: rawScores[type.id] ?? 0,
       percentage:
-        maxScore > 0
-          ? Math.round(((rawScores[type.id] ?? 0) / maxScore) * 100)
-          : 0,
+        questions !== undefined
+          ? calculateTypeMatchPercentage(rawScores, questions, type.id)
+          : // 兜底：使用相对排名
+            Math.round(
+              ((rawScores[type.id] ?? 0) /
+                Math.max(...allTypes.map(t => rawScores[t.id] ?? 0), 1)) *
+                100,
+            ),
     }))
     .sort((a, b) => b.score - a.score)
     .slice(0, 5)

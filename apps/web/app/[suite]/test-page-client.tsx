@@ -20,6 +20,7 @@ export function TestPageClient({ suiteId, config }: TestPageClientProps) {
   const {
     session,
     answers,
+    result,
     startSession,
     answerQuestion,
     resetTest,
@@ -32,6 +33,7 @@ export function TestPageClient({ suiteId, config }: TestPageClientProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
   const [animateKey, setAnimateKey] = useState(0)
+  const sessionRestoredRef = useRef(false)
   const questionRefs = useRef<Map<string, HTMLDivElement>>(new Map())
   const touchStartX = useRef<number>(0)
   const touchEndX = useRef<number>(0)
@@ -100,21 +102,30 @@ export function TestPageClient({ suiteId, config }: TestPageClientProps) {
     // 将套件配置加载到 TestProvider（用于 submitTest 计分）
     loadConfig(config)
 
-    if (!session) {
-      const resumed = resumeSession(suiteId, totalQuestions)
-      if (!resumed) {
-        startSession(suiteId)
-      }
+    if (sessionRestoredRef.current) return
+    sessionRestoredRef.current = true
+
+    const questionIds = (config.questions.questions ?? []).map(
+      (q: Question) => q.id,
+    )
+    const { resumed, lastAnsweredIndex } = resumeSession(
+      suiteId,
+      totalQuestions,
+      questionIds,
+    )
+    if (!resumed) {
+      startSession(suiteId)
+    } else if (lastAnsweredIndex !== undefined) {
+      setCurrentIndex(lastAnsweredIndex)
     }
-  }, [
-    session,
-    suiteId,
-    totalQuestions,
-    resumeSession,
-    startSession,
-    loadConfig,
-    config,
-  ])
+  }, [suiteId, totalQuestions, resumeSession, startSession, loadConfig, config])
+
+  // 如果已有结果，跳转到结果页（防止用户通过 URL 直接回到测试页）
+  useEffect(() => {
+    if (result && !isSubmitting) {
+      router.push(`/${suiteId}/result`)
+    }
+  }, [result, isSubmitting, suiteId, router])
 
   // 背景音乐控制
   useEffect(() => {
